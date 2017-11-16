@@ -4,39 +4,34 @@
  * and open the template in the editor.
  */
 package byui.cit260.oregonTrail.model;
+
 import java.io.Serializable;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Objects;
-import java.awt.Point;
+
 /**
  *
- * @author jones-jordan
+ * @author Dresen_HP
  */
-public class Scene implements Serializable {
-    private String description;
+public class EndScene extends Scene implements Serializable{
     
-
-    // default constructor
-
-    public Scene() {
-    }
-      
-
-    // methods
-
-    public String getDescription() {
-        return description;
+    public String congratulations;
+    
+    public EndScene () {
+        
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public String getCongratulations() {
+        return congratulations;
+    }
+
+    public void setCongratulations(String congratulations) {
+        this.congratulations = congratulations;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.description);
+        int hash = 5;
+        hash = 37 * hash + Objects.hashCode(this.congratulations);
         return hash;
     }
 
@@ -51,8 +46,11 @@ public class Scene implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Scene other = (Scene) obj;
-        if (!Objects.equals(this.description, other.description)) {
+        final EndScene other = (EndScene) obj;
+        if (!Objects.equals(this.congratulations, other.congratulations)) {
+            return false;
+        }
+        if (!super.equals(obj)) {
             return false;
         }
         return true;
@@ -60,9 +58,7 @@ public class Scene implements Serializable {
 
     @Override
     public String toString() {
-        return "Scene{" + "description=" + description + '}';
+        return "EndScene{" + "congratulations=" + congratulations + '}' + super.toString();
     }
-
     
-   
 }

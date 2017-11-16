@@ -5,15 +5,16 @@
  */
 package byui.cit260.oregonTrail.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Dresen_HP
  */
-public enum SceneType {
-    HuntingScene,
-    BarterScene,
-    RiverScene,
-    RegularScene,
-    FortScene,
-    EndScene;
+public class RegularScene extends Scene implements Serializable{
+    
+    public RegularScene() {
+        
+    }
+    
 }

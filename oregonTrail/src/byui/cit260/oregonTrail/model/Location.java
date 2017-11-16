@@ -49,6 +49,7 @@ public class Location implements Serializable{
     private  int column;
     private  int row;
     private boolean visited;
+    private Scene scene;
     
     
     // constructor function
@@ -111,20 +112,27 @@ public class Location implements Serializable{
         this.visited = visited;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.name);
-        hash = 89 * hash + this.milesFromStart;
-        hash = 89 * hash + this.milesToNext;
-        hash = 89 * hash + Objects.hashCode(this.type);
-        hash = 89 * hash + this.column;
-        hash = 89 * hash + this.row;
-        hash = 89 * hash + (this.visited ? 1 : 0);
-        return hash;
+    public Scene getScene() {
+        return scene;
     }
 
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
 
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 83 * hash + Objects.hashCode(this.name);
+        hash = 83 * hash + this.milesFromStart;
+        hash = 83 * hash + this.milesToNext;
+        hash = 83 * hash + Objects.hashCode(this.type);
+        hash = 83 * hash + this.column;
+        hash = 83 * hash + this.row;
+        hash = 83 * hash + (this.visited ? 1 : 0);
+        hash = 83 * hash + Objects.hashCode(this.scene);
+        return hash;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -159,13 +167,17 @@ public class Location implements Serializable{
         if (!Objects.equals(this.type, other.type)) {
             return false;
         }
+        if (!Objects.equals(this.scene, other.scene)) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Location{" + "name=" + name + ", milesFromStart=" + milesFromStart + ", milesToNext=" + milesToNext + ", type=" + type + ", column=" + column + ", row=" + row + ", visited=" + visited + '}';
+        return "Location{" + "name=" + name + ", milesFromStart=" + milesFromStart + ", milesToNext=" + milesToNext + ", type=" + type + ", column=" + column + ", row=" + row + ", visited=" + visited + ", scene=" + scene + '}';
     }
+
     
 
     

@@ -5,6 +5,7 @@
  */
 package byui.cit260.oregonTrail.model;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Objects;
 /**
  *
@@ -19,7 +20,7 @@ public class RiverScene extends Scene implements Serializable{
     
     // relationships with other classes
 
-    
+    private InventoryItem[] inventory = new InventoryItem[8];
     // default constructor
     
     public RiverScene () {
@@ -52,16 +53,23 @@ public class RiverScene extends Scene implements Serializable{
         this.travelChoice = travelChoice;
     }
 
+    public InventoryItem[] getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(InventoryItem[] inventory) {
+        this.inventory = inventory;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 67 * hash + this.riverHeight;
-        hash = 67 * hash + Objects.hashCode(this.travelChoice);
-        hash = 67 * hash + (int) (Double.doubleToLongBits(this.safetyWithGuide) ^ (Double.doubleToLongBits(this.safetyWithGuide) >>> 32));
+        hash = 29 * hash + this.riverHeight;
+        hash = 29 * hash + Objects.hashCode(this.travelChoice);
+        hash = 29 * hash + (int) (Double.doubleToLongBits(this.safetyWithGuide) ^ (Double.doubleToLongBits(this.safetyWithGuide) >>> 32));
+        hash = 29 * hash + Arrays.deepHashCode(this.inventory);
         return hash;
     }
-
-
 
     @Override
     public boolean equals(Object obj) {
@@ -84,19 +92,20 @@ public class RiverScene extends Scene implements Serializable{
         if (!Objects.equals(this.travelChoice, other.travelChoice)) {
             return false;
         }
+        if (!Arrays.deepEquals(this.inventory, other.inventory)) {
+            return false;
+        }
         if (!super.equals(obj)) {
             return false;
         }
         return true;
-        
-        
     }
 
     @Override
     public String toString() {
-        return "RiverScene{" + "riverHeight=" + riverHeight + ", travelChoice=" + travelChoice + ", safetyWithGuide=" + safetyWithGuide +  '}' + super.toString();
+        return "RiverScene{" + "riverHeight=" + riverHeight + ", travelChoice=" + travelChoice + ", safetyWithGuide=" + safetyWithGuide + ", inventory=" + inventory + '}' + super.toString();
     }
     
-    
+
     
 }

@@ -15,29 +15,37 @@ import java.util.Objects;
  *
  * @author hannahwilliams
  */
-public class HuntingScene implements Serializable {
+public class HuntingScene extends Scene implements Serializable {
   // class instance variables
-    private int noFoodCaught; 
+    private Animal animal1; 
+    private Animal animal2;
     private int bonusWithGuide; 
     
     // relationships with other classes
     
-    private List<Animal> animal = new ArrayList<>();
+    private Animal[] animal = new Animal[4];
 
     private InventoryItem[] inventory = new InventoryItem[8];
+    
     // default constructor
 
     public HuntingScene () {
     }
-    
-     // methods
 
-    public int getNoFoodCaught() {
-        return noFoodCaught;
+    public Animal getAnimal1() {
+        return animal1;
     }
 
-    public void setNoFoodCaught(int noFoodCaught) {
-        this.noFoodCaught = noFoodCaught;
+    public void setAnimal1(Animal animal1) {
+        this.animal1 = animal1;
+    }
+
+    public Animal getAnimal2() {
+        return animal2;
+    }
+
+    public void setAnimal2(Animal animal2) {
+        this.animal2 = animal2;
     }
 
     public int getBonusWithGuide() {
@@ -48,21 +56,15 @@ public class HuntingScene implements Serializable {
         this.bonusWithGuide = bonusWithGuide;
     }
 
-    public List<Animal> getAnimal() {
+    public Animal[] getAnimal() {
         return animal;
     }
 
-    public void setAnimal(List<Animal> animal) {
+    public void setAnimal(Animal[] animal) {
         this.animal = animal;
     }
 
-    public RegularSceneType getRegularSceneType() {
-        return regularSceneType;
-    }
-
-    public void setRegularSceneType(RegularSceneType regularSceneType) {
-        this.regularSceneType = regularSceneType;
-    }
+    
 
     public InventoryItem[] getInventory() {
         return inventory;
@@ -74,12 +76,12 @@ public class HuntingScene implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 37 * hash + this.noFoodCaught;
-        hash = 37 * hash + this.bonusWithGuide;
-        hash = 37 * hash + Objects.hashCode(this.animal);
-        hash = 37 * hash + Objects.hashCode(this.regularSceneType);
-        hash = 37 * hash + Arrays.deepHashCode(this.inventory);
+        int hash = 5;
+        hash = 43 * hash + Objects.hashCode(this.animal1);
+        hash = 43 * hash + Objects.hashCode(this.animal2);
+        hash = 43 * hash + this.bonusWithGuide;
+        hash = 43 * hash + Objects.hashCode(this.animal);
+        hash = 43 * hash + Arrays.deepHashCode(this.inventory);
         return hash;
     }
 
@@ -95,19 +97,22 @@ public class HuntingScene implements Serializable {
             return false;
         }
         final HuntingScene other = (HuntingScene) obj;
-        if (this.noFoodCaught != other.noFoodCaught) {
+        if (this.bonusWithGuide != other.bonusWithGuide) {
             return false;
         }
-        if (this.bonusWithGuide != other.bonusWithGuide) {
+        if (this.animal1 != other.animal1) {
+            return false;
+        }
+        if (this.animal2 != other.animal2) {
             return false;
         }
         if (!Objects.equals(this.animal, other.animal)) {
             return false;
         }
-        if (!Objects.equals(this.regularSceneType, other.regularSceneType)) {
+        if (!Arrays.deepEquals(this.inventory, other.inventory)) {
             return false;
         }
-        if (!Arrays.deepEquals(this.inventory, other.inventory)) {
+        if (!super.equals(obj)) {
             return false;
         }
         return true;
@@ -115,8 +120,11 @@ public class HuntingScene implements Serializable {
 
     @Override
     public String toString() {
-        return "HuntingScene{" + "noFoodCaught=" + noFoodCaught + ", bonusWithGuide=" + bonusWithGuide + ", animal=" + animal + ", regularSceneType=" + regularSceneType + ", inventory=" + inventory + '}';
+        return "HuntingScene{" + "animal1=" + animal1 + ", animal2=" + animal2 + ", bonusWithGuide=" + bonusWithGuide + ", animal=" + animal + ", inventory=" + inventory + '}';
     }
+
+    
+
 
     
 }
