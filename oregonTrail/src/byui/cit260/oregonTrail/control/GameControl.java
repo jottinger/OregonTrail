@@ -34,9 +34,7 @@ public class GameControl {
         return player; // returns player object back to doAction in StartProgramView
     }
     /* Team Assignment #10 TODO list
-    * Implement createNewGame() method
-    *   Figure out number of columns and rows for line 62,63*    
-    * Implement createItems() in InventoryControl (pg 15)  
+    *      
     * Implement createMap() in MapControl (pg 20)
     *   See line 24 of MapControl for TODO list
     * Implement any other object needed to play the game ???
@@ -63,8 +61,8 @@ public class GameControl {
             // save list of items in the game object.
             game.setInventory(items); 
             // create map and set it in game
-            int noOfColumns = 0;
-            int noOfRows = 0;
+            int noOfColumns = 5;
+            int noOfRows = 5;
             Map map = MapControl.createMap(noOfRows, noOfColumns);
             // make sure map was created.
             if (map == null) 

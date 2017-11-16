@@ -5,12 +5,13 @@
  */
 package byui.cit260.oregonTrail.model;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Objects;
 /**
  *
  * @author hannahwilliams
  */
-public class RiverScene implements Serializable{
+public class RiverScene extends Scene implements Serializable{
     // class instance variables
     
     private int riverHeight; 
@@ -18,8 +19,8 @@ public class RiverScene implements Serializable{
     private double safetyWithGuide; 
     
     // relationships with other classes
-    private RegularSceneType regularSceneType;
-    
+
+    private InventoryItem[] inventory = new InventoryItem[8];
     // default constructor
     
     public RiverScene () {
@@ -27,13 +28,6 @@ public class RiverScene implements Serializable{
     
     // methods
 
-    public RegularSceneType getRegularSceneType() {
-        return regularSceneType;
-    }
-
-    public void setRegularSceneType(RegularSceneType regularSceneType) {
-        this.regularSceneType = regularSceneType;
-    }
 
     public int getRiverHeight() {
         return riverHeight;
@@ -59,13 +53,21 @@ public class RiverScene implements Serializable{
         this.travelChoice = travelChoice;
     }
 
+    public InventoryItem[] getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(InventoryItem[] inventory) {
+        this.inventory = inventory;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + this.riverHeight;
-        hash = 97 * hash + Objects.hashCode(this.travelChoice);
-        hash = 97 * hash + (int) (Double.doubleToLongBits(this.safetyWithGuide) ^ (Double.doubleToLongBits(this.safetyWithGuide) >>> 32));
-        hash = 97 * hash + Objects.hashCode(this.regularSceneType);
+        int hash = 3;
+        hash = 29 * hash + this.riverHeight;
+        hash = 29 * hash + Objects.hashCode(this.travelChoice);
+        hash = 29 * hash + (int) (Double.doubleToLongBits(this.safetyWithGuide) ^ (Double.doubleToLongBits(this.safetyWithGuide) >>> 32));
+        hash = 29 * hash + Arrays.deepHashCode(this.inventory);
         return hash;
     }
 
@@ -90,19 +92,20 @@ public class RiverScene implements Serializable{
         if (!Objects.equals(this.travelChoice, other.travelChoice)) {
             return false;
         }
-        if (!Objects.equals(this.regularSceneType, other.regularSceneType)) {
+        if (!Arrays.deepEquals(this.inventory, other.inventory)) {
+            return false;
+        }
+        if (!super.equals(obj)) {
             return false;
         }
         return true;
-        
-        
     }
 
     @Override
     public String toString() {
-        return "RiverScene{" + "riverHeight=" + riverHeight + ", travelChoice=" + travelChoice + ", safetyWithGuide=" + safetyWithGuide + ", regularSceneType=" + regularSceneType + '}';
+        return "RiverScene{" + "riverHeight=" + riverHeight + ", travelChoice=" + travelChoice + ", safetyWithGuide=" + safetyWithGuide + ", inventory=" + inventory + '}' + super.toString();
     }
     
-    
+
     
 }

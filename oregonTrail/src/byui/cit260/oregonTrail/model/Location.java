@@ -5,13 +5,18 @@
  */
 package byui.cit260.oregonTrail.model;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 
 /**
  *
  * @author Dresen_HP
  */
-public enum Location {
-    A("Missouri", 0, 102, "S", 0, 0),
+public class Location implements Serializable{
+    
+    
+    /*A("Missouri", 0, 102, "S", 0, 0),
     B("Kansas River Crossing", 102, 83, "R", 0, 1),
     C("Big Blue River Crossing", 185, 119, "R", 0, 3), 
     D("Fort Kearney", 304, 200, "F", 2, 4),
@@ -35,61 +40,145 @@ public enum Location {
     V("Fort Walla Walla", 1935, 15, "F", 23, 19),
     W("Willamette Valley of the Oregon Territory", 1950, 12, "O", 24, 18),
     X("Columbia River Crossing", 1962, 73, "R", 25, 17),
-    Y("Fort Vancouver", 2035, 0, "E", 25, 15);
+    Y("Fort Vancouver", 2035, 0, "E", 25, 15);*/
     // variables
-    private  final String name;
-    private  final int milesFromStart;
-    private  final int milesToNext;
-    private  final String type;
-    private  final int column;
-    private  final int row;
-    // constructor function
-    private Location(String name, int milesFromStart, int milesToNext, String type, int column, int row) {
-        this.name = name;
-        this.milesFromStart = milesFromStart;
-        this.milesToNext = milesToNext;
-        this.type = type;
-        this.column = column;
-        this.row = row;
-        
-    }
-    // getter functions
-    
-    // class instance variables
-    /*private int currentMiles;
-    private String locationVisited;
-    private int milesRemaining;
-    private String type;
-    private int column;
+    private  String name;
+    private  int milesFromStart;
+    private  int milesToNext;
+    private  String type;
+    private  int column;
+    private  int row;
     private boolean visited;
-    private double amountRemaining;
-    private String type2;
-    public String weather;*/
+    private Scene scene;
     
-    // relationships with other classes
+    
+    // constructor function
+    public Location() {        
+    }
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getMilesFromStart() {
         return milesFromStart;
     }
 
+    public void setMilesFromStart(int milesFromStart) {
+        this.milesFromStart = milesFromStart;
+    }
+
     public int getMilesToNext() {
         return milesToNext;
+    }
+
+    public void setMilesToNext(int milesToNext) {
+        this.milesToNext = milesToNext;
     }
 
     public String getType() {
         return type;
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public int getColumn() {
         return column;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
     }
 
     public int getRow() {
         return row;
     }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public boolean getVisited() {
+        return visited;
+    }
+
+    public void setVisited(boolean visited) {
+        this.visited = visited;
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 83 * hash + Objects.hashCode(this.name);
+        hash = 83 * hash + this.milesFromStart;
+        hash = 83 * hash + this.milesToNext;
+        hash = 83 * hash + Objects.hashCode(this.type);
+        hash = 83 * hash + this.column;
+        hash = 83 * hash + this.row;
+        hash = 83 * hash + (this.visited ? 1 : 0);
+        hash = 83 * hash + Objects.hashCode(this.scene);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Location other = (Location) obj;
+        if (this.milesFromStart != other.milesFromStart) {
+            return false;
+        }
+        if (this.milesToNext != other.milesToNext) {
+            return false;
+        }
+        if (this.column != other.column) {
+            return false;
+        }
+        if (this.row != other.row) {
+            return false;
+        }
+        if (this.visited != other.visited) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.type, other.type)) {
+            return false;
+        }
+        if (!Objects.equals(this.scene, other.scene)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" + "name=" + name + ", milesFromStart=" + milesFromStart + ", milesToNext=" + milesToNext + ", type=" + type + ", column=" + column + ", row=" + row + ", visited=" + visited + ", scene=" + scene + '}';
+    }
+
+    
+
     
 }

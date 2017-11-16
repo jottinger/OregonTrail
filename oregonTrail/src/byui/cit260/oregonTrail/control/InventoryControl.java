@@ -34,9 +34,30 @@ public class InventoryControl {
         return inventory;
     }
 
-    public static InventoryItem[] riverFailureRemove(InventoryItem[] inventory) {
+    public static String riverFailureRemove(InventoryItem[] inventory) {
         System.out.println("\n *** riverFailureRemove() called ***");
-        return inventory;
+        String output = "\n"
+                + "\n************************************************"
+                + "\n* Item: New Inventory Totals"
+                + "\n************************************************"
+                + "\n* Item: Quantity in Inventory";
+        double quantity;
+        for(InventoryItem item : inventory){
+            if (inventory == null) 
+                return "-1";
+            quantity = item.getQuantityInStock();
+            if (quantity > 0) {
+                quantity *= .8;
+                quantity = Math.ceil(quantity); 
+                item.setQuantityInStock(quantity);
+            }
+            String name = item.getInventoryType().name();
+            String inStock = Double.toString(quantity);
+            output += "\n* " + name + ": " + inStock;
+        }
+        output += "\n* "
+                + "\n************************************************";
+        return output;
     }
 
 

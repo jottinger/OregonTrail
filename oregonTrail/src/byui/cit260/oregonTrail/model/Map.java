@@ -19,9 +19,11 @@ public class Map implements Serializable {
     private String description;
     private boolean visited;
     private Game game;
+    private int rows;
+    private int columns;
     
     // relationships with other classes
-    private Location[] locations = new Location[25]; //0-*
+    private Location[][] locations = new Location[5][5]; //0-*
     
     //constructor
 
@@ -54,21 +56,39 @@ public class Map implements Serializable {
         this.game = game;
     }
 
-    public Location[] getLocations() {
+    public Location[][] getLocations() {
         return locations;
     }
 
-    public void setLocations(Location[] locations) {
+    public void setLocations(Location[][] locations) {
         this.locations = locations;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public void setRows(int rows) {
+        this.rows = rows;
+    }
+
+    public int getColumns() {
+        return columns;
+    }
+
+    public void setColumns(int columns) {
+        this.columns = columns;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.description);
-        hash = 97 * hash + (this.visited ? 1 : 0);
-        hash = 97 * hash + Objects.hashCode(this.game);
-        hash = 97 * hash + Arrays.deepHashCode(this.locations);
+        hash = 89 * hash + Objects.hashCode(this.description);
+        hash = 89 * hash + (this.visited ? 1 : 0);
+        hash = 89 * hash + Objects.hashCode(this.game);
+        hash = 89 * hash + this.rows;
+        hash = 89 * hash + this.columns;
+        hash = 89 * hash + Arrays.deepHashCode(this.locations);
         return hash;
     }
 
@@ -87,6 +107,12 @@ public class Map implements Serializable {
         if (this.visited != other.visited) {
             return false;
         }
+        if (this.rows != other.rows) {
+            return false;
+        }
+        if (this.columns != other.columns) {
+            return false;
+        }
         if (!Objects.equals(this.description, other.description)) {
             return false;
         }
@@ -101,9 +127,13 @@ public class Map implements Serializable {
 
     @Override
     public String toString() {
-        return "Map{" + "description=" + description + ", visited=" + visited + ", game=" + game + ", locations=" + locations + '}';
+        return "Map{" + "description=" + description + ", visited=" + visited + ", game=" + game + ", rows=" + rows + ", columns=" + columns + ", locations=" + locations + '}';
     }
 
+
+    
+
+    
     
     
 }

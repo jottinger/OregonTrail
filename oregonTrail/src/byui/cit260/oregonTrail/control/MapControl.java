@@ -4,14 +4,27 @@
  * and open the template in the editor.
  */
 package byui.cit260.oregonTrail.control;
+import byui.cit260.oregonTrail.model.Actor;
+import byui.cit260.oregonTrail.model.Animal;
+import byui.cit260.oregonTrail.model.BarterScene;
 import byui.cit260.oregonTrail.model.CharacterDialog;
+import byui.cit260.oregonTrail.model.EndScene;
+import byui.cit260.oregonTrail.model.FortScene;
 import java.util.Date;
 import java.util.Random;
 import byui.cit260.oregonTrail.model.Player;
 import byui.cit260.oregonTrail.model.Location;
 import byui.cit260.oregonTrail.model.Game;
+import byui.cit260.oregonTrail.model.HuntingScene;
+import byui.cit260.oregonTrail.model.InventoryItem;
+import byui.cit260.oregonTrail.model.InventoryType;
 import byui.cit260.oregonTrail.model.Map;
-import byui.cit260.oregonTrail.model.RegularSceneType;
+import byui.cit260.oregonTrail.model.RegularScene;
+import byui.cit260.oregonTrail.model.RiverScene;
+import byui.cit260.oregonTrail.model.Scene;
+import byui.cit260.oregonTrail.model.SceneType;
+import static byui.cit260.oregonTrail.model.SceneType.RegularScene;
+import oregonTrail.OregonTrail;
 
 
 /**
@@ -23,88 +36,109 @@ import byui.cit260.oregonTrail.model.RegularSceneType;
 public class MapControl {
     /* Assignment 10 TODO
     * Implement createMap() pg 21
-    * Implement createLocations() pg 24
-    * Implement createScenes() pg 25
-    *   Create a new enum class called SceneType pg 26
-    *   Use it to set index position of scene object pg 27
     * Implement createCharacterDialog() pg 27
     *   Create new enum class called DialogType
     *   Use it to set index position of CharacterDialog pg 28
     * Implement assignDialogToScenes()
-    * Implement assignScenesLocations() pg 35
     */
     
     public static Map createMap(int noOfRows, int noOfColumns) {
         System.out.println("\n*** createMap() called ***");
         
         //if noOfRows < 0 OR numOfColumns < 0
-        //return null
-        //endif
-        //if items is null OR its length is < 1
-        //RETURN null
-            //endif
-        //Map map = new Map object
+        if (noOfRows < 0 || noOfColumns < 0) {
+            return null;
+        }
         Map gameMap = new Map();
-        //save the noOfRows in the map
-        //save the noOfColumns in the map
+        gameMap.setRows(noOfRows);
+        gameMap.setColumns(noOfColumns);
         //locations = createLocations(noOfRows, noOfColumns)
+        Location[][] locations = createLocations(noOfRows, noOfColumns);
         //Assign the locations array to the map
+        gameMap.setLocations(locations);
         //scenes = createScenes()
-        //questions = createQuestions()
+        InventoryItem[] inventory = new InventoryItem[InventoryType.values().length];
+        inventory = OregonTrail.getCurrentGame().getInventory();
+        Scene[] scenes = createScenes(inventory);
         //assignQuestionsToScenes()
-        //assignItemsToScenes() 
+        //assignDialogToScenes(scenes);
+        assignScenesToLoctions(gameMap, scenes);
         return gameMap;
     }
-    private static Location[][] createLoctions(int rows, int columns) {
-        System.out.println("\n*** createLocations() called ***");
-        //IF rows < 1 OR columns < 1 THEN
-        //RETURN null
-        //ENDIF
-        //locations = new two-dimensional Location array
-        Location[][] location = null;
-        //FOR every row in the locations array
-        //FOR every column in the locations array
-        //location = create a new Location object
-        //set the row, and column attributes in the location
-        //set visited attribute to false
-        //Assign location to the row, and column in array
-        //ENDFOR
-        //RETURN locations 
-        
-        return location;
-    }
-    private static RegularSceneType[] createScenes() {
-        System.out.println("\n*** createScenes() called ***");
-        //scenes = Create an array Scene objects
-        RegularSceneType[] scene = null;
-        //scene1 = Create a new Scene object
-        //Assign values to each attribute in the Scene object
-        //Assign scene1 to its position in the scenes array
 
-        //scene2 = Create a new ConstructionScene object
-        //Assign values to each attribute in the Scene object
-        //Assign scene2 to its position in the scenes array
-        //scene2 = Create a new ResourceScene object
-        //Assign values to each attribute in the Scene object
-        //Assign scene2 to its position in the scenes array 
+    private static Location[][] createLocations(int rows, int columns) {
+        if (rows < 1 || columns < 1)
+            return null;
+        Location[][] locations = new Location[rows][columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                Location location = new Location();
+                location.setRow(i);
+                location.setColumn(j);
+                location.setVisited(false);
+               locations[i][j] = location; 
+            }
+        }
+            return locations;
+
+    }
+    private static Scene[] createScenes(InventoryItem[] inventory) {
+        //scenes = Create an array Scene objects
+        Scene[] scenes = new Scene[SceneType.values().length];
+        {
+            RegularScene scene = new RegularScene();
+            scene.setDescription("Stopping point along the way.");
+            scenes[SceneType.RegularScene.ordinal()] = scene;
+        }
+        {
+            BarterScene scene = new BarterScene();
+            scene.setDescription("Try to trade for what you need.");
+            scene.setItemDesired(inventory[InventoryType.Bullets.ordinal()]);
+            scene.setQuantityToTrade(0);
+            scene.setItemsToTrade(inventory[InventoryType.Money.ordinal()]);
+            scene.setInventory(inventory);
+            scenes[SceneType.BarterScene.ordinal()] = scene;
+        }
+        {
+            RiverScene scene = new RiverScene();
+            scene.setDescription("River Crossing");
+            scene.setRiverHeight(4);
+            scene.setSafetyWithGuide(0);
+            scene.setTravelChoice("Cross");
+            scene.setInventory(inventory);
+            scenes[SceneType.RiverScene.ordinal()] = scene;
+        }
+        {
+            HuntingScene scene = new HuntingScene();
+            scene.setDescription("Hunt for food.");
+            scene.setAnimal1(null);
+            scene.setAnimal2(null);
+            scene.setBonusWithGuide(0);
+            scene.setInventory(inventory);
+            scenes[SceneType.HuntingScene.ordinal()] = scene;
+        }
+        {
+            FortScene scene = new FortScene();
+            scene.setDescription("Resupply at the fort.");
+            scene.setInventory(inventory);
+            scene.setItemToBuy(inventory[InventoryType.Bullets.ordinal()]);
+            scene.setQuantityToBuy(0);
+            scenes[SceneType.FortScene.ordinal()] = scene;
+        }
+        {
+            EndScene scene = new EndScene();
+            scene.setDescription("End of the trail!");
+            scene.setCongratulations("You Win!");
+            scenes[SceneType.EndScene.ordinal()] = scene;
+        }   
+        return scenes;
+    }
+    private static void assignActorsToScenes(Actor[] actors) {
         
-        return scene;
     }
-    private static CharacterDialog[] createDialog() {
-        System.out.println("\n*** createScenes() called ***");
-        CharacterDialog[] dialog = null;
-        //questions = Create an array Question objects
-        //question1 = Create a new Question object
-        //Assign values to each attribute in the Question object
-        //Assign question1 to its position in the questions array
-        //question2 = Create a new Question object
-        //Assign values to each attribute in the Question object
-        //Assign question2 to its position in the questions array
-        //RETURN questions 
-        return dialog;
-    }
-    private static void assignDialogToScenes(CharacterDialog[] dialog, RegularSceneType[] scenes) {
+    private static void assignDialogToScenes( Scene[] scenes) {
         System.out.println("\n*** assignDialogToScenes() called ***");
+        
         // Assign questions to the first question scene
         //questionScene1 = scenes(indexOfScene)
         //questionsInScene = Create a new Questions array
@@ -122,11 +156,41 @@ public class MapControl {
         //assign questionsInScene array to questionScene2
         // REPEAT FOR ALL OTHER QUESTION SCENES 
     }
-    private static void assignScenesToLoctions(RegularSceneType[] scenes, Location[][] locations) {
-        System.out.println("\n*** assignScenesToLocations() called ***");
-        // locations[0][0].setScene(scenes[SceneType.fort.ordinal()];
-        // locations[0][1].setScene(scenes[SceneType.mountain.ordinal()];
+    private static void assignScenesToLoctions(Map map, Scene[] scenes) {
+       Location[][] locations = map.getLocations();
+        locations[0][0].setScene(scenes[SceneType.FortScene.ordinal()]);
+        locations[0][1].setScene(scenes[SceneType.RiverScene.ordinal()]);
+        locations[0][2].setScene(scenes[SceneType.RegularScene.ordinal()]);
+        locations[0][3].setScene(scenes[SceneType.RiverScene.ordinal()]);
+        locations[0][4].setScene(scenes[SceneType.FortScene.ordinal()]);
+        locations[1][0].setScene(scenes[SceneType.RegularScene.ordinal()]);
+        locations[1][1].setScene(scenes[SceneType.RegularScene.ordinal()]);
+        locations[1][2].setScene(scenes[SceneType.RiverScene.ordinal()]);
+        locations[1][3].setScene(scenes[SceneType.FortScene.ordinal()]);
+        locations[1][4].setScene(scenes[SceneType.RegularScene.ordinal()]);
+        locations[2][0].setScene(scenes[SceneType.HuntingScene.ordinal()]);
+        locations[2][1].setScene(scenes[SceneType.RegularScene.ordinal()]);
+        locations[2][2].setScene(scenes[SceneType.BarterScene.ordinal()]);
+        locations[2][3].setScene(scenes[SceneType.RiverScene.ordinal()]);
+        locations[2][4].setScene(scenes[SceneType.FortScene.ordinal()]);
+        locations[3][0].setScene(scenes[SceneType.RegularScene.ordinal()]);
+        locations[3][1].setScene(scenes[SceneType.BarterScene.ordinal()]);
+        locations[3][2].setScene(scenes[SceneType.HuntingScene.ordinal()]);
+        locations[3][3].setScene(scenes[SceneType.RegularScene.ordinal()]);
+        locations[3][4].setScene(scenes[SceneType.RegularScene.ordinal()]);
+        locations[4][0].setScene(scenes[SceneType.FortScene.ordinal()]);
+        locations[4][1].setScene(scenes[SceneType.RegularScene.ordinal()]);
+        locations[4][2].setScene(scenes[SceneType.HuntingScene.ordinal()]);
+        locations[4][3].setScene(scenes[SceneType.RiverScene.ordinal()]);
+        locations[4][4].setScene(scenes[SceneType.EndScene.ordinal()]);
+        
     }
+
+    private static void setToFalse() {
+    
+        }
+
+
     
     
     

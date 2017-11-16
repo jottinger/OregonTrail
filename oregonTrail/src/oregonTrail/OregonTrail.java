@@ -16,7 +16,6 @@ import byui.cit260.oregonTrail.model.BarterScene;
 import byui.cit260.oregonTrail.model.InventoryItem;
 import byui.cit260.oregonTrail.model.InventoryType;
 import byui.cit260.oregonTrail.model.Location;
-import byui.cit260.oregonTrail.model.RegularSceneType;
 import byui.cit260.oregonTrail.model.Map;
 import byui.cit260.oregonTrail.view.StartProgramView;
 import java.util.HashSet;

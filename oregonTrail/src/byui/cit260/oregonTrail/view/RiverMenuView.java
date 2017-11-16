@@ -69,7 +69,8 @@ public class RiverMenuView extends View {
                           + "\n| You have lost 20% of your inventory."
                           + "\n************************************************");
             
-            InventoryItem[] afterInventory = InventoryControl.riverFailureRemove(inventory);
+            String afterInventory = InventoryControl.riverFailureRemove(inventory);
+            System.out.print(afterInventory);
             this.display();
         } else if (success == 1) {
             System.out.println("\n*************************************************"
