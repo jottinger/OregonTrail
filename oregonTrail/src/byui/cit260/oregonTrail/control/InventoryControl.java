@@ -33,7 +33,6 @@ public class InventoryControl {
         inventory[InventoryType.Money.ordinal()] = new InventoryItem(InventoryType.Money, 500);
         inventory[InventoryType.Oxen.ordinal()] = new InventoryItem(InventoryType.Oxen, 0);
         inventory[InventoryType.WagonWheel.ordinal()] = new InventoryItem(InventoryType.WagonWheel, 0);
-        System.out.print(Arrays.toString(inventory));
         return inventory;
         
     }
@@ -55,7 +54,7 @@ public class InventoryControl {
             }
 
         }
-        System.out.print(Arrays.toString(amounts));
+        
         return inventory;
     }
 
