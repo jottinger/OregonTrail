@@ -15,7 +15,7 @@ public class MapView extends View {
     // constructor method
     public MapView() {
         
-        super("");
+        super("\n*** mapView.display() called ***");
 
 }
     

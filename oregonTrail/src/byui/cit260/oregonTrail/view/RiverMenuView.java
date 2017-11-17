@@ -62,27 +62,21 @@ public class RiverMenuView extends View {
         InventoryItem[] inventory = OregonTrail.getCurrentGame().getInventory();
         double guide = inventory[InventoryType.Guide.ordinal()].getQuantityInStock();
         long currentRiverWeather = getRiverWeather();
-        int success = success = RiverControl.calcRiverSuccessProbability(riverHeight, guide, currentRiverWeather);
-        if (success == 0) {
-            System.out.println("\n*************************************************"
-                          + "\n| Your attempt to cross the river failed."
-                          + "\n| You have lost 20% of your inventory."
-                          + "\n************************************************");
-            
-            String afterInventory = InventoryControl.riverFailureRemove(inventory);
-            System.out.print(afterInventory);
-            this.display();
-        } else if (success == 1) {
-            System.out.println("\n*************************************************"
-                          + "\n| Congratulations! "
-                          + "\n| Your attempt to cross the river succeeded."
-                          + "\n************************************************");
-            GameMenuView gameMenuView = new GameMenuView();
-            gameMenuView.display();
+        int success = RiverControl.calcRiverSuccessProbability(riverHeight, guide, currentRiverWeather);
+        if (success == 1) {
+            this.riverYes();
         }
-        
-    }
     
+        else if (success == 0) {
+            this.riverNo(inventory);
+        }
+        else {
+            System.out.println("\n There was an error fording the river. Try again");
+            this.display();
+        }
+
+            
+    }
     private void saveGame() {
         System.out.println("*** saveGame() function called ***");
     }
@@ -108,4 +102,45 @@ public class RiverMenuView extends View {
         return weather;
     }
 
+    private void riverYes() {
+        System.out.println("\n*************************************************"
+                          + "\n| Congratulations! "
+                          + "\n| Your attempt to cross the river succeeded."
+                          + "\n************************************************");
+            GameMenuView gameMenuView = new GameMenuView();
+            gameMenuView.display();
+        }
+
+    private void riverNo(InventoryItem[] inventory) {
+        InventoryItem[] newInventory = InventoryControl.riverFailureRemove(inventory);
+                if (newInventory == null) {
+                    System.out.println("\n There was an error crossing the river");
+                    this.display();
+                }
+                else {
+            System.out.println("\n*************************************************"
+                          + "\n| Your attempt to cross the river failed."
+                          + "\n| You have lost 20% of your inventory."
+                          + "\n************************************************"
+                          + "\n"
+                          + "\n************************************************"
+                          + "\n* Item: New Inventory Totals"
+                          + "\n************************************************"
+                          + "\n* Item: Quantity in Inventory");
+            String name;
+            double inStock;
+            int i = 0;
+            for (InventoryItem item : inventory) {
+                name = item.getInventoryType().name();
+                inStock = item.getQuantityInStock();
+                
+            System.out.println("\n* " + name + ": " + inStock); 
+            }
+            System.out.println("\n* " 
+                + "\n************************************************");
+            this.display();
+            }
+        }
 }
+
+

@@ -43,7 +43,6 @@ public class MapControl {
     */
     
     public static Map createMap(int noOfRows, int noOfColumns) {
-        System.out.println("\n*** createMap() called ***");
         
         //if noOfRows < 0 OR numOfColumns < 0
         if (noOfRows < 0 || noOfColumns < 0) {
@@ -69,6 +68,7 @@ public class MapControl {
     private static Location[][] createLocations(int rows, int columns) {
         if (rows < 1 || columns < 1)
             return null;
+        char alphabet = 'A';
         Location[][] locations = new Location[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -76,8 +76,15 @@ public class MapControl {
                 location.setRow(i);
                 location.setColumn(j);
                 location.setVisited(false);
+                location.setBlocked(true);
+                
+                location.setSymbol((Character.toString(alphabet)));
+                alphabet++;
                locations[i][j] = location; 
             }
+            locations[0][0].setBlocked(false);
+            locations[0][1].setBlocked(false);
+            locations[0][0].setSymbol("*");
         }
             return locations;
 

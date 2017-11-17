@@ -5,6 +5,10 @@
  */
 package byui.cit260.oregonTrail.view;
 
+import byui.cit260.oregonTrail.model.Game;
+import byui.cit260.oregonTrail.model.Location;
+import oregonTrail.OregonTrail;
+
 /**
  *
  * @author Dresen_HP
@@ -24,7 +28,7 @@ public class GameMenuView extends View{
                     +"\nV - View Inventory"
                     +"\nH - Hunt"
                     +"\nP - Purchase Goods"
-                    +"\nM - Display Map"
+                    +"\nM - Travel to Next Location"
                     +"\nQ - Quit"
                     +"\n----------------------------------------------------"
                     +"\n"
@@ -80,10 +84,30 @@ public class GameMenuView extends View{
    }
 
     private void displayMap() {
-        System.out.println("\n*** displayMap() called ***");
         //game = get the currentGame from the main class
+        Game game = OregonTrail.getCurrentGame();
         //locations = get the 2-D locations array from the map
+        Location[][] locations = game.getMap().getLocations();
         //Print the title
+        int i = 1;
+        System.out.println(  "\n*******************************************"
+                            +"\n*            The Oregon Trail             *"
+                            +"\n*-----------------------------------------*"
+                            +"\n      1       2       3       4       5    ");
+        for (Location[] row : locations) {
+            System.out.print("\n*-----------------------------------------*"
+                              + "\n" + i + " " );
+            i++;
+        
+            for (Location location : row){
+                System.out.print("|   " + location.getSymbol() + "   ");
+                
+            }
+        }       
+        System.out.println("\n*******************************************");
+        MapView mapview = new MapView();
+        mapview.display();
+                
         //Print the column numbers for each column
         //for every row in map
         //Print a row divider
@@ -106,3 +130,4 @@ public class GameMenuView extends View{
         //displayMapView.display();
     }
 }
+

@@ -10,6 +10,8 @@ import byui.cit260.oregonTrail.model.InventoryType;
 import byui.cit260.oregonTrail.model.Game;
 import byui.cit260.oregonTrail.model.InventoryItem;
 import byui.cit260.oregonTrail.model.Player;
+import java.util.Arrays;
+
 import oregonTrail.OregonTrail;
 
 /**
@@ -28,36 +30,33 @@ public class InventoryControl {
         inventory[InventoryType.Food.ordinal()] = new InventoryItem(InventoryType.Food, 0);
         inventory[InventoryType.Guide.ordinal()] = new InventoryItem(InventoryType.Guide, 0);
         inventory[InventoryType.Medicine.ordinal()] = new InventoryItem(InventoryType.Medicine, 0);
-        inventory[InventoryType.Money.ordinal()] = new InventoryItem(InventoryType.Money, 0);
+        inventory[InventoryType.Money.ordinal()] = new InventoryItem(InventoryType.Money, 500);
         inventory[InventoryType.Oxen.ordinal()] = new InventoryItem(InventoryType.Oxen, 0);
         inventory[InventoryType.WagonWheel.ordinal()] = new InventoryItem(InventoryType.WagonWheel, 0);
+        System.out.print(Arrays.toString(inventory));
         return inventory;
+        
     }
-
-    public static String riverFailureRemove(InventoryItem[] inventory) {
-        System.out.println("\n *** riverFailureRemove() called ***");
-        String output = "\n"
-                + "\n************************************************"
-                + "\n* Item: New Inventory Totals"
-                + "\n************************************************"
-                + "\n* Item: Quantity in Inventory";
+    
+    public static InventoryItem[] riverFailureRemove(InventoryItem[] inventory) {
+        if (inventory == null) 
+            return null;
         double quantity;
+        double[] amounts = new double[8];
+        int i = 0;
         for(InventoryItem item : inventory){
-            if (inventory == null) 
-                return "-1";
             quantity = item.getQuantityInStock();
             if (quantity > 0) {
                 quantity *= .8;
                 quantity = Math.ceil(quantity); 
                 item.setQuantityInStock(quantity);
+                
+                 
             }
-            String name = item.getInventoryType().name();
-            String inStock = Double.toString(quantity);
-            output += "\n* " + name + ": " + inStock;
+
         }
-        output += "\n* "
-                + "\n************************************************";
-        return output;
+        System.out.print(Arrays.toString(amounts));
+        return inventory;
     }
 
 

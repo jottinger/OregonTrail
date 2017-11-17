@@ -49,6 +49,8 @@ public class Location implements Serializable{
     private  int column;
     private  int row;
     private boolean visited;
+    private String symbol;
+    private boolean blocked;
     private Scene scene;
     
     
@@ -120,17 +122,35 @@ public class Location implements Serializable{
         this.scene = scene;
     }
 
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 83 * hash + Objects.hashCode(this.name);
-        hash = 83 * hash + this.milesFromStart;
-        hash = 83 * hash + this.milesToNext;
-        hash = 83 * hash + Objects.hashCode(this.type);
-        hash = 83 * hash + this.column;
-        hash = 83 * hash + this.row;
-        hash = 83 * hash + (this.visited ? 1 : 0);
-        hash = 83 * hash + Objects.hashCode(this.scene);
+        int hash = 5;
+        hash = 23 * hash + Objects.hashCode(this.name);
+        hash = 23 * hash + this.milesFromStart;
+        hash = 23 * hash + this.milesToNext;
+        hash = 23 * hash + Objects.hashCode(this.type);
+        hash = 23 * hash + this.column;
+        hash = 23 * hash + this.row;
+        hash = 23 * hash + (this.visited ? 1 : 0);
+        hash = 23 * hash + Objects.hashCode(this.symbol);
+        hash = 23 * hash + (this.blocked ? 1 : 0);
+        hash = 23 * hash + Objects.hashCode(this.scene);
         return hash;
     }
 
@@ -161,10 +181,16 @@ public class Location implements Serializable{
         if (this.visited != other.visited) {
             return false;
         }
+        if (this.blocked != other.blocked) {
+            return false;
+        }
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
         if (!Objects.equals(this.type, other.type)) {
+            return false;
+        }
+        if (!Objects.equals(this.symbol, other.symbol)) {
             return false;
         }
         if (!Objects.equals(this.scene, other.scene)) {
@@ -175,10 +201,10 @@ public class Location implements Serializable{
 
     @Override
     public String toString() {
-        return "Location{" + "name=" + name + ", milesFromStart=" + milesFromStart + ", milesToNext=" + milesToNext + ", type=" + type + ", column=" + column + ", row=" + row + ", visited=" + visited + ", scene=" + scene + '}';
+        return "Location{" + "name=" + name + ", milesFromStart=" + milesFromStart + ", milesToNext=" + milesToNext + ", type=" + type + ", column=" + column + ", row=" + row + ", visited=" + visited + ", symbol=" + symbol + ", blocked=" + blocked + ", scene=" + scene + '}';
     }
 
     
-
+    
     
 }

@@ -6,6 +6,7 @@
 package byui.cit260.oregonTrail.control;
 
 import byui.cit260.oregonTrail.model.Game;
+import byui.cit260.oregonTrail.model.InventoryItem;
 import byui.cit260.oregonTrail.model.InventoryType;
 
 import org.junit.Test;
@@ -223,6 +224,24 @@ public class InventoryControlTest {
         // compare results to expected results
         assertEquals(expResult, result, 0.0001);
     }
+
+
+    /**
+     * Test of riverFailureRemove method, of class InventoryControl.
+     */
+    /*@Test
+    public void testRiverFailureRemove() {
+        System.out.println("riverFailureRemove");
+        InventoryItem[] inventory = null;
+        InventoryItem
+        InventoryItem[] expResult = ;
+        String result = InventoryControl.riverFailureRemove(inventory);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    } */
+
+
 
 
 }
