@@ -4,8 +4,12 @@
 package byui.cit260.oregonTrail.view;
 
 import byui.cit260.oregonTrail.control.GameControl;
+import byui.cit260.oregonTrail.exceptions.GameControlException;
+import byui.cit260.oregonTrail.exceptions.MapControlException;
 import byui.cit260.oregonTrail.model.Game;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import oregonTrail.OregonTrail;
 
 /**
@@ -37,8 +41,18 @@ public class MainMenuView extends View {
         value = value.toUpperCase(); //convert choice to upper case
         
         switch (value) {
-            case "N": //Calls startNewGame() in this class. create and start a new game
-                this.startNewGame();
+            case "N": {
+                //Calls startNewGame() in this class. create and start a new game
+                try{
+                    try { 
+                        this.startNewGame();
+                    } catch (MapControlException me) {
+                        System.out.println(me.getMessage());
+                    }
+                } catch (GameControlException ge) {
+                    System.out.println(ge.getMessage());
+                }
+        }
                 break;
             case "G": //Calls startExistingGame() in this class. get and start an existing game
                 this.startExistingGame();
@@ -58,14 +72,13 @@ public class MainMenuView extends View {
                       // false will be returned to displayMainMenuView() triggering repeat of do-while loop.
     }
 
-    private boolean startNewGame() { // Called from doAction() case N in this class.
+    private boolean startNewGame() throws GameControlException, MapControlException { // Called from doAction() case N in this class.
             
 
             //create a new game
             int returnValue = GameControl.createNewGame(OregonTrail.getPlayer()); //Calls createNewGame() from GameControl and passes in player object.
             if (returnValue < 0) { //Checks to see if player created. if unsuccessful, print error message.
-            System.out.println("\nError creating the game.");
-            return false; // if unsuccsful, returns false to doAction so loop is repeated.
+            throw new MapControlException("Unable to create new game. Player is NULL.");
         }
 
             CompanionView companionView = new CompanionView(); // creates new companionView object by calling construtor function in companionView.
