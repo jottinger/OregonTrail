@@ -18,6 +18,7 @@ import byui.cit260.oregonTrail.model.InventoryType;
 import byui.cit260.oregonTrail.model.Location;
 import byui.cit260.oregonTrail.model.Map;
 import byui.cit260.oregonTrail.view.StartProgramView;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,6 +31,7 @@ public class OregonTrail {
     // class instance variables
     private static Game currentGame = null; 
     private static Player player = null;
+    private static InventoryItems currentInventory;
     
     /**
      * @param args the command line arguments
@@ -41,12 +43,27 @@ public class OregonTrail {
         // calls contstructor function in StartProgramView to create new instance of StartProgramView object named startProgramView. 
         //This constructor function creates and displays the welcome banner that explains game.
         StartProgramView startProgramView = new StartProgramView();
-        startProgramView.display(); //call displayStartProgramView() in StartProgramView to prompt user for name.
-        
-    }
+        try {
+            startProgramView.display(); //call displayStartProgramView() in StartProgramView to prompt user for name.
+        } catch (Throwable te) {
+            System.out.println(te.getMessage());
+            te.printStackTrace();
+            startProgramView.display();
+        }
+        }
+    
         
     public static Game getCurrentGame() {
         return currentGame;
+    }
+    
+    public static InventoryItem[] setInventoryItems(String inventoryItem, int inventoryAmount) {    
+        InventoryItem[] currentInventory = new InventoryItem[8];
+        return currentInventory;
+    }
+    
+    public static InventoryItems getInventoryItems() {
+        return currentInventory;
     }
     
     public static void setCurrentGame(Game currentGame) {
@@ -59,6 +76,12 @@ public class OregonTrail {
     
     public static void setPlayer(Player player) { // called from createPlayer() in GameControl
         OregonTrail.player = player;
+    }
+
+    private static class InventoryItems {
+
+        public InventoryItems() {
+        }
     }
   
 }    
