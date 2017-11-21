@@ -64,8 +64,8 @@ public class GameMenuView extends View{
                break;
            case "H":
                System.out.println("*** HuntView() function called ***");
-               //HuntView huntView = new HuntView();
-               //huntView.display();
+               HuntView huntView = new HuntView();
+               huntView.display();
                break;
            case "P":
                System.out.println("*** PurchaseGoodsView() function called ***");
