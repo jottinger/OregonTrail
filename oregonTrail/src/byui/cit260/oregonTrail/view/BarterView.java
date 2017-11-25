@@ -5,6 +5,9 @@
  */
 package byui.cit260.oregonTrail.view;
 
+import byui.cit260.oregonTrail.model.InventoryItem;
+import oregonTrail.OregonTrail;
+
 /**
  *
  * @author Dresen_HP
@@ -20,17 +23,42 @@ public class BarterView extends View {
                     +"\n----------------------------------------------------"
                     +"\n| Barter Menu                                        |"
                     +"\n----------------------------------------------------"
-                    +"\nL - Learn more about the Oregon Trail"
-                    +"\nO - Objectives of the game"
-                    +"\nS - Learn about each occupation"
-                    +"\nQ - Quit to main menu"
+                    +"\nD - Display your invenotory items"
+                    +"\nC - Cancel"
                     +"\n----------------------------------------------------");
     }
 
     @Override
-    public boolean doAction(String value) {
-        System.out.println("***doAction function called***");
+    public boolean doAction(String choice) {
+        choice = choice.toUpperCase(); //convert choice to upper case
+        
+        switch (choice) {
+            case "D": //dsiplay current inventory
+                this.displayInventoryItems();
+                break;
+            case "C": //hire a guide
+                this.cancelBarter();
+                break;
+            default:
+                System.out.println("\n*** Invalid selection *** Try again");
+        }
+        
         return false;
+    }
+
+    private void displayInventoryItems() {
+        InventoryItem[] inventoryArray = OregonTrail.getCurrentGame().getInventory();
+        for (int i = 0; 1 <inventoryArray.length; i++) {
+        if (i > 0) {
+            System.out.println(", ");
+        }
+        System.out.print(inventoryArray[i]);
+    }
+
+    }
+
+    private void cancelBarter() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -5,6 +5,7 @@
  */
 package byui.cit260.oregonTrail.control;
 
+import byui.cit260.oregonTrail.exceptions.RiverControlException;
 import byui.cit260.oregonTrail.model.RiverScene;
 import java.util.Random;
 
@@ -15,21 +16,25 @@ import java.util.Random;
  */
 public class RiverControl {
     
-
-
-    public static int calcRiverSuccessProbability(int riverHeight, double guide,  long currentRiverWeather) {
+    public static int calcRiverSuccessProbability(int riverHeight, double guide,  long currentRiverWeather)
+                        throws RiverControlException {
     //validate inputs
     if (riverHeight < 0) {
-            return -1;
+            throw new RiverControlException("River hieght of " + riverHeight +" too high.");
         }
     if (guide != 0 && guide != 1) {
-            return -1;
+            throw new RiverControlException("Guide selection must be made. Go back to "
+                                          + "previous menu and make a guide choice"
+                                          + " selection.");
         }
     if (currentRiverWeather < -2) {
-            return -1;
+            throw new RiverControlException("Current weather not found. "
+                                          + "Unable to continue.");
         }
     if (riverHeight > 20) {
-        return -1;
+        throw new RiverControlException("River hieght cannot be above 20. Your "
+                                      + "selection of " + riverHeight + "is too "
+                                      + "high. Make another selection");
     }
         
    //declare all the variables

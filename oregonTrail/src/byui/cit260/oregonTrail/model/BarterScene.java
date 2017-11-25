@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.awt.Point;
 import java.util.Arrays;
+import oregonTrail.OregonTrail;
 /**
  *
  * @author jones-jordan
@@ -27,8 +28,10 @@ public class BarterScene extends Scene implements Serializable {
 
     public BarterScene() {
     }
-
-    public InventoryItem getItemsToTrade() {
+    
+    public InventoryItem[] itemsToTrade() {
+        InventoryItem[] itemsToTrade = new InventoryItem [8];
+        itemsToTrade = OregonTrail.getCurrentGame().getInventory();
         return itemsToTrade;
     }
 

@@ -60,8 +60,9 @@ public class Player implements Serializable{
         return pace;
     }
 
-    public void setPace(int pace) {
+    public int setPace(int pace) {
         this.pace = pace;
+        return pace;
     }
 
     public double getTotalHealth() {
@@ -166,6 +167,10 @@ public class Player implements Serializable{
     @Override
     public String toString() {
         return "Player{" + "name=" + name + ", savedGameFile=" + savedGameFile + ", pace=" + pace + ", totalHealth=" + totalHealth + ", currentScore=" + currentScore + ", games=" + games + ", actor=" + actor + ", occupation=" + occupation + '}';
+    }
+
+    public int setPace() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 

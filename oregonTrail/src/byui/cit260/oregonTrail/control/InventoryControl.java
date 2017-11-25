@@ -79,13 +79,11 @@ public class InventoryControl {
            //item = new InventoryItem();
            //item.setQuantityInStock(0);
            //item.setInventoryType(type);
-           //items.put(type, item);
-                  
+           //items.put(type, item);  
         } 
         return item;
     }
-    
-    
+   
     
     /* Adds 1+ quantity of items to player's inventory.
     * New item variable is created and filled with the item from the player's inventory according to type.
