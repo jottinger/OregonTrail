@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package byui.cit260.oregonTrail.control;
+import byui.cit260.oregonTrail.exceptions.MapControlException;
 import byui.cit260.oregonTrail.model.Actor;
 import byui.cit260.oregonTrail.model.Animal;
 import byui.cit260.oregonTrail.model.BarterScene;
@@ -42,11 +43,13 @@ public class MapControl {
     * Implement assignDialogToScenes()
     */
     
-    public static Map createMap(int noOfRows, int noOfColumns) {
-        
+    public static Map createMap(int noOfRows, int noOfColumns) 
+        throws MapControlException
+    {
         //if noOfRows < 0 OR numOfColumns < 0
         if (noOfRows < 0 || noOfColumns < 0) {
-            return null;
+        //    return null;
+        throw new MapControlException("Map must be at least one column wide and one row long");
         }
         Map gameMap = new Map();
         gameMap.setRows(noOfRows);
@@ -65,9 +68,12 @@ public class MapControl {
         return gameMap;
     }
 
-    private static Location[][] createLocations(int rows, int columns) {
-        if (rows < 1 || columns < 1)
-            return null;
+    private static Location[][] createLocations(int rows, int columns)
+        throws MapControlException
+        {
+        /*Don't need this because createMap function looks for a negative colum and row
+            if (rows < 1 || columns < 1)
+            return null; */
         char alphabet = 'A';
         Location[][] locations = new Location[rows][columns];
         for (int i = 0; i < rows; i++) {
@@ -89,7 +95,9 @@ public class MapControl {
             return locations;
 
     }
-    private static Scene[] createScenes(InventoryItem[] inventory) {
+    private static Scene[] createScenes(InventoryItem[] inventory) 
+        throws MapControlException
+        {
         //scenes = Create an array Scene objects
         Scene[] scenes = new Scene[SceneType.values().length];
         {
@@ -163,7 +171,9 @@ public class MapControl {
         //assign questionsInScene array to questionScene2
         // REPEAT FOR ALL OTHER QUESTION SCENES 
     }
-    private static void assignScenesToLoctions(Map map, Scene[] scenes) {
+    private static void assignScenesToLoctions(Map map, Scene[] scenes) 
+            throws MapControlException
+        {
        Location[][] locations = map.getLocations();
         locations[0][0].setScene(scenes[SceneType.FortScene.ordinal()]);
         locations[0][1].setScene(scenes[SceneType.RiverScene.ordinal()]);
@@ -201,24 +211,19 @@ public class MapControl {
     
     
     
-    public int calcDistanceTraveled( int pace, int totalHealth){
+    public int calcDistanceTraveled( int pace, int totalHealth)
+        throws MapControlException {
        // validate inputs
 	   // pace must be an integar >= 0 
         if (pace < 0 ) {
-            return -1;
+            throw new MapControlException("Cannot calculate distance traveled."
+                                        + "Your pace of " + pace + " is less than zero.");
         }
 		// lower boundary, health cannot be less than 0 
-        if (totalHealth < 0) {
-            return -1;
+        if (totalHealth <= 0) {
+            throw new MapControlException("Cannot calculate distance traveled."
+                                        + "Your heath of " + totalHealth + " is less than zero.");
         }
-		// cannot travel if dead aka totalHealth is 0
-        if (totalHealth == 0) {
-            return 1;
-    }			
-		// if pace is 0, the party is resting	
-        if (pace == 0) {
-            return 2;
-    }
     
         // declare all variables
         int p = 15;

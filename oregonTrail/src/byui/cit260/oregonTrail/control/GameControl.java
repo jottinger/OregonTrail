@@ -5,6 +5,8 @@
  */
 package byui.cit260.oregonTrail.control;
 
+import byui.cit260.oregonTrail.exceptions.GameControlException;
+import byui.cit260.oregonTrail.exceptions.MapControlException;
 import static byui.cit260.oregonTrail.model.Occupation.Merchant;
 import byui.cit260.oregonTrail.model.Game;
 import byui.cit260.oregonTrail.model.InventoryItem;
@@ -41,9 +43,9 @@ public class GameControl {
     * Create new mapView class in view package
     * Implement displayMap() in Game Menu View pg 39
     */
-    public static int createNewGame(Player player) {
+    public static int createNewGame(Player player) throws GameControlException, MapControlException {
        if (player == null)  // if no player passed in, return null back to startNewGame() in MainMenuView
-            return -1;  // return error code
+            throw new GameControlException("Cannot create game. Player name is empty.");  // return error code
             // create new game object.
             Game game =  new Game();
             // save a reference to the Player object in the game.

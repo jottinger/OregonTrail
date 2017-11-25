@@ -7,6 +7,7 @@ package byui.cit260.oregonTrail.view;
 
 import byui.cit260.oregonTrail.control.InventoryControl;
 import byui.cit260.oregonTrail.control.RiverControl;
+import byui.cit260.oregonTrail.exceptions.RiverControlException;
 import byui.cit260.oregonTrail.model.InventoryItem;
 import byui.cit260.oregonTrail.model.InventoryType;
 import java.util.Scanner;
@@ -25,9 +26,9 @@ public class RiverMenuView extends View {
                     +"\n----------------------------------------------------"
                     +"\n| River Menu                                       |"
                     +"\n----------------------------------------------------"
-                    +"\nF - Ford the river"
-                    +"\nH - Hire a Guide for $10"
-                    +"\nS - Save game"
+                    +"\n1 - Ford the river"
+                    +"\n2 - Hire a Guide for $10"
+                    +"\n3 - Save game"
                     +"\nQ - Quit"
                     +"\n----------------------------------------------------");
     }
@@ -37,13 +38,13 @@ public class RiverMenuView extends View {
         choice = choice.toUpperCase(); //convert choice to upper case
         
         switch (choice) {
-            case "F": //ford the river
+            case "1": //ford the river
                 this.fordRiver();
                 break;
-            case "H": //hire a guide
+            case "2": //hire a guide
                 this.hireGuide();
                 break;
-            case "S": //save the current game
+            case "3": //save the current game
                 this.saveGame();
                 break;
             case "Q": //quit the menu
@@ -62,7 +63,12 @@ public class RiverMenuView extends View {
         InventoryItem[] inventory = OregonTrail.getCurrentGame().getInventory();
         double guide = inventory[InventoryType.Guide.ordinal()].getQuantityInStock();
         long currentRiverWeather = getRiverWeather();
-        int success = RiverControl.calcRiverSuccessProbability(riverHeight, guide, currentRiverWeather);
+        int success = 0;
+        try {
+            RiverControl.calcRiverSuccessProbability(riverHeight, guide, currentRiverWeather);
+        } catch (RiverControlException me) {
+            System.out.println(me.getMessage());
+        }
         if (success == 1) {
             this.riverYes();
         }
