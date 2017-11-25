@@ -21,31 +21,20 @@ import oregonTrail.OregonTrail;
 public class InventoryControl {
     
 
-// creates inventory list for game when new game is started.
-    public static InventoryItem[] createItems() {
-        
-        InventoryItem[] inventory = new InventoryItem[8];
-        inventory[InventoryType.Bullets.ordinal()] = new InventoryItem(InventoryType.Bullets ,0);
-        inventory[InventoryType.Clothing.ordinal()] = new InventoryItem(InventoryType.Clothing, 0);
-        inventory[InventoryType.Food.ordinal()] = new InventoryItem(InventoryType.Food, 0);
-        inventory[InventoryType.Guide.ordinal()] = new InventoryItem(InventoryType.Guide, 0);
-        inventory[InventoryType.Medicine.ordinal()] = new InventoryItem(InventoryType.Medicine, 0);
-        inventory[InventoryType.Money.ordinal()] = new InventoryItem(InventoryType.Money, 500);
-        inventory[InventoryType.Oxen.ordinal()] = new InventoryItem(InventoryType.Oxen, 0);
-        inventory[InventoryType.WagonWheel.ordinal()] = new InventoryItem(InventoryType.WagonWheel, 0);
-        return inventory;
-        
-    }
+
     
-    public static InventoryItem[] riverFailureRemove(InventoryItem[] inventory) {
+    public static double riverFailureRemove(InventoryItem[] inventory) {
         if (inventory == null) 
-            return null;
+            return -1;
         double quantity;
-        double[] amounts = new double[8];
-        int i = 0;
+        double result;
+        double sum = 0;
+
         for(InventoryItem item : inventory){
             quantity = item.getQuantityInStock();
             if (quantity > 0) {
+                result = Math.floor(quantity * .2);
+                sum += result;
                 quantity *= .8;
                 quantity = Math.ceil(quantity); 
                 item.setQuantityInStock(quantity);
@@ -55,7 +44,7 @@ public class InventoryControl {
 
         }
         
-        return inventory;
+        return sum;
     }
 
 

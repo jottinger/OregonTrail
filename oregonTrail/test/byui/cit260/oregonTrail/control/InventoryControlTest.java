@@ -8,6 +8,7 @@ package byui.cit260.oregonTrail.control;
 import byui.cit260.oregonTrail.model.Game;
 import byui.cit260.oregonTrail.model.InventoryItem;
 import byui.cit260.oregonTrail.model.InventoryType;
+import java.util.Arrays;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -229,19 +230,101 @@ public class InventoryControlTest {
     /**
      * Test of riverFailureRemove method, of class InventoryControl.
      */
-    /*@Test
+    @Test
     public void testRiverFailureRemove() {
         System.out.println("riverFailureRemove");
-        InventoryItem[] inventory = null;
-        InventoryItem
-        InventoryItem[] expResult = ;
-        String result = InventoryControl.riverFailureRemove(inventory);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    } */
+        /********************
+         * Test case #1
+         *******************/
+        System.out.println("\tTestCase #1");
+        InventoryItem[] inventory = new InventoryItem[8];
+        inventory[InventoryType.Bullets.ordinal()] = new InventoryItem(InventoryType.Bullets, 5);
+        inventory[InventoryType.Clothing.ordinal()] = new InventoryItem(InventoryType.Clothing, 7);
+        inventory[InventoryType.Food.ordinal()] = new InventoryItem(InventoryType.Food, 4);
+        inventory[InventoryType.Guide.ordinal()] = new InventoryItem(InventoryType.Guide, 1);
+        inventory[InventoryType.Medicine.ordinal()] = new InventoryItem(InventoryType.Medicine, 7);
+        inventory[InventoryType.Money.ordinal()] = new InventoryItem(InventoryType.Money, 9);
+        inventory[InventoryType.Oxen.ordinal()] = new InventoryItem(InventoryType.Oxen, 3);
+        inventory[InventoryType.WagonWheel.ordinal()] = new InventoryItem(InventoryType.WagonWheel, 2);
+        
+        double expResult = 4;
+        double result = InventoryControl.riverFailureRemove(inventory);
+        assertEquals(expResult, result, 0.0);
+        
+        /********************
+         * Test case #2
+         *******************/
+        System.out.println("\tTestCase #2");
+        
+        inventory[InventoryType.Bullets.ordinal()].setQuantityInStock(0);
+        inventory[InventoryType.Clothing.ordinal()].setQuantityInStock(7);
+        inventory[InventoryType.Food.ordinal()].setQuantityInStock(20);
+        inventory[InventoryType.Guide.ordinal()].setQuantityInStock(1);
+        inventory[InventoryType.Medicine.ordinal()].setQuantityInStock(8);
+        inventory[InventoryType.Money.ordinal()].setQuantityInStock(100);
+        inventory[InventoryType.Oxen.ordinal()].setQuantityInStock(3);
+        inventory[InventoryType.WagonWheel.ordinal()].setQuantityInStock(5);
+        
+
+        expResult = 27;
+        result = InventoryControl.riverFailureRemove(inventory);
+        assertEquals(expResult, result, 0.0);
+        
+        /********************
+         * Test case #3
+         *******************/
+        System.out.println("\tTestCase #3");
+        
+        inventory = null;
+        
+        expResult = -1;
+        result = InventoryControl.riverFailureRemove(inventory);
+        assertEquals(expResult, result, 0.0);
+        
+        /********************
+         * Test case #4
+         *******************/
+        System.out.println("\tTestCase #4");
+        
+        inventory = new InventoryItem[8];
+        inventory[InventoryType.Bullets.ordinal()] = new InventoryItem(InventoryType.Bullets, 0);
+        inventory[InventoryType.Clothing.ordinal()] = new InventoryItem(InventoryType.Clothing, 0);
+        inventory[InventoryType.Food.ordinal()] = new InventoryItem(InventoryType.Food, 0);
+        inventory[InventoryType.Guide.ordinal()] = new InventoryItem(InventoryType.Guide, 0);
+        inventory[InventoryType.Medicine.ordinal()] = new InventoryItem(InventoryType.Medicine, 0);
+        inventory[InventoryType.Money.ordinal()] = new InventoryItem(InventoryType.Money, 0);
+        inventory[InventoryType.Oxen.ordinal()] = new InventoryItem(InventoryType.Oxen, 0);
+        inventory[InventoryType.WagonWheel.ordinal()] = new InventoryItem(InventoryType.WagonWheel, 0);
+        
+        expResult = 0.0;
+        result = InventoryControl.riverFailureRemove(inventory);
+        assertEquals(expResult, result, 0.0);
+
+        /********************
+         * Test case #5
+         *******************/
+        System.out.println("\tTestCase #5");
+        
+        inventory[InventoryType.Bullets.ordinal()].setQuantityInStock(1000);
+        inventory[InventoryType.Clothing.ordinal()].setQuantityInStock(500);
+        inventory[InventoryType.Food.ordinal()].setQuantityInStock(80);
+        inventory[InventoryType.Guide.ordinal()].setQuantityInStock(1);
+        inventory[InventoryType.Medicine.ordinal()].setQuantityInStock(73);
+        inventory[InventoryType.Money.ordinal()].setQuantityInStock(975);
+        inventory[InventoryType.Oxen.ordinal()].setQuantityInStock(254433);
+        inventory[InventoryType.WagonWheel.ordinal()].setQuantityInStock(97);
+        
+
+        expResult = 51430;
+        result = InventoryControl.riverFailureRemove(inventory);
+        assertEquals(expResult, result, 0.0);
+ 
+
+
+
+    } }
 
 
 
 
-}
+

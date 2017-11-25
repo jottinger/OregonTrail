@@ -57,7 +57,7 @@ public class GameControl {
             game.setCompanion2("");
             game.setCompanion3("");
             // create inventory. TODO: finish createItems() in inventoryControl
-            InventoryItem[] items = InventoryControl.createItems(); 
+            InventoryItem[] items = createItems(); 
             // save list of items in the game object.
             game.setInventory(items); 
             // create map and set it in game
@@ -94,7 +94,21 @@ public class GameControl {
             }               
         } 
     }
-    
+    // creates inventory list for game when new game is started.
+    public static InventoryItem[] createItems() {
+        
+        InventoryItem[] inventory = new InventoryItem[8];
+        inventory[InventoryType.Bullets.ordinal()] = new InventoryItem(InventoryType.Bullets ,0);
+        inventory[InventoryType.Clothing.ordinal()] = new InventoryItem(InventoryType.Clothing, 0);
+        inventory[InventoryType.Food.ordinal()] = new InventoryItem(InventoryType.Food, 0);
+        inventory[InventoryType.Guide.ordinal()] = new InventoryItem(InventoryType.Guide, 0);
+        inventory[InventoryType.Medicine.ordinal()] = new InventoryItem(InventoryType.Medicine, 0);
+        inventory[InventoryType.Money.ordinal()] = new InventoryItem(InventoryType.Money, 500);
+        inventory[InventoryType.Oxen.ordinal()] = new InventoryItem(InventoryType.Oxen, 0);
+        inventory[InventoryType.WagonWheel.ordinal()] = new InventoryItem(InventoryType.WagonWheel, 0);
+        return inventory;
+        
+    }
     public static void setCompanionName(String companion) { // called from doAction() in this class
         Game game = OregonTrail.getCurrentGame(); // gets current game from main
         String companion1 = game.getCompanion1(); // gets companion 1 name from game

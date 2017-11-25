@@ -45,7 +45,7 @@ public class MainMenuView extends View {
                 //Calls startNewGame() in this class. create and start a new game
                 try{
                     try { 
-                        this.startNewGame();
+                this.startNewGame();
                     } catch (MapControlException me) {
                         System.out.println(me.getMessage());
                     }

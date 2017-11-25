@@ -112,15 +112,17 @@ public class RiverMenuView extends View {
         }
 
     private void riverNo(InventoryItem[] inventory) {
-        InventoryItem[] newInventory = InventoryControl.riverFailureRemove(inventory);
-                if (newInventory == null) {
+        double lost = InventoryControl.riverFailureRemove(inventory);
+
+                if (lost == -1) {
                     System.out.println("\n There was an error crossing the river");
                     this.display();
                 }
                 else {
             System.out.println("\n*************************************************"
                           + "\n| Your attempt to cross the river failed."
-                          + "\n| You have lost 20% of your inventory."
+                          + "\n| 20% of your inventory fell in the river."
+                          + "\n| You lost " + lost + " items."
                           + "\n************************************************"
                           + "\n"
                           + "\n************************************************"
