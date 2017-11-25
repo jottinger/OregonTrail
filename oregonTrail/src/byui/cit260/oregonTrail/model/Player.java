@@ -21,6 +21,8 @@ public class Player implements Serializable{
     private String savedGameFile;
     private int pace;
     private double totalHealth;
+    private int row;
+    private int column;
 
    
 
@@ -106,20 +108,35 @@ public class Player implements Serializable{
         this.occupation = occupation;
     }
 
+    public int getRow() {
+        return row;
+    }
 
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 79 * hash + Objects.hashCode(this.name);
-        hash = 79 * hash + Objects.hashCode(this.savedGameFile);
-        hash = 79 * hash + this.pace;
-        hash = 79 * hash + (int) (Double.doubleToLongBits(this.totalHealth) ^ (Double.doubleToLongBits(this.totalHealth) >>> 32));
-        hash = 79 * hash + this.currentScore;
-        hash = 79 * hash + Objects.hashCode(this.games);
-        hash = 79 * hash + Objects.hashCode(this.actor);
-
-        hash = 79 * hash + Objects.hashCode(this.occupation);
+        int hash = 3;
+        hash = 23 * hash + Objects.hashCode(this.name);
+        hash = 23 * hash + Objects.hashCode(this.savedGameFile);
+        hash = 23 * hash + this.pace;
+        hash = 23 * hash + (int) (Double.doubleToLongBits(this.totalHealth) ^ (Double.doubleToLongBits(this.totalHealth) >>> 32));
+        hash = 23 * hash + this.row;
+        hash = 23 * hash + this.column;
+        hash = 23 * hash + this.currentScore;
+        hash = 23 * hash + Objects.hashCode(this.games);
+        hash = 23 * hash + Objects.hashCode(this.actor);
+        hash = 23 * hash + Objects.hashCode(this.occupation);
         return hash;
     }
 
@@ -141,6 +158,12 @@ public class Player implements Serializable{
         if (Double.doubleToLongBits(this.totalHealth) != Double.doubleToLongBits(other.totalHealth)) {
             return false;
         }
+        if (this.row != other.row) {
+            return false;
+        }
+        if (this.column != other.column) {
+            return false;
+        }
         if (this.currentScore != other.currentScore) {
             return false;
         }
@@ -156,7 +179,6 @@ public class Player implements Serializable{
         if (this.actor != other.actor) {
             return false;
         }
-
         if (this.occupation != other.occupation) {
             return false;
         }
@@ -165,9 +187,11 @@ public class Player implements Serializable{
 
     @Override
     public String toString() {
-        return "Player{" + "name=" + name + ", savedGameFile=" + savedGameFile + ", pace=" + pace + ", totalHealth=" + totalHealth + ", currentScore=" + currentScore + ", games=" + games + ", actor=" + actor + ", occupation=" + occupation + '}';
+        return "Player{" + "name=" + name + ", savedGameFile=" + savedGameFile + ", pace=" + pace + ", totalHealth=" + totalHealth + ", row=" + row + ", column=" + column + ", currentScore=" + currentScore + ", games=" + games + ", actor=" + actor + ", occupation=" + occupation + '}';
     }
+    
 
 
+    
 
 }

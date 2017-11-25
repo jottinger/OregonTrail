@@ -60,6 +60,9 @@ public class GameControl {
             InventoryItem[] items = createItems(); 
             // save list of items in the game object.
             game.setInventory(items); 
+            // save location of player at start
+            game.getPlayer().setColumn(0);
+            game.getPlayer().setRow(0);
             // create map and set it in game
             int noOfColumns = 5;
             int noOfRows = 5;
