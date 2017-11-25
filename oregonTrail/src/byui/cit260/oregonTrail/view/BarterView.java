@@ -5,60 +5,27 @@
  */
 package byui.cit260.oregonTrail.view;
 
-import byui.cit260.oregonTrail.model.InventoryItem;
-import oregonTrail.OregonTrail;
-
 /**
  *
- * @author Dresen_HP
+ * @author jordan
  */
-public class BarterView extends View {
-    // class instance variables
-    private String menu; // barter menu
-    private String promptMessage; // enter choice prompt
-    
-    // constructor funtion called from GameMenuView
-    public BarterView() {
-        super("\n"
-                    +"\n----------------------------------------------------"
-                    +"\n| Barter Menu                                        |"
-                    +"\n----------------------------------------------------"
-                    +"\nD - Display your invenotory items"
-                    +"\nC - Cancel"
-                    +"\n----------------------------------------------------");
-    }
+class BarterView extends View {
 
     @Override
-    public boolean doAction(String choice) {
-        choice = choice.toUpperCase(); //convert choice to upper case
-        
-        switch (choice) {
-            case "D": //dsiplay current inventory
-                this.displayInventoryItems();
-                break;
-            case "C": //hire a guide
-                this.cancelBarter();
-                break;
-            default:
-                System.out.println("\n*** Invalid selection *** Try again");
-        }
-        
-        return false;
-    }
-
-    private void displayInventoryItems() {
-        InventoryItem[] inventoryArray = OregonTrail.getCurrentGame().getInventory();
-        for (int i = 0; 1 <inventoryArray.length; i++) {
-        if (i > 0) {
-            System.out.println(", ");
-        }
-        System.out.print(inventoryArray[i]);
-    }
-
-    }
-
-    private void cancelBarter() {
+    public boolean doAction(String value) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    /*
+    STUFF LEFT TO DO
+    - display inventory and price
+    - have selection for what to purchase
+    - selection for how many you want to purchase
+    - selection for how you want to pay (default to money for now)
+    - find out price by calling PriceForOne for each inventory item - that is in the inventory control
+    - Check to see if the player has enough money
+    - Confirm purchase or cancel
+    - if confirmed, add inventory and remove money
+    */
     
 }
