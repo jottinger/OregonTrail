@@ -7,6 +7,7 @@ import byui.cit260.oregonTrail.control.GameControl;
 import byui.cit260.oregonTrail.exceptions.GameControlException;
 import byui.cit260.oregonTrail.exceptions.MapControlException;
 import byui.cit260.oregonTrail.model.Game;
+import byui.cit260.oregonTrail.model.Occupation;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,6 +30,7 @@ public class MainMenuView extends View {
                     +"\nG - Get and start saved game"
                     +"\nH - Get help on how to play the game"
                     +"\nS - Save game"
+                    +"\nP - Pass setup and start quick game"
                     +"\nQ - Quit"
                     +"\n----------------------------------------------------"
                     +"\n"
@@ -41,7 +43,7 @@ public class MainMenuView extends View {
         value = value.toUpperCase(); //convert choice to upper case
         
         switch (value) {
-            case "N": {
+            case "N": 
                 //Calls startNewGame() in this class. create and start a new game
                 try{
                     try { 
@@ -52,7 +54,7 @@ public class MainMenuView extends View {
                 } catch (GameControlException ge) {
                     System.out.println(ge.getMessage());
                 }
-        }
+        
                 break;
             case "G": //Calls startExistingGame() in this class. get and start an existing game
                 this.startExistingGame();
@@ -63,6 +65,16 @@ public class MainMenuView extends View {
             case "S": //Calls saveGame() in this class. save the current game
                 this.saveGame();
                 break;
+            case "P": // Bypasses all of start up menu for testing.
+                try{
+                    try { 
+                this.startNewGameFast();
+                    } catch (MapControlException me) {
+                        System.out.println(me.getMessage());
+                    }
+                } catch (GameControlException ge) {
+                    System.out.println(ge.getMessage());
+                }
             default: // Print out error message and exit loop.
                 System.out.println("\n*** Invalid selection *** Try again");
                 break;
@@ -85,11 +97,44 @@ public class MainMenuView extends View {
             companionView.display(); //calls companionView() in companionView
             
             return true; //success!*/
+    }
             
-        
+    private boolean startNewGameFast() throws GameControlException, MapControlException { 
+            //create a new game
+            int returnValue = GameControl.createNewGame(OregonTrail.getPlayer()); //Calls createNewGame() from GameControl and passes in player object.
+            if (returnValue < 0) { //Checks to see if player created. if unsuccessful, print error message.
+            throw new MapControlException("Unable to create new game. Player is NULL.");
+        }   
+            GameControl.setCompanionName("Bob");
+            GameControl.setCompanionName("Alice");
+            GameControl.setCompanionName("Fred");
+            GameControl.setOccupation(Occupation.Farmer);
+            GameControl.setStartDate(61);
+            
+            System.out.println("\n****************************************************"
+                              + "\n Quick Start"
+                              +"\n****************************************************"
+                              +"\n----------------------------------------------------"
+                              +"\n| Companions                                        |"
+                              +"\n----------------------------------------------------"
+                              +"\nYou: " + OregonTrail.getCurrentGame().getPlayer().getName()
+                              +"\nCompanion 1: " + OregonTrail.getCurrentGame().getCompanion1()             
+                              +"\nCompanion 2: " + OregonTrail.getCurrentGame().getCompanion2()
+                              +"\nCompanion 3: " + OregonTrail.getCurrentGame().getCompanion3()
+                              +"\n----------------------------------------------------"
+                              + "\n| Occupation chosen: " + OregonTrail.getPlayer().getOccupation().getName()
+                              + "\n----------------------------------------------------"
+                              + "\n| StartDate: MARCH 1;"
+                              +"\n****************************************************");
+
+            GameMenuView gameMenuView = new GameMenuView(); // creates new companionView object by calling construtor function in companionView.
+            gameMenuView.display(); //calls companionView() in companionView
+            
+            return true; //success!*/
+    }    
         
   
-    }
+    
 
     private void startExistingGame() {
         System.out.println("*** startExistingGame() function called ***");

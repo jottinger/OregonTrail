@@ -6,6 +6,7 @@
  */
 package byui.cit260.oregonTrail.control;
 
+import byui.cit260.oregonTrail.exceptions.InventoryControlException;
 import byui.cit260.oregonTrail.model.InventoryType;
 import byui.cit260.oregonTrail.model.Game;
 import byui.cit260.oregonTrail.model.InventoryItem;
@@ -22,39 +23,10 @@ public class InventoryControl {
     
 
 
-    
-    public static double riverFailureRemove(InventoryItem[] inventory) {
-        if (inventory == null) 
-            return -1;
-        double quantity;
-        double result;
-        double sum = 0;
-
-        for(InventoryItem item : inventory){
-            quantity = item.getQuantityInStock();
-            if (quantity > 0) {
-                result = Math.floor(quantity * .2);
-                sum += result;
-                quantity *= .8;
-                quantity = Math.ceil(quantity); 
-                item.setQuantityInStock(quantity);
-                
-                 
-            }
-
-        }
-        
-        return sum;
-    }
-
-
-    
-    
-    
     /* Gets the player's inventory from the current game. 
     * Stores it in inventory to make it available to the controller to manipulate.
     */
-    private InventoryItem[] getItemDatabase() {
+    private static InventoryItem[] getItemDatabase() {
         InventoryItem[] inventory = new InventoryItem[8];
         inventory = OregonTrail.getCurrentGame().getInventory();
         return inventory;
@@ -70,17 +42,10 @@ public class InventoryControl {
     * Information is validated to make sure not null. 
     * The variable item is returned.*/
     
-    private InventoryItem getItem(InventoryType type) {
+    private static InventoryItem getItem(InventoryType type) {
         InventoryItem[] items = getItemDatabase();
         
         InventoryItem item = items[type.ordinal()];
-        if (item == null) {
-            //TODO: how to validate this?
-           //item = new InventoryItem();
-           //item.setQuantityInStock(0);
-           //item.setInventoryType(type);
-           //items.put(type, item);  
-        } 
         return item;
     }
    
@@ -90,7 +55,8 @@ public class InventoryControl {
     * The getQuantityInStock method is called for the item and the new quantity is added to it.
     * The total is stored in the item with the setQuantityInStock method.*/
     
-    public void addToInventory(InventoryType type, int quantity) {
+    public static void addToInventory(InventoryType type, int quantity) {
+        
        InventoryItem item = getItem(type);
        item.setQuantityInStock(item.getQuantityInStock() + quantity);  //How does this know where to set the Quantity?
     }
@@ -101,7 +67,7 @@ public class InventoryControl {
     * Public so can be accessed from hunt and game control. Void because it won't return anything. Parameters are 
     * the type from InventoryType class and the quantity of items to be removed.
     * A new item variable is created with datatype of InventoryType class and filled with item from player's inventory.*/
-    public void subtractFromInventory(InventoryType type, int quantity) {
+    public static void subtractFromInventory(InventoryType type, int quantity) {
        InventoryItem item = getItem(type); 
        item.setQuantityInStock(item.getQuantityInStock() + quantity);
     }
@@ -111,9 +77,27 @@ public class InventoryControl {
         return Math.random();
     }
     
-    
-    
-    public int barter(InventoryType owned, InventoryType desired, int desiredQuantity) {
+    public static String displayInventoryQuantityPrice() {
+        String output = "";
+        String name;
+        double inStock;
+        double price;
+        
+        InventoryItem[] inventory = getItemDatabase();
+        for (InventoryItem item : inventory) {
+                name = item.getInventoryType().name();
+                inStock = item.getQuantityInStock();
+                price = item.getInventoryType().getCost();
+                price = barter(InventoryType.Money, item.getInventoryType(), 1);
+        output += "\n* " + name + ": " + inStock + " instock, worth $" + price + " each";
+        }
+        return output;
+    }
+    public static String displayInventorywithPrice() {
+        return "";
+    }
+
+    public static int barter(InventoryType owned, InventoryType desired, int desiredQuantity) {
         // validate input
         if (owned == null) {
             return -1;
@@ -169,7 +153,7 @@ public class InventoryControl {
     }
     
     //calculate the price of one item for barter or purchase
-    public int calcBarterPrice(int basePriceGet, int basePriceGive, double percentComplete, int barterCoefficient) {
+    public static int calcBarterPrice(int basePriceGet, int basePriceGive, double percentComplete, int barterCoefficient) {
         // validate inputs
         if (basePriceGet < 1) {
             return -1;
@@ -196,6 +180,34 @@ public class InventoryControl {
        // return price for one item
        return costForOne;
        
+    }
+    
+        public static double riverFailureRemove(InventoryItem[] inventory)
+                            throws InventoryControlException {
+        inventory = null;
+        if (inventory == null) {
+            throw new InventoryControlException("Items cannot be removed from inventory because player inventory has not been created.");
+        }
+            
+        double quantity;
+        double result;
+        double sum = 0;
+
+        for(InventoryItem item : inventory){
+            quantity = item.getQuantityInStock();
+            if (quantity > 0) {
+                result = Math.floor(quantity * .2);
+                sum += result;
+                quantity *= .8;
+                quantity = Math.ceil(quantity); 
+                item.setQuantityInStock(quantity);
+                
+                 
+            }
+
+        }
+        
+        return sum;
     }
     
 }

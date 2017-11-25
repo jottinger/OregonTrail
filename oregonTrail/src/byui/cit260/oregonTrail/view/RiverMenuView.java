@@ -7,6 +7,7 @@ package byui.cit260.oregonTrail.view;
 
 import byui.cit260.oregonTrail.control.InventoryControl;
 import byui.cit260.oregonTrail.control.RiverControl;
+import byui.cit260.oregonTrail.exceptions.InventoryControlException;
 import byui.cit260.oregonTrail.exceptions.RiverControlException;
 import byui.cit260.oregonTrail.model.InventoryItem;
 import byui.cit260.oregonTrail.model.InventoryType;
@@ -118,13 +119,13 @@ public class RiverMenuView extends View {
         }
 
     private void riverNo(InventoryItem[] inventory) {
-        double lost = InventoryControl.riverFailureRemove(inventory);
+        double lost = 0;
+        try {
+            lost = InventoryControl.riverFailureRemove(inventory);
+        } catch (InventoryControlException ie) {
+            System.out.println(ie.getMessage());
+        }
 
-                if (lost == -1) {
-                    System.out.println("\n There was an error crossing the river");
-                    this.display();
-                }
-                else {
             System.out.println("\n*************************************************"
                           + "\n| Your attempt to cross the river failed."
                           + "\n| 20% of your inventory fell in the river."
@@ -134,8 +135,8 @@ public class RiverMenuView extends View {
                           + "\n************************************************"
                           + "\n* Item: New Inventory Totals"
                           + "\n************************************************"
-                          + "\n* Item: Quantity in Inventory");
-            String name;
+                          + "\n* Item: Quantity in Inventory, Value");
+            /*String name;
             double inStock;
             int i = 0;
             for (InventoryItem item : inventory) {
@@ -143,12 +144,14 @@ public class RiverMenuView extends View {
                 inStock = item.getQuantityInStock();
                 
             System.out.println("\n* " + name + ": " + inStock); 
-            }
+            }*/
+            String playerInventory = InventoryControl.displayInventoryQuantityPrice();
+            System.out.print(playerInventory);
             System.out.println("\n* " 
                 + "\n************************************************");
             this.display();
             }
         }
-}
+
 
 

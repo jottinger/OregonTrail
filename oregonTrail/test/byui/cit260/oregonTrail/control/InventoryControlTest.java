@@ -5,6 +5,7 @@
  */
 package byui.cit260.oregonTrail.control;
 
+import byui.cit260.oregonTrail.exceptions.InventoryControlException;
 import byui.cit260.oregonTrail.model.Game;
 import byui.cit260.oregonTrail.model.InventoryItem;
 import byui.cit260.oregonTrail.model.InventoryType;
@@ -231,7 +232,7 @@ public class InventoryControlTest {
      * Test of riverFailureRemove method, of class InventoryControl.
      */
     @Test
-    public void testRiverFailureRemove() {
+    public void testRiverFailureRemove() throws InventoryControlException {
         System.out.println("riverFailureRemove");
         /********************
          * Test case #1
