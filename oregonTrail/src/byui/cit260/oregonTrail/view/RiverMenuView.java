@@ -11,7 +11,10 @@ import byui.cit260.oregonTrail.exceptions.InventoryControlException;
 import byui.cit260.oregonTrail.exceptions.RiverControlException;
 import byui.cit260.oregonTrail.model.InventoryItem;
 import byui.cit260.oregonTrail.model.InventoryType;
+import static java.lang.Integer.parseInt;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import oregonTrail.OregonTrail;
 
 /**
@@ -28,7 +31,7 @@ public class RiverMenuView extends View {
                     +"\n| River Menu                                       |"
                     +"\n----------------------------------------------------"
                     +"\n1 - Ford the river"
-                    +"\n2 - Hire a Guide for $10"
+                    +"\n2 - Hire a Guide for $50"
                     +"\n3 - Save game"
                     +"\nQ - Quit"
                     +"\n----------------------------------------------------");
@@ -36,20 +39,30 @@ public class RiverMenuView extends View {
     
     @Override
     public boolean doAction(String choice) {
-        choice = choice.toUpperCase(); //convert choice to upper case
         
-        switch (choice) {
-            case "1": //ford the river
+        int number = 0;
+        try {
+            number = parseInt(choice);
+        } catch (NumberFormatException nf) {
+            System.out.println("\nYou must enter a valid number. Try again or enter Q to quit.");
+            getInput();
+        }
+        
+        switch (number) {
+            case 1: {
+            try {
+                //ford the river
                 this.fordRiver();
+            } catch (InventoryControlException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
                 break;
-            case "2": //hire a guide
+            case 2: //hire a guide
                 this.hireGuide();
                 break;
-            case "3": //save the current game
+            case 3: //save the current game
                 this.saveGame();
-                break;
-            case "Q": //quit the menu
-                this.quitGame();
                 break;
             default:
                 System.out.println("\n*** Invalid selection *** Try again");
@@ -58,7 +71,7 @@ public class RiverMenuView extends View {
         return false;
     }
 
-    private void fordRiver() {
+    private void fordRiver() throws InventoryControlException {
         //ford the river
         int riverHeight = getRiverHeight();
         InventoryItem[] inventory = OregonTrail.getCurrentGame().getInventory();
@@ -98,7 +111,7 @@ public class RiverMenuView extends View {
     }
 
     private int getRiverHeight() {
-        System.out.println("*** getRiverHeight() function called ***");
+
         int height = 0;
         return height;
     }
@@ -118,12 +131,13 @@ public class RiverMenuView extends View {
             gameMenuView.display();
         }
 
-    private void riverNo(InventoryItem[] inventory) {
+    private void riverNo(InventoryItem[] inventory) throws InventoryControlException {
         double lost = 0;
         try {
             lost = InventoryControl.riverFailureRemove(inventory);
         } catch (InventoryControlException ie) {
             System.out.println(ie.getMessage());
+            
         }
 
             System.out.println("\n*************************************************"

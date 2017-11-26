@@ -15,9 +15,9 @@ public enum InventoryType {
     Food("Food - 20 lbs.", 5),
     Guide("Guide - 1 week", 50),
     Medicine("Medicine - 1 bottle", 10),
-    Money("Money in dollars", 1),
     Oxen("Oxen - 1 team", 40),
-    WagonWheel("Wagon wheel - 1 wheel", 10);
+    WagonWheel("Wagon wheel - 1 wheel", 10),
+    Money("Money in dollars", 1);
     
     
     

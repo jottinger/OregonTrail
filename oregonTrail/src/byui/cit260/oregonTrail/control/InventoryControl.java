@@ -26,7 +26,7 @@ public class InventoryControl {
     /* Gets the player's inventory from the current game. 
     * Stores it in inventory to make it available to the controller to manipulate.
     */
-    private static InventoryItem[] getItemDatabase() {
+    private static InventoryItem[] getItemDatabase() throws InventoryControlException {
         InventoryItem[] inventory = new InventoryItem[8];
         inventory = OregonTrail.getCurrentGame().getInventory();
         return inventory;
@@ -42,7 +42,7 @@ public class InventoryControl {
     * Information is validated to make sure not null. 
     * The variable item is returned.*/
     
-    private static InventoryItem getItem(InventoryType type) {
+    private static InventoryItem getItem(InventoryType type) throws InventoryControlException {
         InventoryItem[] items = getItemDatabase();
         
         InventoryItem item = items[type.ordinal()];
@@ -55,10 +55,10 @@ public class InventoryControl {
     * The getQuantityInStock method is called for the item and the new quantity is added to it.
     * The total is stored in the item with the setQuantityInStock method.*/
     
-    public static void addToInventory(InventoryType type, int quantity) {
+    public static void addToInventory(InventoryType type, int quantity) throws InventoryControlException {
         
        InventoryItem item = getItem(type);
-       item.setQuantityInStock(item.getQuantityInStock() + quantity);  //How does this know where to set the Quantity?
+       item.setQuantityInStock(item.getQuantityInStock() + quantity);  
     }
     
     
@@ -67,46 +67,44 @@ public class InventoryControl {
     * Public so can be accessed from hunt and game control. Void because it won't return anything. Parameters are 
     * the type from InventoryType class and the quantity of items to be removed.
     * A new item variable is created with datatype of InventoryType class and filled with item from player's inventory.*/
-    public static void subtractFromInventory(InventoryType type, int quantity) {
+    public static void subtractFromInventory(InventoryType type, int quantity) throws InventoryControlException {
        InventoryItem item = getItem(type); 
-       item.setQuantityInStock(item.getQuantityInStock() + quantity);
+       item.setQuantityInStock(item.getQuantityInStock() - quantity);
     }
     
     
-    public static double random() { // generate random number for barter success rate.
+    public static double random() throws InventoryControlException { // generate random number for barter success rate.
         return Math.random();
     }
     
-    public static String displayInventoryQuantityPrice() {
+    public static String displayInventoryQuantityPrice() throws InventoryControlException {
         String output = "";
         String name;
         double inStock;
         double price;
-        
+        double value;
+        int i = 0;
         InventoryItem[] inventory = getItemDatabase();
         for (InventoryItem item : inventory) {
                 name = item.getInventoryType().name();
                 inStock = item.getQuantityInStock();
                 price = item.getInventoryType().getCost();
-                price = barter(InventoryType.Money, item.getInventoryType(), 1);
-        output += "\n* " + name + ": " + inStock + " instock, worth $" + price + " each";
+                price = calcBarterPrice(item.getInventoryType(), InventoryType.Money);
+                value = inStock * price;
+                output += "\n* " + i + " - " + name + ": Quantity owned: " + inStock + ", Price: $" + price ;
+                i++;
         }
         return output;
     }
-    public static String displayInventorywithPrice() {
-        return "";
-    }
 
-    public static int barter(InventoryType owned, InventoryType desired, int desiredQuantity) {
+
+    public static int barter(InventoryType owned, InventoryType desired, int desiredQuantity) throws InventoryControlException {
         // validate input
-        if (owned == null) {
-            return -1;
-        }
-        if (desired == null) {
-            return -1;
+        if (owned == null || desired == null) {
+            throw new InventoryControlException("Can not calculate price because item desired is null");
         }
         if (desiredQuantity < 0) {
-            return -1;
+            throw new InventoryControlException("Can not calculate price because desiredQuantity is less than 0");
         }
         // get desired item and owned item information for player's inventory.
         InventoryItem itemDesired = getItem(desired);
@@ -117,74 +115,74 @@ public class InventoryControl {
         int costOwned = owned.getCost();
         
         // get percentComplete of player's game.
-        double percentComplete = 0.5;// TODO: Should be Database.INSTANCE.getGame().getPercentComplete();
+        double percentComplete = OregonTrail.getCurrentGame().getPercentComplete();
                 
             
-        // determine barterCoefficient Buy=1, Barter=2 
-        int barterCoefficient = 1;
-        // If buying, the item will cost 1+ percentcomplete more than base price of item.
-        if (owned != InventoryType.Money) {
-            //If trading for goods, the item will cost 2 + percentComplete more than base price of item.
-            barterCoefficient = 2;
-            /* If trading for goods, there will be less chance of the trade happening 
-            * the farher along the trail you are. A random number is generated, and compared
-            * with the percent complete divided by 2. If the random number is less than half the
-            * percentComplete, then the trade will be declined.*/
-            double success = random();
-            if (success < percentComplete * .5) {
-                return 1; // 1 will display message "No one was willing to trade."
-            }
+
+        double success = random();
+        if (owned == InventoryType.Money) {
+            success = 100;
         }
+        if (success < percentComplete * .5) {
+            return 1; // 1 will display message "No one was willing to trade."
+        }
+
             
         // call calcBarterPrice function to figure cost of purchase.
-        int costForOne = calcBarterPrice(costDesired, costOwned, percentComplete, barterCoefficient);
+        int costForOne = calcBarterPrice(desired, owned);
+        int price = costForOne * desiredQuantity;
         double quantityOwned = itemOwned.getQuantityInStock();
         
         // test to see if player has enough of item to trade. 
-        if (itemOwned.getQuantityInStock() < desiredQuantity) {
+        if (itemOwned.getQuantityInStock() < price) {
              
             return 2; // 2 will display message "You do not have enough " + owned + " to complete the transaction.";
         } else {
         // add desired item to inventory and remove desired item from inventory.
         addToInventory(desired, desiredQuantity);
-        subtractFromInventory(owned, desiredQuantity);
+        subtractFromInventory(owned, price);
         return 3; // 3 will display message "Transaction successful.";
         }
     }
     
     //calculate the price of one item for barter or purchase
-    public static int calcBarterPrice(int basePriceGet, int basePriceGive, double percentComplete, int barterCoefficient) {
-        // validate inputs
-        if (basePriceGet < 1) {
-            return -1;
+    public static int calcBarterPrice(InventoryType get, InventoryType give) throws InventoryControlException {
+        
+        int costForOne = 0;
+        // determine barterCoefficient Buy=1, Barter=2 
+        int barterCoefficient = 1;
+        // If buying, the item will cost 1+ percentcomplete more than base price of item.
+        
+        
+
+        if (give != InventoryType.Money) {
+            //If trading for goods, the item will cost 2 + percentComplete more than base price of item.
+            barterCoefficient = 2;
         }
-        if (basePriceGive < 1) {
-            return -1;
-        }
-       if (percentComplete <0 || percentComplete > 1) {
-           return -1;
-        }
-       if (barterCoefficient != 1 && barterCoefficient != 2){
-           return -1;
-       }
-       
+            /* If trading for goods, there will be less chance of the trade happening 
+            * the farher along the trail you are. A random number is generated, and compared
+            * with the percent complete divided by 2. If the random number is less than half the
+            * percentComplete, then the trade will be declined.*/
+       int costDesired = get.getCost(); 
+        int costOwned = give.getCost();
+
+        double percentComplete = OregonTrail.getCurrentGame().getPercentComplete();
        // calculate price for one item
-       int ratio = basePriceGet / basePriceGive;
+       int ratio = costDesired / costOwned;
        double scarcity = barterCoefficient + percentComplete;
        double price = ratio * scarcity;
-       int costForOne = (int) Math.ceil(price);
+       costForOne = (int) Math.ceil(price);
        if (costForOne < 1) {
            costForOne = 1;
        }
-       
+
        // return price for one item
        return costForOne;
        
     }
-    
-        public static double riverFailureRemove(InventoryItem[] inventory)
+
+    public static double riverFailureRemove(InventoryItem[] inventory)
                             throws InventoryControlException {
-        inventory = null;
         if (inventory == null) {
             throw new InventoryControlException("Items cannot be removed from inventory because player inventory has not been created.");
         }

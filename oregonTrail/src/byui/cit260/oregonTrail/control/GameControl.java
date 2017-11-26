@@ -62,6 +62,9 @@ public class GameControl {
             InventoryItem[] items = createItems(); 
             // save list of items in the game object.
             game.setInventory(items); 
+            game.setMilesTraveled(0);
+            game.setPercentComplete(0);
+            game.setTravelDays(1);
             // save location of player at start
             game.getPlayer().setColumn(0);
             game.getPlayer().setRow(0);

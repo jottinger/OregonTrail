@@ -37,7 +37,7 @@ public class InventoryControlTest {
         System.out.println("\tTestCase #1");
         
         // input values for test case 1
-        int basePriceGet = 20;
+        /*int basePriceGet = 20;
         int basePriceGive = 5;
         double percentComplete = 0.5;
         int barterCoefficient = 1;
@@ -53,7 +53,7 @@ public class InventoryControlTest {
         /********************
          * Test case #2
          *******************/
-        System.out.println("\tTestCase #2");
+        /*System.out.println("\tTestCase #2");
         // input values for test case 2
         basePriceGet = 5;
         basePriceGive = 20;
@@ -69,7 +69,7 @@ public class InventoryControlTest {
         /********************
          * Test case #3
          *******************/
-        System.out.println("\tTestCase #3");
+        /*System.out.println("\tTestCase #3");
         // input values for test case 3
         basePriceGet = -5;
         basePriceGive = 20;
@@ -85,7 +85,7 @@ public class InventoryControlTest {
         /********************
          * Test case #4
          *******************/
-        System.out.println("\tTestCase #4");
+        /*System.out.println("\tTestCase #4");
         // input values for test case 4
         basePriceGet = 20;
         basePriceGive = -5;
@@ -101,7 +101,7 @@ public class InventoryControlTest {
         /********************
          * Test case #5
          *******************/
-        System.out.println("\tTestCase #5");
+        /*System.out.println("\tTestCase #5");
         // input values for test case 5
         basePriceGet = 20;
         basePriceGive = 5;
@@ -117,7 +117,7 @@ public class InventoryControlTest {
         /********************
          * Test case #6
          *******************/
-        System.out.println("\tTestCase #6");
+        /*System.out.println("\tTestCase #6");
         // input values for test case 6
         basePriceGet = 20;
         basePriceGive = 5;
@@ -133,7 +133,7 @@ public class InventoryControlTest {
         /********************
          * Test case #7
          *******************/
-        System.out.println("\tTestCase #7");
+        /*System.out.println("\tTestCase #7");
         // input values for test case 7
         basePriceGet = 1;
         basePriceGive = 20;
@@ -149,7 +149,7 @@ public class InventoryControlTest {
         /********************
          * Test case #8
          *******************/
-        System.out.println("\tTestCase #8");
+        /*System.out.println("\tTestCase #8");
         // input values for test case 8
         basePriceGet = 20;
         basePriceGive = 1;
@@ -165,7 +165,7 @@ public class InventoryControlTest {
         /********************
          * Test case #9
          *******************/
-        System.out.println("\tTestCase #9");
+        /*System.out.println("\tTestCase #9");
         // input values for test case 9
         basePriceGet = 20;
         basePriceGive = 5;
@@ -181,7 +181,7 @@ public class InventoryControlTest {
         /********************
          * Test case #10
          *******************/
-        System.out.println("\tTestCase #10");
+        /*System.out.println("\tTestCase #10");
         // input values for test case 10
         basePriceGet = 5;
         basePriceGive = 20;
@@ -197,7 +197,7 @@ public class InventoryControlTest {
         /********************
          * Test case #11
          *******************/
-        System.out.println("\tTestCase #11");
+        /*System.out.println("\tTestCase #11");
         // input values for test case 11
         basePriceGet = 20;
         basePriceGive = 5;
@@ -213,7 +213,7 @@ public class InventoryControlTest {
         /********************
          * Test case #12
          *******************/
-        System.out.println("\tTestCase #12");
+        /*System.out.println("\tTestCase #12");
         // input values for test case 12
         basePriceGet = 20;
         basePriceGive = 20;
@@ -224,7 +224,7 @@ public class InventoryControlTest {
         // run test case and get result
         result = instance.calcBarterPrice(basePriceGet, basePriceGive, percentComplete, barterCoefficient);
         // compare results to expected results
-        assertEquals(expResult, result, 0.0001);
+        assertEquals(expResult, result, 0.0001);*/
     }
 
 
@@ -323,7 +323,10 @@ public class InventoryControlTest {
 
 
 
-    } }
+    }
+
+
+}
 
 
 
