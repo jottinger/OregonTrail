@@ -9,15 +9,9 @@ package byui.cit260.oregonTrail.view;
  *
  * @author jordan
  */
-class BarterView extends View {
 
-    @Override
-    public boolean doAction(String value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    /*
-    STUFF LEFT TO DO
+/*
+    STUFF LEFT TO DO FOR THIS
     - display inventory and price
     - have selection for what to purchase
     - selection for how many you want to purchase
@@ -26,6 +20,15 @@ class BarterView extends View {
     - Check to see if the player has enough money
     - Confirm purchase or cancel
     - if confirmed, add inventory and remove money
-    */
+ */
+
+class BarterView extends View {
+
+    @Override
+    public boolean doAction(String value) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
     
 }

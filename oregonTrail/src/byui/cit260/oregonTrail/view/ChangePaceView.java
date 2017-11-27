@@ -7,6 +7,7 @@ package byui.cit260.oregonTrail.view;
 
 import byui.cit260.oregonTrail.model.Player;
 import java.util.Scanner;
+import oregonTrail.OregonTrail;
 
 /**
  *
@@ -23,6 +24,7 @@ public class ChangePaceView extends View{
                     +"\n1 - Slow (10 miles per day)"
                     +"\n2 - Medium (15 miles per day)"
                     +"\n3 - Fast (21 miles per day)"
+                    +"\nQ - Quit to previous menu"
                     +"\n----------------------------------------------------"
                     +"\nPlease make a selection to change your pace: ");
     }
@@ -31,64 +33,53 @@ public class ChangePaceView extends View{
         System.out.println("\n *** ChangePaceView called ***");
     } */
     
+    
     @Override
     public boolean doAction(String choice) {
-        choice = choice.toUpperCase(); //convert choice to upper case
-        
-        Scanner keyboard = new Scanner(System.in); //get infile for keyboard
-        String value = ""; //create variable value to be returned
-        boolean valid = false; //initialize to not valid
-        
-        while(!valid) {
-        choice = keyboard.nextLine();
-        valid = true;
+        int pace = 0;
         
         try {
-          int pace = Integer.parseInt(choice);
-        } catch (NumberFormatException nf) {
-        System.out.println("\nYou must enter a valid number. "
-        + " Try again");
-        valid = false;
-        } 
+            pace = Integer.parseInt(choice);
+            } catch (NumberFormatException nf) {
+            System.out.println("\nYou must enter a valid number. "
+            + " Try again");
+            }
         
         switch (choice) {
-            case "1": //ford the river
-                this.setPaceToSlow();
+            case "1": 
+                setPaceToSlow(pace);
                 break;
-            case "2": //hire a guide
-                this.setPaceToMedium();
+            case "2": 
+                setPaceToMedium(pace);
                 break;
-            case "3": //save the current game
-                this.setPacetoFast();
-                break;
-            case "Q": //quit the menu
-                this.quitGame();
+            case "3": 
+                setPacetoFast(pace);
                 break;
             default:
-                System.out.println("\n*** Invalid selection *** Try again");
-                this.display();
+                System.out.println("Invalid selection. Please try again.");
         }
-    }
+        
         return false;
     }
-    
-    private void setPaceToSlow() {
-        pace = 1;
-        this.pace = new Player().setPace();
-        
+
+    private void setPaceToSlow(int pace) {
+        OregonTrail.getCurrentGame().getPlayer().setPace(pace);
+        displayNextView(pace);
     }
 
-    private void setPaceToMedium() {
-        pace = 2;
-        this.pace = new Player().setPace();
+    private void setPaceToMedium(int pace) {
+        OregonTrail.getCurrentGame().getPlayer().setPace(pace);
+        displayNextView(pace);
     }
 
-    private void setPacetoFast() {
-        pace = 3;
-        this.pace = new Player().setPace();
+    private void setPacetoFast(int pace) {
+        OregonTrail.getCurrentGame().getPlayer().setPace(pace);
+        displayNextView(pace);
     }
 
-    private void quitGame() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void displayNextView(int pace) {
+        System.out.println("Your pace has changed to " + pace + ". ");
+        GameMenuView gameMenuView = new GameMenuView();
+        gameMenuView.display();
     }
 }
