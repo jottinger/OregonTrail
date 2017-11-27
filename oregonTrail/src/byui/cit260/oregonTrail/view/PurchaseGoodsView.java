@@ -22,18 +22,18 @@ import oregonTrail.OregonTrail;
  */
 public class PurchaseGoodsView extends View {
     
-    public PurchaseGoodsView() throws InventoryControlException {
+    public PurchaseGoodsView(String inventory) throws InventoryControlException {
         super("\n"
                     +"\n----------------------------------------------------"
                     +"\n| Player Inventory                                 |"
                     +"\n----------------------------------------------------"
-                    + InventoryControl.displayInventoryQuantityPrice()
+                    + inventory
                     +"\n"
                     +"\nQ - Quit to game menu view"
                     +"\n----------------------------------------------------"
                     +"\n What would you like to purchase?");
         
-
+        
    
     }
     @Override
@@ -60,7 +60,7 @@ public class PurchaseGoodsView extends View {
             number = parseInt(value);
         } catch (NumberFormatException nf) {
             System.out.println("\nYou must enter a valid number. Try again or enter Q to quit.");
-            getInput();
+            display();
         }
         if (number == 7) {
             System.out.println("\nYou can not purchase money. Enter another choice or enter Q to quit.");
@@ -72,23 +72,23 @@ public class PurchaseGoodsView extends View {
         }
         InventoryItem[] items = OregonTrail.getCurrentGame().getInventory();
         type = items[number].getInventoryType();
-        String choice = requestQuantity(type);
+        boolean choice = requestQuantity(type);
         
-        try {
+        /*try {
             boolean quantity = getPrice(type, choice);
         } catch (InventoryControlException ex) {
             System.out.println(ex.getMessage());
-        }
+        }*/
         
         
         return false;
     }
 
-    private String requestQuantity(InventoryType type) {
+    private boolean requestQuantity(InventoryType type) {
         Scanner keyboard = new Scanner(System.in); //get infile for keyboard
         String value = ""; //create variable value to be returned
         boolean valid = false; //initialize to not valid
-        
+
         while (!valid) { //loop while an invalid value is entered
             System.out.println("\nHow many " + type.name() + " would you like to purchase?"); // print out the message asking for name stored in class instance variable.
             
@@ -99,11 +99,20 @@ public class PurchaseGoodsView extends View {
                 System.out.println("\nInvalid value: value cannot be blank");
                 continue;
             }
+            if (value.toUpperCase().equals("Q")) // user wants to quit
+                    display();//exit the game
+
+            try {
+            boolean quantity = getPrice(type, value);
+        } catch (InventoryControlException ex) {
+            System.out.println(ex.getMessage());
+        }
             
             break; //end the loop
         }
         
-        return value; 
+        
+        return valid; 
     }
 
     private boolean getPrice(InventoryType type, String choice) throws InventoryControlException {
@@ -151,12 +160,17 @@ public class PurchaseGoodsView extends View {
 
     private boolean finalizeSale(InventoryType type, int quantity, int price, String sale) throws InventoryControlException {
         sale = sale.toUpperCase();
-        int result;
+        int result = 0;
         switch (sale){
         
             case "Y":
+                try {
                 result = InventoryControl.barter(InventoryType.Money, type, quantity);
-                
+                } catch (InventoryControlException ex) {
+                    System.out.println(ex.getMessage());
+                    requestQuantity(type);
+                    
+                }
 
                 if (result == -1) {
                     System.out.println("\nThere was an error completing the sale. Try again");
@@ -174,7 +188,16 @@ public class PurchaseGoodsView extends View {
                 } else if (result == 3) {
                     System.out.println("\nTransaction successful. "
                             + "Make another purchase or press Q to exit menu.");
-                    PurchaseGoodsView purchaseGoodsView = new PurchaseGoodsView();
+                    String inventory = "";
+
+             {
+                try {
+                    inventory = InventoryControl.displayInventoryQuantityPrice();
+                } catch (InventoryControlException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+                    PurchaseGoodsView purchaseGoodsView = new PurchaseGoodsView(inventory);
                     purchaseGoodsView.display();
                     break;
                 } else {

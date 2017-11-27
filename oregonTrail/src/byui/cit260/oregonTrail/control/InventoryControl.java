@@ -26,9 +26,9 @@ public class InventoryControl {
     /* Gets the player's inventory from the current game. 
     * Stores it in inventory to make it available to the controller to manipulate.
     */
-    private static InventoryItem[] getItemDatabase() throws InventoryControlException {
-        InventoryItem[] inventory = new InventoryItem[8];
-        inventory = OregonTrail.getCurrentGame().getInventory();
+    private static InventoryItem[] getItemDatabase() throws InventoryControlException {  
+        InventoryItem[] inventory = new InventoryItem[8]; 
+        inventory = OregonTrail.getCurrentGame().getInventory(); 
         return inventory;
     }
     
@@ -85,6 +85,8 @@ public class InventoryControl {
         double value;
         int i = 0;
         InventoryItem[] inventory = getItemDatabase();
+        if (inventory == null) 
+            throw new InventoryControlException("Can not display inventory because player inventory is null.");
         for (InventoryItem item : inventory) {
                 name = item.getInventoryType().name();
                 inStock = item.getQuantityInStock();
@@ -101,10 +103,10 @@ public class InventoryControl {
     public static int barter(InventoryType owned, InventoryType desired, int desiredQuantity) throws InventoryControlException {
         // validate input
         if (owned == null || desired == null) {
-            throw new InventoryControlException("Can not calculate price because item desired is null");
+            throw new InventoryControlException("Can not calculate price because item type is null. Please enter a valid type.");
         }
         if (desiredQuantity < 0) {
-            throw new InventoryControlException("Can not calculate price because desiredQuantity is less than 0");
+            throw new InventoryControlException("Can not calculate price because desiredQuantity is less than 0. Please enter a positive number.");
         }
         // get desired item and owned item information for player's inventory.
         InventoryItem itemDesired = getItem(desired);

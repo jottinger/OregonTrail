@@ -5,6 +5,7 @@
  */
 package byui.cit260.oregonTrail.control;
 
+import byui.cit260.oregonTrail.exceptions.RiverControlException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -41,7 +42,7 @@ public class RiverControlTest {
      * Test of calcRiverSuccessProbability method, of class RiverControl.
      */
     @Test
-    public void testCalcRiverSuccessProbability() {
+    public void testCalcRiverSuccessProbability() throws RiverControlException {
         System.out.println("calcRiverSuccessProbability");
         
         /********************
@@ -52,8 +53,7 @@ public class RiverControlTest {
         int guide = 1;
         long currentRiverWeather = -2;
         RiverControl instance = new RiverControl();
-        int expResult = -1;
-        int result = instance.calcRiverSuccessProbability(riverHeight, guide, currentRiverWeather);
+        int expResult = -1;        int result = instance.calcRiverSuccessProbability(riverHeight, guide, currentRiverWeather);
         assertEquals(expResult, result);
         
         /********************
