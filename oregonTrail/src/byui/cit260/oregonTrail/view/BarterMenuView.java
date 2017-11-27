@@ -5,7 +5,10 @@
  */
 package byui.cit260.oregonTrail.view;
 
+import byui.cit260.oregonTrail.exceptions.InventoryControlException;
 import byui.cit260.oregonTrail.model.InventoryItem;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import oregonTrail.OregonTrail;
 
 /**
@@ -38,8 +41,14 @@ public class BarterMenuView extends View {
                 displayInventoryItems();
                 break;
             case "B": //display barter items
-                BarterView barterView = new BarterView();
-                barterView.display();
+                BarterView barterView;
+        try {
+            barterView = new BarterView();
+            barterView.display();
+        } catch (InventoryControlException ex) {
+            System.out.println(ex.getMessage());
+        }
+                
                 break;
             default:
                 System.out.println("\n*** Invalid selection *** Try again");

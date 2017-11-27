@@ -174,7 +174,8 @@ class BarterView extends View {
                 } else if (result == 3) {
                     System.out.println("\nTransaction successful. "
                             + "Make another purchase or press Q to exit menu.");
-                    PurchaseGoodsView purchaseGoodsView = new PurchaseGoodsView();
+                    String inventory = InventoryControl.displayInventoryQuantityPrice();
+                    PurchaseGoodsView purchaseGoodsView = new PurchaseGoodsView(inventory);
                     purchaseGoodsView.display();
                     break;
                 } else {
