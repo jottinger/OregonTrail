@@ -45,7 +45,7 @@ public class GameMenuView extends View{
        
        switch (value) {
            case "B":
-               BarterView barterView = new BarterView();
+               BarterMenuView barterView = new BarterMenuView();
                barterView.display();
                break;
            case "C":
