@@ -86,7 +86,8 @@ public class InventoryControl {
         int i = 0;
         InventoryItem[] inventory = getItemDatabase();
         if (inventory == null) 
-            throw new InventoryControlException("Can not display inventory because player inventory is null.");
+            throw new InventoryControlException("Can not display inventory because player inventory is null. "
+                    + "Please start new game to fix problem.");
         for (InventoryItem item : inventory) {
                 name = item.getInventoryType().name();
                 inStock = item.getQuantityInStock();
@@ -186,7 +187,7 @@ public class InventoryControl {
     public static double riverFailureRemove(InventoryItem[] inventory)
                             throws InventoryControlException {
         if (inventory == null) {
-            throw new InventoryControlException("Items cannot be removed from inventory because player inventory has not been created.");
+            throw new InventoryControlException("Inventory is null. Please start new game to fix problem.");
         }
             
         double quantity;

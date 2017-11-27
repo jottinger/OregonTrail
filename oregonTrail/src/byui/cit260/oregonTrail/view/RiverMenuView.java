@@ -152,7 +152,8 @@ public class RiverMenuView extends View {
             lost = InventoryControl.riverFailureRemove(inventory);
         } catch (InventoryControlException ie) {
             System.out.println(ie.getMessage());
-            
+            MainMenuView mainMenuView = new MainMenuView();
+            mainMenuView.display();
         }
 
             System.out.println("\n*************************************************"

@@ -91,6 +91,8 @@ public class GameMenuView extends View{
                inventory = InventoryControl.displayInventoryQuantityPrice();
            } catch (InventoryControlException ex) {
                System.out.println(ex.getMessage());
+               MainMenuView mainMenuView = new MainMenuView();
+               mainMenuView.display();
            }
        }
 
@@ -100,6 +102,8 @@ public class GameMenuView extends View{
            purchaseGoodsView.display();
        } catch (InventoryControlException ex) {
            System.out.println(ex.getMessage());
+           MainMenuView mainMenuView = new MainMenuView();
+           mainMenuView.display();
        } 
                break;
            case "M":
