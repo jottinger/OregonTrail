@@ -61,9 +61,5 @@ public class BarterMenuView extends View {
                 + "\n************************************************");
             this.display();
     }
-
-    private void displayBarterView() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
 }
