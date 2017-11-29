@@ -5,8 +5,11 @@
  */
 package byui.cit260.oregonTrail.view;
 
+import byui.cit260.oregonTrail.exceptions.InventoryControlException;
 import byui.cit260.oregonTrail.model.Game;
 import byui.cit260.oregonTrail.model.Location;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import oregonTrail.OregonTrail;
 
 /**
@@ -65,7 +68,12 @@ public class GameMenuView extends View{
                huntView.display();
                break;
            case "P":
-               PurchaseGoodsView purchaseGoodsView = new PurchaseGoodsView();
+               PurchaseGoodsView purchaseGoodsView = null;
+       try {
+           purchaseGoodsView = new PurchaseGoodsView();
+       } catch (InventoryControlException ex) {
+           Logger.getLogger(GameMenuView.class.getName()).log(Level.SEVERE, null, ex);
+       }
                purchaseGoodsView.display();
                break;
            case "M":
