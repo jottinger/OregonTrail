@@ -5,7 +5,13 @@
  */
 package byui.cit260.oregonTrail.view;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import oregonTrail.OregonTrail;
 
 /**
  *
@@ -15,8 +21,10 @@ import java.util.Scanner;
 public abstract class View implements ViewInterface {
     
     protected String promptMessage;
- 
     
+    protected final BufferedReader keyboard = OregonTrail.getInFile();
+    protected final PrintWriter console = OregonTrail.getOutFile();
+     
     public View() {
     }
     
@@ -39,23 +47,26 @@ public abstract class View implements ViewInterface {
     }
     
     public String getInput() { // called from displayStartProgramView() in this class.
-        Scanner keyboard = new Scanner(System.in); //get infile for keyboard
         String value = ""; //create variable value to be returned
         boolean valid = false; //initialize to not valid
-        
-        while (!valid) { //loop while an invalid value is entered
+        try {
+        while (!valid) { 
+            //loop while an invalid value is entered
             System.out.println("\n" + this.promptMessage); // print out the message asking for name stored in class instance variable.
             
-            value = keyboard.nextLine(); //get next line typed on keyboard and store in value
+            value = keyboard.readLine(); //get next line typed on keyboard and store in value
             value = value.trim(); //trim off leading and trailing blanks
             
             if (value.length() < 1) { //if value is blank print error message, starts loop again
                 System.out.println("\nInvalid value: value cannot be blank");
                 continue;
             }
-            
+        
             break; //end the loop
         }
+            } catch (IOException ex) {
+                Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+            }
         
         return value; //return the value entered to displayStartProgramView()
     }
