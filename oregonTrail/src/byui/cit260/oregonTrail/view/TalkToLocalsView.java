@@ -13,16 +13,10 @@ import java.util.Scanner;
  *
  * @author hannahwilliams
  */
-public class TalkToLocalsView {
-    
-    private String menu;
-    private String promptMessage;
-    
-    
+public class TalkToLocalsView extends View{
     public TalkToLocalsView() {
     
-    this.promptMessage = "\nWho would you like to speak to?";
-    this.menu = "\n"
+    super("\n"
                     +"\n----------------------------------------------------"
                     +"\n| Character Menu                                    |"
                     +"\n----------------------------------------------------"
@@ -38,59 +32,20 @@ public class TalkToLocalsView {
                     +"\nJ - Son"
                     +"\nK - Daughter"
                     +"\nQ - Quit"
-                    +"\n----------------------------------------------------";
+                    +"\n----------------------------------------------------"
+                    + "\nWho would you like to speak to?");
 
     
     }
-    
-    public void displayTalkToLocalsView() {
-         System.out.print(menu); // Prints out the menu.
-        boolean done = false; //set flag to not done
-        do {
-            String menuOption = this.getMenuOption();//calls GetMenuOption from this class
-            if (menuOption.toUpperCase().equals("Q")) //user wants to quit
-                return; // Returns control to displayNextView() in StartProgramView. (Exit game) TODO: Why does this exit game?
-            
-            Actor actor = null;
-            
-            String name = actor.getName();
-            String description = actor.getDescription();
-            
-            
-            //Calls doAction() in this class and passes in menu option. 
-            done = this.doAction(menuOption); //do the requested action and display the next view
-        
-        } while (!done); // repeats the loop if done = false. False value will be returned from doAction() if menuOption is invalid.
-    }
 
-    private String getMenuOption() {
-          Scanner keyboard = new Scanner(System.in); //get infile for keyboard
-        String value = ""; //create variable value to be returned
-        boolean valid = false; //initialize to not valid
-        
-        while (!valid) { //loop while an invalid value is entered
-            System.out.println("\n" + this.promptMessage); // prints out promptMessage class instance variable.
-            
-            value = keyboard.nextLine(); //get next line typed on keyboard
-            value = value.trim(); //trim off leading and trailing blanks
-            
-            if (value.length() < 1) { // if value is blank, print error message and repeat loop.
-                System.out.println("\nInvalid value: value cannot be blank");
-                continue;
-            }
-            
-            break; //end the loop
-        }
-        
-        return value; //return the value entered to displayMainMenuView
-    }
 
-    private boolean doAction(String menuOption) {
-        menuOption = menuOption.toUpperCase();
+    @Override
+    public boolean doAction(String choice) {
+        choice = choice.toUpperCase();
         
         Actor actor;
         
-        switch (menuOption) {
+        switch (choice) {
             case "A":
                 actor = Actor.Settler;
             case "B":
