@@ -28,7 +28,7 @@ class PurchaseView extends View{
         try {
             number = parseInt(value);
         } catch (NumberFormatException nf) {
-            System.out.println("\nYou must enter a valid number. Try again or enter Q to quit.");
+            ErrorView.display(this.getClass().getName(), "\nYou must enter a valid number. Try again or enter Q to quit.");
             getInput();
         }
     

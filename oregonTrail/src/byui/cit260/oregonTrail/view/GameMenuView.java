@@ -8,6 +8,7 @@ package byui.cit260.oregonTrail.view;
 import byui.cit260.oregonTrail.control.InventoryControl;
 import byui.cit260.oregonTrail.exceptions.InventoryControlException;
 import byui.cit260.oregonTrail.model.Game;
+import byui.cit260.oregonTrail.model.InventoryItem;
 import byui.cit260.oregonTrail.model.Location;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -89,8 +90,12 @@ public class GameMenuView extends View{
        {
            try {
                inventory = InventoryControl.displayInventoryQuantityPrice();
+                
+            /*       if (inventory == null) 
+            throw new InventoryControlException();*/
            } catch (InventoryControlException ex) {
-               System.out.println(ex.getMessage());
+               ErrorView.display(this.getClass().getName(), "Error reading data: Can not display inventory because player inventory is null. "
+                    + "Please start new game to fix problem.");
                MainMenuView mainMenuView = new MainMenuView();
                mainMenuView.display();
            }
@@ -101,7 +106,8 @@ public class GameMenuView extends View{
            purchaseGoodsView = new PurchaseGoodsView(inventory);
            purchaseGoodsView.display();
        } catch (InventoryControlException ex) {
-           System.out.println(ex.getMessage());
+           ErrorView.display(this.getClass().getName(), 
+                   "Error reading input: " + ex.getMessage());
            MainMenuView mainMenuView = new MainMenuView();
            mainMenuView.display();
        } 
@@ -110,7 +116,7 @@ public class GameMenuView extends View{
                this.displayMap();
                break;
            default:
-               System.out.println("*** Error: invalid choice entered. Try again. ***");
+               ErrorView.display(this.getClass().getName(), "*** Error: invalid choice entered. Try again. ***");
                
                
            
@@ -124,21 +130,21 @@ public class GameMenuView extends View{
         Location[][] locations = game.getMap().getLocations();
         //Print the title
         int i = 1;
-        System.out.println(  "\n*******************************************"
+        this.console.println(  "\n*******************************************"
                             +"\n*            The Oregon Trail             *"
                             +"\n*-----------------------------------------*"
                             +"\n      1       2       3       4       5    ");
         for (Location[] row : locations) {
-            System.out.print("\n*-----------------------------------------*"
+            this.console.print("\n*-----------------------------------------*"
                               + "\n" + i + " " );
             i++;
         
             for (Location location : row){
-                System.out.print("|   " + location.getSymbol() + "   ");
+                this.console.print("|   " + location.getSymbol() + "   ");
                 
             }
         }       
-        System.out.println("\n*******************************************");
+        this.console.println("\n*******************************************");
         MapView mapview = new MapView();
         mapview.display();
         

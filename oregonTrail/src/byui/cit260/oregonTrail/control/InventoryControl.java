@@ -79,7 +79,7 @@ public class InventoryControl {
     
     public static String displayInventoryQuantityPrice() throws InventoryControlException {
         
-        try {
+        
         String output = "";
         String name;
         double inStock;
@@ -100,12 +100,8 @@ public class InventoryControl {
                 i++;
         }
         return output;
-        }
         
-        catch (InventoryControlException ex) {
-            System.out.println("Unable to display Inventory Quantity Price, try again");
-        }
-    return null;  
+     
     
     }
 

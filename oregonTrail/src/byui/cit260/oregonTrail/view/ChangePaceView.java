@@ -30,7 +30,7 @@ public class ChangePaceView extends View{
     }
 
     /* public void display() {
-        System.out.println("\n *** ChangePaceView called ***");
+        this.console.println("\n *** ChangePaceView called ***");
     } */
     
     
@@ -41,7 +41,7 @@ public class ChangePaceView extends View{
         try {
             pace = Integer.parseInt(choice);
             } catch (NumberFormatException nf) {
-            System.out.println("\nYou must enter a valid number. "
+            this.console.println("\nYou must enter a valid number. "
             + " Try again");
             }
         
@@ -56,7 +56,7 @@ public class ChangePaceView extends View{
                 setPacetoFast(pace);
                 break;
             default:
-                System.out.println("Invalid selection. Please try again.");
+                ErrorView.display(this.getClass().getName(), "Error reading input: Invalid selection. Please try again.");
         }
         
         return false;
@@ -78,7 +78,7 @@ public class ChangePaceView extends View{
     }
 
     private void displayNextView(int pace) {
-        System.out.println("Your pace has changed to " + pace + ". ");
+        this.console.println("Your pace has changed to " + pace + ". ");
         GameMenuView gameMenuView = new GameMenuView();
         gameMenuView.display();
     }

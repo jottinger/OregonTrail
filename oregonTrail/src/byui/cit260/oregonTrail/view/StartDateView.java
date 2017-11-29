@@ -50,7 +50,7 @@ public class StartDateView extends View{
                 this.saveStartDate(startDate);
                 break;
             default:
-                System.out.println("\n Invalid selection: Try again.");
+                ErrorView.display(this.getClass().getName(),"Error reading input: Invalid selection: Try again.");
                 break;   
         }
         return false;
@@ -74,7 +74,7 @@ public class StartDateView extends View{
         int monthDate = GameControl.findMonth(startDate, travelDays); 
         int day = GameControl.findDay(startDate, travelDays);
         String calDate = GameControl.thisDay(monthDate, day);
-        System.out.println("\n*************************************************"
+        this.console.println("\n*************************************************"
                           + "\n| StartDate: " + calDate
                           + "\n************************************************");
         this.displayNextView();

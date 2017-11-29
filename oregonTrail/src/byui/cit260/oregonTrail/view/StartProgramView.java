@@ -27,7 +27,7 @@ public class StartProgramView extends View {
     } // returns control back to main() in OregonTrail.java
 
     public void displayBanner() { // called from constructor function in this class. Prints welcome message.
-        System.out.println(
+        this.console.println(
               "\n**************************************************************"
             + "\n*                                                            *"
             + "\n* This game takes place along the 1850’s era Oregon Trail.   *"
@@ -63,8 +63,8 @@ public class StartProgramView extends View {
     @Override
     public boolean doAction(String value) { //called from displayStartProgramView in this class.  Player's name passed in.
         if (value.length() < 2) { // checks name length and prints error message if name is too short
-            System.out.println("\nInvalid players name: "
-            + "The name must be greater than one character in length");
+            ErrorView.display(this.getClass().getName(),"Error reading input: Invalid players name:  "
+                                                       + "\nThe name must be greater than one character in length");
             return false; //returns false to displayStartProgramView so loop is repeated.
         }
         
@@ -72,7 +72,7 @@ public class StartProgramView extends View {
         Player player = GameControl.createPlayer(value);
         
         if (player == null) { //Checks to see if player created. if unsuccessful, print error message.
-            System.out.println("\nError creating the player.");
+            ErrorView.display(this.getClass().getName(), "Error creating the player.");
             return false; // if unsuccsful, returns false to displayStartProgramView so loop is repeated.
         }
         
@@ -84,7 +84,7 @@ public class StartProgramView extends View {
 
     private void displayNextView(Player player) { // called from doAction() in this class
         //dispaly a custom welcome message
-        System.out.println("\n==========================================="
+        this.console.println("\n==========================================="
                            +"\n Welcome to the game " + player.getName()
                            +"\n We hope you have a lot of fun!"
                            +"\n==========================================="

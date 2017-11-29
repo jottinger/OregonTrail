@@ -60,16 +60,16 @@ class BarterView extends View {
         try {
             number = Integer.parseInt(choice);
             } catch (NumberFormatException nf) {
-            System.out.println("\nPlease enter a valid number. "
+            ErrorView.display(this.getClass().getName(),"Error reading input: Please enter a valid number. "
             + " Try again");
             }
         
         if (number == 7) {
-            System.out.println("\nYou can not purchase money. Enter another choice or enter Q to quit.");
+            ErrorView.display(this.getClass().getName(), "\nYou can not purchase money. Enter another choice or enter Q to quit.");
             getInput();
         }
         if (number == 3) {
-            System.out.println("\nYou cannot purchase a guide at this time. Make another selection.");
+            ErrorView.display(this.getClass().getName(), "\nYou cannot purchase a guide at this time. Make another selection.");
             getInput();
         }
         InventoryItem[] items = OregonTrail.getCurrentGame().getInventory();
@@ -90,13 +90,13 @@ class BarterView extends View {
         boolean valid = false; //initialize to not valid
         
         while (!valid) { //loop while an invalid value is entered
-            System.out.println("\nHow many " + type.name() + " would you like to purchase?"); // print out the message asking for name stored in class instance variable.
+            this.console.println("\nHow many " + type.name() + " would you like to purchase?"); // print out the message asking for name stored in class instance variable.
             
-            value = keyboard.nextLine(); //get next line typed on keyboard and store in value
+            value = this.keyboard.readLine(); //get next line typed on keyboard and store in value
             value = value.trim(); //trim off leading and trailing blanks
             
             if (value.length() < 1) { //if value is blank print error message, starts loop again
-                System.out.println("\nInvalid value: value cannot be blank");
+                ErrorView.display(this.getClass().getName(),"Error reading input: Invalid value: value cannot be blank");
                 continue;
             }
             if (value.toUpperCase().equals("Q")) { // user wants to quit
@@ -105,7 +105,7 @@ class BarterView extends View {
             try {
             boolean quantity = getPrice(type, value);
         } catch (InventoryControlException ex) {
-            System.out.println(ex.getMessage());
+            ErrorView.display(this.getClass().getName(), "Error: " + ex.getMessage());
         }
             break; //end the loop
         }
@@ -119,14 +119,14 @@ class BarterView extends View {
         try {
             quantity = parseInt(choice);
         } catch (NumberFormatException nf) {
-            System.out.println("\nYou must enter a valid number. Try again or enter Q to quit.");
+            ErrorView.display(this.getClass().getName(),"Error reading input: You must enter a valid number. Try again or enter Q to quit.");
             requestQuantity(type);   
         }
         
         try {
             price = InventoryControl.calcBarterPrice(type, InventoryType.Money);
         } catch (InventoryControlException ex) {
-            System.out.println(ex.getMessage());
+            ErrorView.display(this.getClass().getName(), "Error: " + ex.getMessage());
         }
         String sale = confirmSale(type, quantity, price);
         boolean finalize = finalizeSale(type, quantity, price, sale);
@@ -139,14 +139,14 @@ class BarterView extends View {
         boolean valid = false; //initialize to not valid
         
         while (!valid) { //loop while an invalid value is entered
-            System.out.println("\n" + quantity + " " + type.name() + " will cost $" + price * quantity + "."
+            this.console.println("\n" + quantity + " " + type.name() + " will cost $" + price * quantity + "."
         + "\nConfirm sale? Y/N"); // print out the message asking for name stored in class instance variable.
             
             value = keyboard.nextLine(); //get next line typed on keyboard and store in value
             value = value.trim(); //trim off leading and trailing blanks
             
             if (value.length() < 1) { //if value is blank print error message, starts loop again
-                System.out.println("\nInvalid value: value cannot be blank");
+                ErrorView.display(this.getClass().getName(),"Error reading input: Invalid value: value cannot be blank");
                 continue;
             }
             
@@ -165,26 +165,26 @@ class BarterView extends View {
                 try {
                 result = InventoryControl.barter(InventoryType.Money, type, quantity);
                 } catch (InventoryControlException ex) {
-                    System.out.println(ex.getMessage());
+                    ErrorView.display(this.getClass().getName(), "Error: " + ex.getMessage());
                     requestQuantity(type);
                     
                 }
 
                 if (result == -1) {
-                    System.out.println("\nThere was an error completing the sale. Try again");
+                    ErrorView.display(this.getClass().getName(), "Error: There was an error completing the sale. Try again");
                     display();
                     break;
                 } else if (result == 1) {
-                    System.out.println("\nThis item is out of stock. Try again.");
+                    this.console.println("\nThis item is out of stock. Try again.");
                     display(); 
                     break;
                 } else if (result == 2) {
-                    System.out.println("\nYou do not have enough money to complete the sale. "
+                    this.console.println("\nYou do not have enough money to complete the sale. "
                             + "Purchase something else or press Q to exit menu.");
                     display(); 
                     break;
                 } else if (result == 3) {
-                    System.out.println("\nTransaction successful. "
+                    this.console.println("\nTransaction successful. "
                             + "Make another purchase or press Q to exit menu.");
                     String inventory = "";
 
@@ -192,23 +192,23 @@ class BarterView extends View {
                 try {
                     inventory = InventoryControl.displayInventoryQuantityPrice();
                 } catch (InventoryControlException ex) {
-                    System.out.println(ex.getMessage());
+                    ErrorView.display(this.getClass().getName(), "Error: " + ex.getMessage());
                 }
             }
                     PurchaseGoodsView purchaseGoodsView = new PurchaseGoodsView(inventory);
                     purchaseGoodsView.display();
                     break;
                 } else {
-                    System.out.println("\nThere was an error completing the sale. Try again");
+                    ErrorView.display(this.getClass().getName(), "Error: There was an error completing the sale. Try again");
                     display();
                     break;
                 }
             case "N":
 
-                System.out.println("\nPurchase cancelled.");
+                this.console.println("\nPurchase cancelled.");
                 display();
             default:
-                System.out.println("\nInvalid entry. Please enter Y or N.");
+                ErrorView.display(this.getClass().getName(),"Error reading input: Invalid entry. Please enter Y or N.");
                 confirmSale(type, quantity, price);
             
         } return false;
@@ -216,7 +216,7 @@ class BarterView extends View {
     } 
 
     private void displayBarterHelp() {
-        System.out.println("*** displayBarterHelp() method called ***");
+        this.console.println("*** displayBarterHelp() method called ***");
     }
         
     }

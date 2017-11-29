@@ -33,7 +33,7 @@ public class RiverMenuView extends View {
                     +"\n1 - Ford the river"
                     +"\n2 - Hire a Guide for $50"
                     +"\n3 - Save game"
-                    +"\nQ - Quit"
+                    +"\nQ - Quit to previous menu"
                     +"\n----------------------------------------------------");
     }
     
@@ -59,7 +59,7 @@ public class RiverMenuView extends View {
         try {
             number = parseInt(choice);
         } catch (NumberFormatException nf) {
-            System.out.println("\nYou must enter a valid number. Try again or enter Q to quit.");
+            ErrorView.display(this.getClass().getName(), "Error reading input: You must enter a valid number. Try again or enter Q to quit.");
             getInput();
         }
         
@@ -69,7 +69,7 @@ public class RiverMenuView extends View {
                 //ford the river
                 this.fordRiver();
             } catch (InventoryControlException ex) {
-                System.out.println(ex.getMessage());
+                ErrorView.display(this.getClass().getName(), "Error: " + ex.getMessage());
             }
         }
                 break;
@@ -80,7 +80,7 @@ public class RiverMenuView extends View {
                 this.saveGame();
                 break;
             default:
-                System.out.println("\n*** Invalid selection *** Try again");
+                ErrorView.display(this.getClass().getName(),"Error reading input: Invalid selection *** Try again");
         }
         
         return false;
@@ -96,7 +96,7 @@ public class RiverMenuView extends View {
         try {
             RiverControl.calcRiverSuccessProbability(riverHeight, guide, currentRiverWeather);
         } catch (RiverControlException me) {
-            System.out.println(me.getMessage());
+            ErrorView.display(this.getClass().getName(), "Error: " + me.getMessage());
         }
         if (success == 1) {
             this.riverYes();
@@ -106,18 +106,18 @@ public class RiverMenuView extends View {
             this.riverNo(inventory);
         }
         else {
-            System.out.println("\n There was an error fording the river. Try again");
+            ErrorView.display(this.getClass().getName(), "Error: There was an error fording the river. Try again");
             this.display();
         }
 
             
     }
     private void saveGame() {
-        System.out.println("*** saveGame() function called ***");
+        this.console.println("*** saveGame() function called ***");
     }
 
     private void quitGame() {
-        System.out.println("*** quitGame() function called ***");
+        this.console.println("*** quitGame() function called ***");
     }
 
     private void hireGuide() {
@@ -132,13 +132,13 @@ public class RiverMenuView extends View {
     }
 
     private long getRiverWeather() {
-        System.out.println("*** getRiverWeather() function called ***");
+        this.console.println("*** getRiverWeather() function called ***");
         long weather = 0;
         return weather;
     }
 
     private void riverYes() {
-        System.out.println("\n*************************************************"
+        this.console.println("\n*************************************************"
                           + "\n| Congratulations! "
                           + "\n| Your attempt to cross the river succeeded."
                           + "\n************************************************");
@@ -151,12 +151,12 @@ public class RiverMenuView extends View {
         try {
             lost = InventoryControl.riverFailureRemove(inventory);
         } catch (InventoryControlException ie) {
-            System.out.println(ie.getMessage());
+            ErrorView.display(this.getClass().getName(), "Error: " + ie.getMessage());
             MainMenuView mainMenuView = new MainMenuView();
             mainMenuView.display();
         }
 
-            System.out.println("\n*************************************************"
+            this.console.println("\n*************************************************"
                           + "\n| Your attempt to cross the river failed."
                           + "\n| 20% of your inventory fell in the river."
                           + "\n| You lost " + lost + " items."
@@ -173,14 +173,22 @@ public class RiverMenuView extends View {
                 name = item.getInventoryType().name();
                 inStock = item.getQuantityInStock();
                 
-            System.out.println("\n* " + name + ": " + inStock); 
+            this.console.println("\n* " + name + ": " + inStock); 
             }*/
-            String playerInventory = InventoryControl.displayInventoryQuantityPrice();
-            System.out.print(playerInventory);
-            System.out.println("\n* " 
+            String playerInventory = "";
+            try {
+            playerInventory = InventoryControl.displayInventoryQuantityPrice();
+            } catch (InventoryControlException ex) {
+                    ErrorView.display(this.getClass().getName(), 
+                            "Error reading input: " + ex.getMessage());
+                }
+            this.console.print(playerInventory);
+            this.console.println("\n* " 
                 + "\n************************************************");
             this.display();
             }
+   
+                
         }
 
 

@@ -151,7 +151,7 @@ public class MapControl {
     private static void assignActorsToScenes(Actor[] actors) {
         
     }
-    private static void assignDialogToScenes( Scene[] scenes) {
+    /*private static void assignDialogToScenes( Scene[] scenes) {
         System.out.println("\n*** assignDialogToScenes() called ***");
         
         // Assign questions to the first question scene
@@ -170,7 +170,7 @@ public class MapControl {
 
         //assign questionsInScene array to questionScene2
         // REPEAT FOR ALL OTHER QUESTION SCENES 
-    }
+    }*/
     private static void assignScenesToLoctions(Map map, Scene[] scenes) 
             throws MapControlException
         {

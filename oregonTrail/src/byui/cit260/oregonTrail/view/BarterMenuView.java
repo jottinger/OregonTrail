@@ -47,13 +47,13 @@ public class BarterMenuView extends View {
             barterView = new BarterView();
             barterView.display();
         } catch (InventoryControlException ex) {
-            System.out.println(ex.getMessage());
+            ErrorView.display(this.getClass().getName(), "Error message: " + ex.getMessage());
         }
                 
 
                 break;
             default:
-                System.out.println("\n*** Invalid selection *** Try again");
+                ErrorView.display(this.getClass().getName(), "\n*** Invalid selection *** Try again");
         }
         
         return false;
@@ -66,9 +66,9 @@ public class BarterMenuView extends View {
         for (InventoryItem item : inventory) {
             name = item.getInventoryType().name();
             inStock = item.getQuantityInStock();
-            System.out.println("\n* " + name + ": " + inStock);
+            this.console.println("\n* " + name + ": " + inStock);
         }
-        System.out.println("\n* " 
+        this.console.println("\n* " 
                 + "\n************************************************");
             this.display();
     }

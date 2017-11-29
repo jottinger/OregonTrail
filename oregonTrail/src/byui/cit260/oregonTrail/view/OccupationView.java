@@ -57,7 +57,7 @@ class OccupationView extends View {
 }
 
     public void displayOccupationHelp() {
-        System.out.print(occupationHelp);
+        this.console.print(occupationHelp);
     }
 
 
@@ -82,7 +82,7 @@ class OccupationView extends View {
                 this.getInput();
                 break;
             default:
-                System.out.println("\n*** Invalid selection *** Try again");
+                ErrorView.display(this.getClass().getName(),"Error reading input: Invalid selection *** Try again");
                 break;
                 
         }
@@ -91,7 +91,7 @@ class OccupationView extends View {
 
     private void saveOccupation(Occupation occupation) {
         GameControl.setOccupation(occupation);
-        System.out.println("\n*************************************************"
+        this.console.println("\n*************************************************"
                           + "\n| Occupation chosen: " + OregonTrail.getPlayer().getOccupation().getName()
                           + "\n************************************************");
         this.displayNextView();

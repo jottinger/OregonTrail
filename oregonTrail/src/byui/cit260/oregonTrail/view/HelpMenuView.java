@@ -47,7 +47,7 @@ class HelpMenuView extends View {
             // no need for case "Q" because this is handled in displayHelpMenu() before this function called.
 
             default:
-                System.out.println("\n*** Invalid selection *** Try again");
+                ErrorView.display(this.getClass().getName(),"Error reading input: Invalid selection *** Try again");
                 break;  // if invalid option selected, error message displayed and loop exited.
         }
         
@@ -56,7 +56,7 @@ class HelpMenuView extends View {
     }
 
     private void displayLearnOregonTrail() { // called from helpOption() in this class
-        System.out.println("\n**************************************************************"
+        this.console.println("\n**************************************************************"
                             +"\n* The Oregon Trail                                            *"
                             +"\n*-------------------------------------------------------------*"                                                            
                             + "\n* This game takes place along the 1850’s era Oregon Trail.   *"
@@ -92,7 +92,7 @@ class HelpMenuView extends View {
     
 
     private void displayObjectives() { // called from helpOption() in this class
-        System.out.println("\n**************************************************************"
+        this.console.println("\n**************************************************************"
                             +"\n* Objectives Of the Game                                      *"
                             +"\n*-------------------------------------------------------------*"
                             + "\n*                                                            *"

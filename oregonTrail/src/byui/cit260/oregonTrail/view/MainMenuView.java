@@ -49,10 +49,10 @@ public class MainMenuView extends View {
                     try { 
                 this.startNewGame();
                     } catch (MapControlException me) {
-                        System.out.println(me.getMessage());
+                        ErrorView.display(this.getClass().getName(), "Error: " + me.getMessage());
                     }
                 } catch (GameControlException ge) {
-                    System.out.println(ge.getMessage());
+                    ErrorView.display(this.getClass().getName(), "Error: " + ge.getMessage());
                 }
         
                 break;
@@ -70,13 +70,13 @@ public class MainMenuView extends View {
                     try { 
                 this.startNewGameFast();
                     } catch (MapControlException me) {
-                        System.out.println(me.getMessage());
+                        ErrorView.display(this.getClass().getName(), "Error: " + me.getMessage());
                     }
                 } catch (GameControlException ge) {
-                    System.out.println(ge.getMessage());
+                    ErrorView.display(this.getClass().getName(), "Error: " + ge.getMessage());
                 }
             default: // Print out error message and exit loop.
-                System.out.println("\n*** Invalid selection *** Try again");
+                ErrorView.display(this.getClass().getName(),"Error reading input: Invalid selection *** Try again");
                 break;
         }
         
@@ -111,7 +111,7 @@ public class MainMenuView extends View {
             GameControl.setOccupation(Occupation.Farmer);
             GameControl.setStartDate(61);
             
-            System.out.println("\n****************************************************"
+            this.console.println("\n****************************************************"
                               + "\n Quick Start"
                               +"\n****************************************************"
                               +"\n----------------------------------------------------"
@@ -137,7 +137,7 @@ public class MainMenuView extends View {
     
 
     private void startExistingGame() {
-        System.out.println("*** startExistingGame() function called ***");
+        this.console.println("*** startExistingGame() function called ***");
     }
     
     private void displayHelpMenu() { //Called from doAction() case H in this class
@@ -148,6 +148,6 @@ public class MainMenuView extends View {
     
 
         private void saveGame() { // called from doOption() in this class
-        System.out.println("*** saveGame() function called ***");
+        this.console.println("*** saveGame() function called ***");
     }
 }

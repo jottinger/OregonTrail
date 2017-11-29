@@ -9,9 +9,15 @@ package byui.cit260.oregonTrail.view;
  *
  * @author Dresen_HP
  */
-class HireGuideView {
+class HireGuideView extends View{
 
-    void display() {
-        System.out.println("\n *** HireGuideView called ***");    }
+    public void display() {
+        this.console.println("\n *** HireGuideView called ***");    }
+
+    @Override
+    public boolean doAction(String value) {
+        this.console.println("\n *** doAction called ***");
+        return false;
+    }
     
-}
+}  

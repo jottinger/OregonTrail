@@ -18,14 +18,14 @@ public class InventoryView extends View {
     
     // constructor function called from ??? TODO: Would this be called from game menu or from startGame?
     public InventoryView() {
-        System.out.println("*** InventoryView() function called ***");
+        this.console.println("*** InventoryView() function called ***");
         //this.promptMessage = "Please enter your choice";
         //this.inventory = player.getItems();
     }
 
     @Override
     public boolean doAction(String value) {
-        System.out.println("***doAction stub function called***");
+        this.console.println("***doAction stub function called***");
         return false;
     }
 }

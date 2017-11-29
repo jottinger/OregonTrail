@@ -98,7 +98,7 @@ public class HuntView extends View{
             int traveldays = OregonTrail.getCurrentGame().getTravelDays();
             double successProbability = huntControl.calcHuntingSuccessProbability(difficulty, startdate, traveldays);
             String probability = "\nYour hunt success probability is " + successProbability;
-            System.out.print(probability);
+            this.console.print(probability);
             String success = "\n You successfully shot the " + animalChoice + "! Would you like to hunt again?";
             String failure = "\n You failed to shoot the " + animalChoice + ". Would you like to hunt again?";
             // TODO: Fix the rest of this

@@ -58,14 +58,14 @@ public class GuideMenuView extends View {
                 try {
                  this.setRiverGuideYes();
             } catch (InventoryControlException ex) {
-                 System.out.println(ex.getMessage());
+                 ErrorView.display(this.getClass().getName(), "Error: " + ex.getMessage());
                     }
                 break;
             case "N":
                 this.setRiverGuideNo();   
                 break;
             default:
-                System.out.println("\n*** Invalid selection *** Try again");
+                ErrorView.display(this.getClass().getName(),"Error reading input: *** Invalid selection *** Try again");
             }
                  
         return false;
@@ -75,11 +75,11 @@ public class GuideMenuView extends View {
         InventoryItem[] inventory = OregonTrail.getCurrentGame().getInventory();
         double quantity = inventory[InventoryType.Guide.ordinal()].getQuantityInStock();
         if (quantity != 0) {
-        System.out.println("\nYou already have a guide. You are ready to cross the river.");    
+        this.console.println("\nYou already have a guide. You are ready to cross the river.");    
         } else {
             InventoryControl.addToInventory(InventoryType.Guide, 1);
             InventoryControl.subtractFromInventory(InventoryType.Money, 50);
-            System.out.println("\nYou have hired a guide. You are ready to cross the river.");
+            this.console.println("\nYou have hired a guide. You are ready to cross the river.");
             RiverMenuView riverMenuView = new RiverMenuView();
             riverMenuView.display();
     }}

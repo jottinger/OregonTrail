@@ -29,14 +29,14 @@ class CompanionView extends View {
         
         String companion;
         do {
-            System.out.print(getCompanionList()); // calls getComanionList() in this class
+            this.console.print(getCompanionList()); // calls getComanionList() in this class
             companion = this.getInput(); // calls getInput() from this class.
             if (companion.toUpperCase().equals("Q")) 
                 return; //exit to startNewGame() in MainMenuView
 
             this.doAction(companion); // calls doAction() in this class
         } while (OregonTrail.getCurrentGame().getCompanion3() == "");
-        System.out.print(getCompanionList());
+        this.console.print(getCompanionList());
         this.displayNextView();
         
         
@@ -61,9 +61,9 @@ class CompanionView extends View {
     @Override
     public boolean doAction(String value) { // called from display() in this class
         if (value.length() < 2) {  // checks name length and prints error
-            System.out.println("\nInvalid value:"
-            + "The name must be greater than one character in length");
-            this.getInput(); // calls getInput() from this class to prompt user to re-enter name.
+            ErrorView.display(this.getClass().getName(),"Error reading input: Invalid value:"
+            + "\nThe name must be greater than one character in length");
+            this.display(); // calls getInput() from this class to prompt user to re-enter name.
         }
         GameControl.setCompanionName(value); // calls setCompaninName() in GameControl
         return false; // returns false to display() in this class
