@@ -76,11 +76,11 @@ class BarterView extends View {
         type = items[number].getInventoryType();
         choice = requestQuantity(type);
         
-        try {
+        /*try {
             boolean quantity = getPrice(type, choice);
         } catch (InventoryControlException ex) {
             System.out.println(ex.getMessage());
-        }
+        }*/
         
         return false;
     }
@@ -99,7 +99,14 @@ class BarterView extends View {
                 System.out.println("\nInvalid value: value cannot be blank");
                 continue;
             }
-            
+            if (value.toUpperCase().equals("Q")) { // user wants to quit
+                    display();//exit the game
+            }
+            try {
+            boolean quantity = getPrice(type, value);
+        } catch (InventoryControlException ex) {
+            System.out.println(ex.getMessage());
+        }
             break; //end the loop
         }
         
@@ -151,12 +158,17 @@ class BarterView extends View {
 
     private boolean finalizeSale(InventoryType type, int quantity, int price, String sale) throws InventoryControlException {
         sale = sale.toUpperCase();
-        int result;
+        int result = 0;
         switch (sale){
         
             case "Y":
+                try {
                 result = InventoryControl.barter(InventoryType.Money, type, quantity);
-                
+                } catch (InventoryControlException ex) {
+                    System.out.println(ex.getMessage());
+                    requestQuantity(type);
+                    
+                }
 
                 if (result == -1) {
                     System.out.println("\nThere was an error completing the sale. Try again");
@@ -174,7 +186,16 @@ class BarterView extends View {
                 } else if (result == 3) {
                     System.out.println("\nTransaction successful. "
                             + "Make another purchase or press Q to exit menu.");
-                    PurchaseGoodsView purchaseGoodsView = new PurchaseGoodsView();
+                    String inventory = "";
+
+             {
+                try {
+                    inventory = InventoryControl.displayInventoryQuantityPrice();
+                } catch (InventoryControlException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+                    PurchaseGoodsView purchaseGoodsView = new PurchaseGoodsView(inventory);
                     purchaseGoodsView.display();
                     break;
                 } else {

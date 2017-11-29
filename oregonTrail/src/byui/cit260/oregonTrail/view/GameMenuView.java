@@ -5,6 +5,7 @@
  */
 package byui.cit260.oregonTrail.view;
 
+import byui.cit260.oregonTrail.control.InventoryControl;
 import byui.cit260.oregonTrail.exceptions.InventoryControlException;
 import byui.cit260.oregonTrail.model.Game;
 import byui.cit260.oregonTrail.model.Location;
@@ -38,6 +39,21 @@ public class GameMenuView extends View{
                     +"\n Please enter your choice:");
    
     }
+    @Override
+    public void display() {  //called from main() in OregonTrail.java
+            boolean done = false; // set flag to not done
+            MainMenuView mainMenuView = new MainMenuView();
+            do {
+                //prompt for and get player's name
+                String value = this.getInput(); // calls getPlayersName() from this class, stores in string playersName
+                if (value.toUpperCase().equals("Q")) // user wants to quit 
+                    mainMenuView.display();//exit the game
+                 
+                //do the requested action and display the next view
+                done = this.doAction(value);// Calls doAction()in this class and passes in name. Return value changes boolean to true to exit do while loop.
+            } while (!done);
+    }
+    
    @Override
    public boolean doAction(String value) {
        value = value.toUpperCase();
@@ -68,13 +84,27 @@ public class GameMenuView extends View{
                huntView.display();
                break;
            case "P":
-               PurchaseGoodsView purchaseGoodsView = null;
-       try {
-           purchaseGoodsView = new PurchaseGoodsView();
-       } catch (InventoryControlException ex) {
-           Logger.getLogger(GameMenuView.class.getName()).log(Level.SEVERE, null, ex);
+               String inventory = "";
+
+       {
+           try {
+               inventory = InventoryControl.displayInventoryQuantityPrice();
+           } catch (InventoryControlException ex) {
+               System.out.println(ex.getMessage());
+               MainMenuView mainMenuView = new MainMenuView();
+               mainMenuView.display();
+           }
        }
-               purchaseGoodsView.display();
+
+               PurchaseGoodsView purchaseGoodsView;
+       try {
+           purchaseGoodsView = new PurchaseGoodsView(inventory);
+           purchaseGoodsView.display();
+       } catch (InventoryControlException ex) {
+           System.out.println(ex.getMessage());
+           MainMenuView mainMenuView = new MainMenuView();
+           mainMenuView.display();
+       } 
                break;
            case "M":
                this.displayMap();

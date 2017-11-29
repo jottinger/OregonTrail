@@ -26,9 +26,9 @@ public class InventoryControl {
     /* Gets the player's inventory from the current game. 
     * Stores it in inventory to make it available to the controller to manipulate.
     */
-    private static InventoryItem[] getItemDatabase() throws InventoryControlException {
-        InventoryItem[] inventory = new InventoryItem[8];
-        inventory = OregonTrail.getCurrentGame().getInventory();
+    private static InventoryItem[] getItemDatabase() throws InventoryControlException {  
+        InventoryItem[] inventory = new InventoryItem[8]; 
+        inventory = OregonTrail.getCurrentGame().getInventory(); 
         return inventory;
     }
     
@@ -78,6 +78,8 @@ public class InventoryControl {
     }
     
     public static String displayInventoryQuantityPrice() throws InventoryControlException {
+        
+        try {
         String output = "";
         String name;
         double inStock;
@@ -85,6 +87,9 @@ public class InventoryControl {
         double value;
         int i = 0;
         InventoryItem[] inventory = getItemDatabase();
+        if (inventory == null) 
+            throw new InventoryControlException("Can not display inventory because player inventory is null. "
+                    + "Please start new game to fix problem.");
         for (InventoryItem item : inventory) {
                 name = item.getInventoryType().name();
                 inStock = item.getQuantityInStock();
@@ -95,16 +100,23 @@ public class InventoryControl {
                 i++;
         }
         return output;
+        }
+        
+        catch (InventoryControlException ex) {
+            System.out.println("Unable to display Inventory Quantity Price, try again");
+        }
+    return null;  
+    
     }
 
 
     public static int barter(InventoryType owned, InventoryType desired, int desiredQuantity) throws InventoryControlException {
         // validate input
         if (owned == null || desired == null) {
-            throw new InventoryControlException("Can not calculate price because item desired is null");
+            throw new InventoryControlException("Can not calculate price because item type is null. Please enter a valid type.");
         }
         if (desiredQuantity < 0) {
-            throw new InventoryControlException("Can not calculate price because desiredQuantity is less than 0");
+            throw new InventoryControlException("Can not calculate price because desiredQuantity is less than 0. Please enter a positive number.");
         }
         // get desired item and owned item information for player's inventory.
         InventoryItem itemDesired = getItem(desired);
@@ -184,7 +196,7 @@ public class InventoryControl {
     public static double riverFailureRemove(InventoryItem[] inventory)
                             throws InventoryControlException {
         if (inventory == null) {
-            throw new InventoryControlException("Items cannot be removed from inventory because player inventory has not been created.");
+            throw new InventoryControlException("Inventory is null. Please start new game to fix problem.");
         }
             
         double quantity;

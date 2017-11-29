@@ -41,13 +41,16 @@ public class BarterMenuView extends View {
                 displayInventoryItems();
                 break;
             case "B": //display barter items
-                BarterView barterView = null;
+
+                BarterView barterView;
         try {
             barterView = new BarterView();
+            barterView.display();
         } catch (InventoryControlException ex) {
-            Logger.getLogger(BarterMenuView.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
-                barterView.display();
+                
+
                 break;
             default:
                 System.out.println("\n*** Invalid selection *** Try again");
