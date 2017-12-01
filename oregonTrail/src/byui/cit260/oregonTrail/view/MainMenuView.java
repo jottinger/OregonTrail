@@ -76,6 +76,7 @@ public class MainMenuView extends View {
                 } catch (GameControlException ge) {
                     ErrorView.display(this.getClass().getName(), "Error: " + ge.getMessage());
                 }
+                break;
             default: // Print out error message and exit loop.
                 ErrorView.display(this.getClass().getName(),"Error reading input: Invalid selection *** Try again");
                 break;

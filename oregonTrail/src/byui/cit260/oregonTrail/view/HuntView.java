@@ -89,6 +89,15 @@ public class HuntView extends View{
         return false;
         
     }
+       // save animal choice
+       // figure probability
+       // subtract bullet from inventory
+       // if success then calcFoodWeight 
+       // add food to inventory
+       // else You failed message.
+       // hunting again if yes, then call display
+       // else quit to the game menu
+       
 
     private void storeAnimal(Animal animal) {
             HuntControl huntControl = new HuntControl();

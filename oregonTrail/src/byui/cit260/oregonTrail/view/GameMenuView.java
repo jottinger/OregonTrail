@@ -47,11 +47,13 @@ public class GameMenuView extends View{
             do {
                 //prompt for and get player's name
                 String value = this.getInput(); // calls getPlayersName() from this class, stores in string playersName
-                if (value.toUpperCase().equals("Q")) // user wants to quit 
-                    mainMenuView.display();//exit the game
-                 
+                if (value.toUpperCase().equals("Q")) { // user wants to quit 
+                    done = true;//exit the game
+                } else {
+                    done = this.doAction(value);// Calls doAction()in this class and passes in name. Return value changes boolean to true to exit do while loop.
+  
+                }
                 //do the requested action and display the next view
-                done = this.doAction(value);// Calls doAction()in this class and passes in name. Return value changes boolean to true to exit do while loop.
             } while (!done);
     }
     
@@ -87,30 +89,30 @@ public class GameMenuView extends View{
            case "P":
                String inventory = "";
 
-       {
-           try {
-               inventory = InventoryControl.displayInventoryQuantityPrice();
-                
-            /*       if (inventory == null) 
+                {
+                   try {
+                       inventory = InventoryControl.displayInventoryQuantityPrice();
+
+                       /*       if (inventory == null) 
             throw new InventoryControlException();*/
-           } catch (InventoryControlException ex) {
-               ErrorView.display(this.getClass().getName(), "Error reading data: Can not display inventory because player inventory is null. "
-                    + "Please start new game to fix problem.");
-               MainMenuView mainMenuView = new MainMenuView();
-               mainMenuView.display();
-           }
-       }
+                   } catch (InventoryControlException ex) {
+                       ErrorView.display(this.getClass().getName(), "Error reading data: Can not display inventory because player inventory is null. "
+                               + "Please start new game to fix problem.");
+                       MainMenuView mainMenuView = new MainMenuView();
+                       mainMenuView.display();
+                   }
+               }
 
                PurchaseGoodsView purchaseGoodsView;
-       try {
-           purchaseGoodsView = new PurchaseGoodsView(inventory);
-           purchaseGoodsView.display();
-       } catch (InventoryControlException ex) {
-           ErrorView.display(this.getClass().getName(), 
-                   "Error reading input: " + ex.getMessage());
-           MainMenuView mainMenuView = new MainMenuView();
-           mainMenuView.display();
-       } 
+               try {
+                   purchaseGoodsView = new PurchaseGoodsView(inventory);
+                   purchaseGoodsView.display();
+               } catch (InventoryControlException ex) {
+                   ErrorView.display(this.getClass().getName(),
+                           "Error reading input: " + ex.getMessage());
+                   MainMenuView mainMenuView = new MainMenuView();
+                   mainMenuView.display();
+               }
                break;
            case "M":
                this.displayMap();

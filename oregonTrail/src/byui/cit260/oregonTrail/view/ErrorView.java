@@ -26,6 +26,7 @@ public class ErrorView {
         
         //log error
         logFile.println(className + " - " + errorMessage);
+        logFile.flush();
     }
     public void display2(String className, String errorMessage) {
         
