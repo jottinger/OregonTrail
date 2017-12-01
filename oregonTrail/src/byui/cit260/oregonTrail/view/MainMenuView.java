@@ -8,6 +8,7 @@ import byui.cit260.oregonTrail.exceptions.GameControlException;
 import byui.cit260.oregonTrail.exceptions.MapControlException;
 import byui.cit260.oregonTrail.model.Game;
 import byui.cit260.oregonTrail.model.Occupation;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -137,7 +138,20 @@ public class MainMenuView extends View {
     
 
     private void startExistingGame() {
-        this.console.println("*** startExistingGame() function called ***");
+         this.console.println("\nEnter the file path to saved game." );
+        String filePath = this.getGameInput();
+        
+        try {
+            // start saved game
+            GameControl.getSavedGame(filePath);
+            
+        }
+        catch (Exception ex) {
+            ErrorView.display("MainMenuView", ex.getMessage());
+        }
+        // display game menu
+        GameMenuView gameMenu = new GameMenuView();
+        gameMenu.display();
     }
     
     private void displayHelpMenu() { //Called from doAction() case H in this class
@@ -147,7 +161,40 @@ public class MainMenuView extends View {
     }
     
 
-        private void saveGame() { // called from doOption() in this class
-        this.console.println("*** saveGame() function called ***");
+    private void saveGame() { // called from doOption() in this class
+        this.console.println("\nEnter the file path for file where the game is to be saved." );
+        String filePath = this.getGameInput();
+        try {
+            // save game to specified file
+            GameControl.saveGame(OregonTrail.getCurrentGame(), filePath);
+        } catch (Exception ex) {
+            ErrorView.display("mainMenuView", ex.getMessage());
+        }
     }
-}
+
+    private String getGameInput() {
+        String value = ""; //create variable value to be returned
+        boolean valid = false; //initialize to not valid
+        try {
+        while (!valid) { 
+            //loop while an invalid value is entered
+        this.console.println("\nEnter game file path." );
+            
+            value = keyboard.readLine(); //get next line typed on keyboard and store in value
+            value = value.trim(); //trim off leading and trailing blanks
+            
+            if (value.length() < 1) { //if value is blank print error message, starts loop again
+                ErrorView.display(this.getClass().getName(),
+                        "\nInvalid value: value cannot be blank");
+                continue;
+            }
+        
+            break; //end the loop
+        }
+            } catch (IOException ex) {
+                ErrorView.display(this.getClass().getName(),
+                        "Error reading input: " + ex.getMessage());
+            }
+        
+        return value; //return the value entered to displayStartProgramView()
+    }}

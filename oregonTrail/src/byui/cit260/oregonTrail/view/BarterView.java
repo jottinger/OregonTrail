@@ -85,10 +85,9 @@ class BarterView extends View {
         return false;
     }
     private String requestQuantity(InventoryType type) {
-        Scanner keyboard = new Scanner(System.in); //get infile for keyboard
         String value = ""; //create variable value to be returned
         boolean valid = false; //initialize to not valid
-        
+        try {
         while (!valid) { //loop while an invalid value is entered
             this.console.println("\nHow many " + type.name() + " would you like to purchase?"); // print out the message asking for name stored in class instance variable.
             
@@ -109,7 +108,9 @@ class BarterView extends View {
         }
             break; //end the loop
         }
-        
+        } catch (Exception e) {
+            this.console.println(this.promptMessage);
+        }
         return value; 
     }
 
@@ -134,15 +135,14 @@ class BarterView extends View {
     } 
 
     private String confirmSale(InventoryType type, int quantity, int price) {
-        Scanner keyboard = new Scanner(System.in); //get infile for keyboard
         String value = ""; //create variable value to be returned
         boolean valid = false; //initialize to not valid
-        
+        try {
         while (!valid) { //loop while an invalid value is entered
             this.console.println("\n" + quantity + " " + type.name() + " will cost $" + price * quantity + "."
         + "\nConfirm sale? Y/N"); // print out the message asking for name stored in class instance variable.
             
-            value = keyboard.nextLine(); //get next line typed on keyboard and store in value
+            value = this.keyboard.readLine(); //get next line typed on keyboard and store in value
             value = value.trim(); //trim off leading and trailing blanks
             
             if (value.length() < 1) { //if value is blank print error message, starts loop again
@@ -152,7 +152,9 @@ class BarterView extends View {
             
             break; //end the loop
         }
-        
+        } catch (Exception e) {
+            this.console.println("Error reading input: " + e.getMessage());
+        }
         return value; 
     }
 

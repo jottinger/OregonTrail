@@ -16,6 +16,10 @@ import byui.cit260.oregonTrail.model.Occupation;
 import byui.cit260.oregonTrail.model.Player;
 import oregonTrail.OregonTrail;
 import byui.cit260.oregonTrail.model.Map;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  *
@@ -91,6 +95,33 @@ public class GameControl {
         //return currentGame; // returns current game back to StartGameView */
         //return 1;
     }
+
+    public static void saveGame(Game game, String filePath) throws GameControlException {
+        try( FileOutputStream fops = new FileOutputStream(filePath)) {
+            ObjectOutputStream output = new ObjectOutputStream(fops);
+            
+            output.writeObject(game); // write game object out to file
+        }
+        catch(Exception e){
+            throw new GameControlException(e.getMessage());
+        }
+    }
+
+    public static void getSavedGame(String filePath) throws GameControlException {
+        Game game = null;
+        
+        try( FileInputStream fips = new FileInputStream(filePath)) {
+            ObjectInputStream input = new ObjectInputStream(fips);
+            
+            game = (Game) input.readObject(); // read the game object from file
+        }
+        catch(Exception e) {
+            throw new GameControlException(e.getMessage());
+        }
+        // close the output file
+        OregonTrail.setCurrentGame(game); // save in OregonTrail 
+    }
+    
 
     public void CreateNewPlayer(String name) { // called from doAction() in StartProgramView class
         
