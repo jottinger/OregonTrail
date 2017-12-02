@@ -35,7 +35,21 @@ public class MapView extends View {
                 + "\n"
                 + "\n Please enter your choice:");
     }
-
+    @Override
+    public void display() {  //called from main() in OregonTrail.java
+            boolean done = false; // set flag to not done
+            do {
+                //prompt for and get player's name
+                String value = this.getInput(); // calls getPlayersName() from this class, stores in string playersName
+                GameMenuView gameMenuView = new GameMenuView();
+                if (value.toUpperCase().equals("Q")) // user wants to quit
+                    gameMenuView.display();
+                    
+                 
+                //do the requested action and display the next view
+                done = this.doAction(value);// Calls doAction()in this class and passes in name. Return value changes boolean to true to exit do while loop.
+            } while (!done);
+    }
     @Override
     public boolean doAction(String value) {
         value = value.toUpperCase();
