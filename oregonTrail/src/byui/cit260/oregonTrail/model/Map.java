@@ -21,9 +21,11 @@ public class Map implements Serializable {
     private Game game;
     private int rows;
     private int columns;
+
     
     // relationships with other classes
     private Location[][] locations = new Location[5][5]; //0-*
+    private Places[] places;
     
     //constructor
 
@@ -80,15 +82,24 @@ public class Map implements Serializable {
         this.columns = columns;
     }
 
+    public Places[] getPlaces() {
+        return places;
+    }
+
+    public void setPlaces(Places[] places) {
+        this.places = places;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.description);
-        hash = 89 * hash + (this.visited ? 1 : 0);
-        hash = 89 * hash + Objects.hashCode(this.game);
-        hash = 89 * hash + this.rows;
-        hash = 89 * hash + this.columns;
-        hash = 89 * hash + Arrays.deepHashCode(this.locations);
+        int hash = 5;
+        hash = 53 * hash + Objects.hashCode(this.description);
+        hash = 53 * hash + (this.visited ? 1 : 0);
+        hash = 53 * hash + Objects.hashCode(this.game);
+        hash = 53 * hash + this.rows;
+        hash = 53 * hash + this.columns;
+        hash = 53 * hash + Arrays.deepHashCode(this.locations);
+        hash = 53 * hash + Arrays.deepHashCode(this.places);
         return hash;
     }
 
@@ -122,18 +133,16 @@ public class Map implements Serializable {
         if (!Arrays.deepEquals(this.locations, other.locations)) {
             return false;
         }
+        if (!Arrays.deepEquals(this.places, other.places)) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Map{" + "description=" + description + ", visited=" + visited + ", game=" + game + ", rows=" + rows + ", columns=" + columns + ", locations=" + locations + '}';
+        return "Map{" + "description=" + description + ", visited=" + visited + ", game=" + game + ", rows=" + rows + ", columns=" + columns + ", locations=" + locations + ", places=" + places + '}';
     }
 
-
-    
-
-    
-    
-    
+     
 }

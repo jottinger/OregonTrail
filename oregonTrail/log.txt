@@ -1,0 +1,2 @@
+byui.cit260.oregonTrail.view.PrintMapView - 
+Invalid value: value cannot be blank

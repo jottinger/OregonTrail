@@ -125,17 +125,18 @@ public class GameMenuView extends View{
        } return false;
    }
 
-    private void displayMap() {
+    public void displayMap() {
         //game = get the currentGame from the main class
         Game game = OregonTrail.getCurrentGame();
         //locations = get the 2-D locations array from the map
         Location[][] locations = game.getMap().getLocations();
         //Print the title
-        int i = 1;
+        int i = 0;
         this.console.println(  "\n*******************************************"
                             +"\n*            The Oregon Trail             *"
                             +"\n*-----------------------------------------*"
-                            +"\n      1       2       3       4       5    ");
+                            +"\n      0       1       2       3       "
+                + "    ");
         for (Location[] row : locations) {
             this.console.print("\n*-----------------------------------------*"
                               + "\n" + i + " " );
@@ -150,8 +151,8 @@ public class GameMenuView extends View{
         MapView mapview = new MapView();
         mapview.display();
         
-        //DisplayMapView displayMapView = new DisplayMapView();
-        //displayMapView.display();
+        MapView mapView = new MapView();
+        mapView.display();
     }
 }
 

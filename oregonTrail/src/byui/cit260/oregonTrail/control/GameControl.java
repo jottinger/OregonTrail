@@ -121,7 +121,7 @@ public class GameControl {
         // close the output file
         OregonTrail.setCurrentGame(game); // save in OregonTrail 
     }
-    
+
 
     public void CreateNewPlayer(String name) { // called from doAction() in StartProgramView class
         

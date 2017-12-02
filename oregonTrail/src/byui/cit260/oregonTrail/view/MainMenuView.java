@@ -179,14 +179,14 @@ public class MainMenuView extends View {
         try {
         while (!valid) { 
             //loop while an invalid value is entered
-        this.console.println("\nEnter game file path." );
             
             value = keyboard.readLine(); //get next line typed on keyboard and store in value
             value = value.trim(); //trim off leading and trailing blanks
             
             if (value.length() < 1) { //if value is blank print error message, starts loop again
                 ErrorView.display(this.getClass().getName(),
-                        "\nInvalid value: value cannot be blank");
+                        "\nInvalid value: value cannot be blank"
+                +"\n Enter game file path");
                 continue;
             }
         

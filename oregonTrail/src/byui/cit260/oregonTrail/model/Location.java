@@ -52,6 +52,7 @@ public class Location implements Serializable{
     private String symbol;
     private boolean blocked;
     private Scene scene;
+    private Places place;
     
     
     // constructor function
@@ -106,20 +107,12 @@ public class Location implements Serializable{
         this.row = row;
     }
 
-    public boolean getVisited() {
+    public boolean isVisited() {
         return visited;
     }
 
     public void setVisited(boolean visited) {
         this.visited = visited;
-    }
-
-    public Scene getScene() {
-        return scene;
-    }
-
-    public void setScene(Scene scene) {
-        this.scene = scene;
     }
 
     public String getSymbol() {
@@ -138,19 +131,36 @@ public class Location implements Serializable{
         this.blocked = blocked;
     }
 
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    public Places getPlace() {
+        return place;
+    }
+
+    public void setPlace(Places place) {
+        this.place = place;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 23 * hash + Objects.hashCode(this.name);
-        hash = 23 * hash + this.milesFromStart;
-        hash = 23 * hash + this.milesToNext;
-        hash = 23 * hash + Objects.hashCode(this.type);
-        hash = 23 * hash + this.column;
-        hash = 23 * hash + this.row;
-        hash = 23 * hash + (this.visited ? 1 : 0);
-        hash = 23 * hash + Objects.hashCode(this.symbol);
-        hash = 23 * hash + (this.blocked ? 1 : 0);
-        hash = 23 * hash + Objects.hashCode(this.scene);
+        int hash = 3;
+        hash = 53 * hash + Objects.hashCode(this.name);
+        hash = 53 * hash + this.milesFromStart;
+        hash = 53 * hash + this.milesToNext;
+        hash = 53 * hash + Objects.hashCode(this.type);
+        hash = 53 * hash + this.column;
+        hash = 53 * hash + this.row;
+        hash = 53 * hash + (this.visited ? 1 : 0);
+        hash = 53 * hash + Objects.hashCode(this.symbol);
+        hash = 53 * hash + (this.blocked ? 1 : 0);
+        hash = 53 * hash + Objects.hashCode(this.scene);
+        hash = 53 * hash + Objects.hashCode(this.place);
         return hash;
     }
 
@@ -196,15 +206,17 @@ public class Location implements Serializable{
         if (!Objects.equals(this.scene, other.scene)) {
             return false;
         }
+        if (this.place != other.place) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Location{" + "name=" + name + ", milesFromStart=" + milesFromStart + ", milesToNext=" + milesToNext + ", type=" + type + ", column=" + column + ", row=" + row + ", visited=" + visited + ", symbol=" + symbol + ", blocked=" + blocked + ", scene=" + scene + '}';
+        return "Location{" + "name=" + name + ", milesFromStart=" + milesFromStart + ", milesToNext=" + milesToNext + ", type=" + type + ", column=" + column + ", row=" + row + ", visited=" + visited + ", symbol=" + symbol + ", blocked=" + blocked + ", scene=" + scene + ", place=" + place + '}';
     }
 
-    
-    
-    
+ 
 }
+

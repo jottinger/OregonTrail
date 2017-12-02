@@ -9,13 +9,10 @@ package byui.cit260.oregonTrail.view;
  *
  * @author Dresen_HP
  */
-public class DisplayMapView extends View{
+class MoveLocationView {
 
-    public void display() {
-        this.console.println("\n *** DisplayMapView called ***");
+    void display() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-        @Override
-    public boolean doAction(String value) {
-        return false;
-    }
+    
 }
