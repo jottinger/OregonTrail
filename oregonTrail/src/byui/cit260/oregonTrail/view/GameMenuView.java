@@ -34,6 +34,7 @@ public class GameMenuView extends View{
                     +"\nH - Hunt"
                     +"\nP - Purchase Goods"
                     +"\nM - Travel to Next Location"
+                    +"\nT - Talk to Locals"
                     +"\nQ - Quit"
                     +"\n----------------------------------------------------"
                     +"\n"
@@ -116,6 +117,10 @@ public class GameMenuView extends View{
                break;
            case "M":
                this.displayMap();
+               break;
+           case "T":
+               TalkToLocalsView talktoLocalsView = new TalkToLocalsView();
+               talktoLocalsView.display();
                break;
            default:
                ErrorView.display(this.getClass().getName(), "*** Error: invalid choice entered. Try again. ***");
