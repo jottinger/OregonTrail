@@ -197,8 +197,8 @@ class BarterView extends View {
                     ErrorView.display(this.getClass().getName(), "Error: " + ex.getMessage());
                 }
             }
-                    PurchaseGoodsView purchaseGoodsView = new PurchaseGoodsView(inventory);
-                    purchaseGoodsView.display();
+                    BarterView barterView = new BarterView();
+                    barterView.display();
                     break;
                 } else {
                     ErrorView.display(this.getClass().getName(), "Error: There was an error completing the sale. Try again");

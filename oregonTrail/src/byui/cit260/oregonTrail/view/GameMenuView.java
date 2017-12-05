@@ -131,11 +131,11 @@ public class GameMenuView extends View{
         //locations = get the 2-D locations array from the map
         Location[][] locations = game.getMap().getLocations();
         //Print the title
-        int i = 0;
+        int i = 1;
         this.console.println(  "\n*******************************************"
                             +"\n*            The Oregon Trail             *"
                             +"\n*-----------------------------------------*"
-                            +"\n      0       1       2       3       "
+                            +"\n      1       2       3       4       5       "
                 + "    ");
         for (Location[] row : locations) {
             this.console.print("\n*-----------------------------------------*"
@@ -151,8 +151,7 @@ public class GameMenuView extends View{
         MapView mapview = new MapView();
         mapview.display();
         
-        MapView mapView = new MapView();
-        mapView.display();
+
     }
 }
 

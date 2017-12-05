@@ -16,6 +16,8 @@ import java.awt.Point;
 public class Scene implements Serializable {
     private String description;
     private String name;
+    private String option1;
+    
 
     // default constructor
 
@@ -41,11 +43,20 @@ public class Scene implements Serializable {
         this.name = name;
     }
 
+    public String getOption1() {
+        return option1;
+    }
+
+    public void setOption1(String option1) {
+        this.option1 = option1;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 29 * hash + Objects.hashCode(this.description);
-        hash = 29 * hash + Objects.hashCode(this.name);
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.description);
+        hash = 79 * hash + Objects.hashCode(this.name);
+        hash = 79 * hash + Objects.hashCode(this.option1);
         return hash;
     }
 
@@ -67,14 +78,17 @@ public class Scene implements Serializable {
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
+        if (!Objects.equals(this.option1, other.option1)) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Scene{" + "description=" + description + ", name=" + name + '}';
+        return "Scene{" + "description=" + description + ", name=" + name + ", option1=" + option1 + '}';
     }
-    
+
 
     
    

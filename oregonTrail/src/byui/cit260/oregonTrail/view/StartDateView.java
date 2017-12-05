@@ -6,7 +6,10 @@
 package byui.cit260.oregonTrail.view;
 
 import byui.cit260.oregonTrail.control.GameControl;
+import byui.cit260.oregonTrail.exceptions.GameControlException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import oregonTrail.OregonTrail;
 
 /**
@@ -65,15 +68,23 @@ public class StartDateView extends View{
     }
 
     private void saveStartDate(int startDate) {
-        GameControl.setStartDate(startDate);
-        this.findThisDay(startDate);
+        
+        try {
+            GameControl.setStartDate(startDate);
+        } catch (GameControlException ex) {
+            ErrorView.display(this.getClass().getName(), ex.getMessage());
+        }
+        this.findThisDay();
         
     }
-    private void findThisDay(int startDate) {
-        int travelDays = OregonTrail.getCurrentGame().getTravelDays();
-        int monthDate = GameControl.findMonth(startDate, travelDays); 
-        int day = GameControl.findDay(startDate, travelDays);
-        String calDate = GameControl.thisDay(monthDate, day);
+
+    private void findThisDay() {        
+        String calDate = "";
+        try {
+            calDate = GameControl.thisDay();
+        } catch (GameControlException ex) {
+            ErrorView.display(this.getClass().getName(), ex.getMessage());
+        }
         this.console.println("\n*************************************************"
                           + "\n| StartDate: " + calDate
                           + "\n************************************************");

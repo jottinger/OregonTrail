@@ -33,7 +33,7 @@ public enum Actor{
     private final CharacterDialog[] dialog = new CharacterDialog[18]; //Dependency
     
     
-
+    
     // constructor
     Actor(String name, String description) {
         this.name = name;

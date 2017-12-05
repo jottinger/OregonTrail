@@ -5,6 +5,7 @@
  */
 package byui.cit260.oregonTrail.control;
 
+import byui.cit260.oregonTrail.exceptions.GameControlException;
 import byui.cit260.oregonTrail.model.Game;
 import byui.cit260.oregonTrail.model.Occupation;
 import byui.cit260.oregonTrail.model.Player;
@@ -26,7 +27,7 @@ public class GameControlTest {
      * Test of getMonth method, of class GameControl.
      */
     @Test
-    public void testGetMonth() {
+    public void testGetMonth() throws GameControlException {
         System.out.println("getMonth");
         /********************
          * Test case #1

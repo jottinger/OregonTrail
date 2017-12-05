@@ -11,7 +11,7 @@ package byui.cit260.oregonTrail.model;
  */
 public enum SceneType {
     HuntingScene,
-    BarterScene,
+    StartScene,
     RiverScene,
     RegularScene,
     FortScene,

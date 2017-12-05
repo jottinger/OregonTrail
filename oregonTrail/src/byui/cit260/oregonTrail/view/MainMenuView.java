@@ -37,7 +37,7 @@ public class MainMenuView extends View {
                     +"\n"
                     +"\n Please enter your choice:");
    
-    } // returns control back to displayNextView() in StartProgramView
+    } 
 
     @Override
     public boolean doAction(String value) { //called from displayMainMenuView() in this class. menu choice passed in.

@@ -35,21 +35,7 @@ public class MapView extends View {
                 + "\n"
                 + "\n Please enter your choice:");
     }
-    @Override
-    public void display() {  //called from main() in OregonTrail.java
-            boolean done = false; // set flag to not done
-            do {
-                //prompt for and get player's name
-                String value = this.getInput(); // calls getPlayersName() from this class, stores in string playersName
-                GameMenuView gameMenuView = new GameMenuView();
-                if (value.toUpperCase().equals("Q")) // user wants to quit
-                    gameMenuView.display();
-                    
-                 
-                //do the requested action and display the next view
-                done = this.doAction(value);// Calls doAction()in this class and passes in name. Return value changes boolean to true to exit do while loop.
-            } while (!done);
-    }
+
     @Override
     public boolean doAction(String value) {
         value = value.toUpperCase();
@@ -65,81 +51,12 @@ public class MapView extends View {
                 break;
             default:
                 ErrorView.display(this.getClass().getName(), "*** Error: invalid choice entered. Try again. ***");
-
+                GameMenuView gameMenuView = new GameMenuView();
+                gameMenuView.displayMap();
         }
         return false;
 
     }
 
-    private void printReport() {
-        
-        String filePath = this.getFilePath();
-        String list = "\n"
-               +"\n----------------------------------------------------"              
-                +"\n List of map loctations                            |"
-                +"\n----------------------------------------------------"
-                +"\n   Name, Scene Type, Miles from Start"
-                +"\n";
-        Location[][] locations = OregonTrail.getCurrentGame().getMap().getLocations();
-        for (Location[] location : locations) {
-            for (Location stop : location) {
-                list += "\n" + stop.getSymbol() + ", " + stop.getPlace().getDescription() 
-                        + ", " + stop.getPlace().getMilesFromStart();
-                
-            }
-        }
-        this.console.print(list);
-        try {
-            // save report to specified file.
-        printMapReport(list, filePath);
-        }
-        catch (Exception ex) {
-            ErrorView.display(this.getClass().getName(), ex.getMessage());
-        }
-        display();
-    }
-
-    private String getFilePath() {
-        String value = "";
-        boolean valid = false;
-        try {
-            while (!valid) {
-                value = keyboard.readLine();
-                value = value.trim();
-                
-                if (value.length() < 1) {
-                    ErrorView.display(this.getClass().getName(), "\nInvalid value: value cannot be blank"
-                            + "\n Enter game file path");
-                    continue;
-                }
-                break;
-            }
-        } catch (IOException ex) {
-            ErrorView.display(this.getClass().getName(), "Error reading input: " + ex.getMessage());
-            
-        }
-        return value;
-}
-
-    private void printMapReport(String list, String filePath) {
-        
-        // try with resources will auto close at end
-        try (PrintWriter out = new PrintWriter(filePath)) {
-            // print title and column headings
-            out.println("\n\n       LIST OF MAP LOCATIONS       \n");
-            out.printf("%n%-10s%20s%10s", "Symbol", "Description", "Scene Type");
-            out.printf("%n%-10s%20s%10s", "------", "-----------", "----------");
-            
-            // print symbol, description, and scenetype of each item
-        for (Location[] location : OregonTrail.getCurrentGame().getMap().getLocations()) {
-            for (Location stop : location) {
-                out.printf("%n%-10s%20s%10s", stop.getSymbol(), stop.getPlace().getDescription(),stop.getScene().getDescription());
-                
-            }
-        }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(MapView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }
+    
 }

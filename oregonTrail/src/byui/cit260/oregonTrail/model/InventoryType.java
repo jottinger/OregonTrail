@@ -12,7 +12,7 @@ package byui.cit260.oregonTrail.model;
 public enum InventoryType {
     Bullets("Bullets - 10 count",1),
     Clothing("Clothing - 1 set", 20),
-    Food("Food - 20 lbs.", 5),
+    Food("Food - 4 lbs.", 1),
     Guide("Guide - 1 week", 50),
     Medicine("Medicine - 1 bottle", 10),
     Oxen("Oxen - 1 team", 40),

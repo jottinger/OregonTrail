@@ -6,8 +6,11 @@
 package byui.cit260.oregonTrail.view;
 
 import byui.cit260.oregonTrail.control.GameControl;
+import byui.cit260.oregonTrail.exceptions.GameControlException;
 import byui.cit260.oregonTrail.model.Occupation;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import oregonTrail.OregonTrail;
 
 /**
@@ -90,7 +93,11 @@ class OccupationView extends View {
     }         
 
     private void saveOccupation(Occupation occupation) {
-        GameControl.setOccupation(occupation);
+        try {
+            GameControl.setOccupation(occupation);
+        } catch (GameControlException ex) {
+            ErrorView.display(this.getClass().getName(), ex.getMessage());
+        }
         this.console.println("\n*************************************************"
                           + "\n| Occupation chosen: " + OregonTrail.getPlayer().getOccupation().getName()
                           + "\n************************************************");

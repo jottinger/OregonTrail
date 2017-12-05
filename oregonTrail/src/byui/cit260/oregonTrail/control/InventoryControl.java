@@ -26,7 +26,7 @@ public class InventoryControl {
     /* Gets the player's inventory from the current game. 
     * Stores it in inventory to make it available to the controller to manipulate.
     */
-    private static InventoryItem[] getItemDatabase() throws InventoryControlException {  
+    public static InventoryItem[] getItemDatabase() throws InventoryControlException {  
         InventoryItem[] inventory = new InventoryItem[8]; 
         inventory = OregonTrail.getCurrentGame().getInventory(); 
         return inventory;
@@ -42,7 +42,7 @@ public class InventoryControl {
     * Information is validated to make sure not null. 
     * The variable item is returned.*/
     
-    private static InventoryItem getItem(InventoryType type) throws InventoryControlException {
+    public static InventoryItem getItem(InventoryType type) throws InventoryControlException {
         InventoryItem[] items = getItemDatabase();
         
         InventoryItem item = items[type.ordinal()];
@@ -67,7 +67,7 @@ public class InventoryControl {
     * Public so can be accessed from hunt and game control. Void because it won't return anything. Parameters are 
     * the type from InventoryType class and the quantity of items to be removed.
     * A new item variable is created with datatype of InventoryType class and filled with item from player's inventory.*/
-    public static void subtractFromInventory(InventoryType type, int quantity) throws InventoryControlException {
+    public static void subtractFromInventory(InventoryType type, double quantity) throws InventoryControlException {
        InventoryItem item = getItem(type); 
        item.setQuantityInStock(item.getQuantityInStock() - quantity);
     }

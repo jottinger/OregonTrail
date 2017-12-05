@@ -6,8 +6,11 @@
 package byui.cit260.oregonTrail.view;
 
 import byui.cit260.oregonTrail.control.GameControl;
+import byui.cit260.oregonTrail.exceptions.GameControlException;
 import byui.cit260.oregonTrail.model.Game;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import oregonTrail.OregonTrail;
 
 /**
@@ -65,7 +68,12 @@ class CompanionView extends View {
             + "\nThe name must be greater than one character in length");
             this.display(); // calls getInput() from this class to prompt user to re-enter name.
         }
-        GameControl.setCompanionName(value); // calls setCompaninName() in GameControl
+        
+        try {
+            GameControl.setCompanionName(value); // calls setCompaninName() in GameControl
+        } catch (GameControlException ex) {
+            ErrorView.display(this.getClass().getName(), ex.getMessage());
+        }
         return false; // returns false to display() in this class
     } 
     

@@ -6,8 +6,11 @@
 package byui.cit260.oregonTrail.view;
 
 import byui.cit260.oregonTrail.control.GameControl;
+import byui.cit260.oregonTrail.exceptions.GameControlException;
 import byui.cit260.oregonTrail.model.Player;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import oregonTrail.OregonTrail;
 
 /**
@@ -69,12 +72,14 @@ public class StartProgramView extends View {
         }
         
         // call createPlayer() control function from GameControl class to create player and set name.
-        Player player = GameControl.createPlayer(value);
-        
-        if (player == null) { //Checks to see if player created. if unsuccessful, print error message.
-            ErrorView.display(this.getClass().getName(), "Error creating the player.");
-            return false; // if unsuccsful, returns false to displayStartProgramView so loop is repeated.
+        Player player;
+        try {
+            player = GameControl.createPlayer(value);
+        } catch (GameControlException ex) {
+            ErrorView.display(this.getClass().getName(), ex.getMessage());
+            return false;
         }
+        
         
         //Calls displayNextView from this class and passes in player object to display next view. 
         this.displayNextView(player);// 
