@@ -137,22 +137,23 @@ public class GameMenuView extends View{
         Location[][] locations = game.getMap().getLocations();
         //Print the title
         int i = 1;
-        this.console.println(  "\n*******************************************"
-                            +"\n*            The Oregon Trail             *"
-                            +"\n*-----------------------------------------*"
-                            +"\n      1       2       3       4       5       "
+        this.console.println(  "\n***********************************************"
+                              +"\n*               The Oregon Trail              *"
+                              +"\n*---------------------------------------------*"
+                              +"\n|     |   1   |   2   |   3   |   4   |   5   |  "
                 + "    ");
         for (Location[] row : locations) {
-            this.console.print("\n*-----------------------------------------*"
-                              + "\n" + i + " " );
+            this.console.print("\n-----------------------------------------------"
+                              + "\n|  " + i  );
             i++;
         
             for (Location location : row){
-                this.console.print("|   " + location.getSymbol() + "   ");
+                this.console.print("  |   " + location.getSymbol() + " ");
                 
             }
+            this.console.print("  |");
         }       
-        this.console.println("\n*******************************************");
+        this.console.println("\n***********************************************");
         MapView mapview = new MapView();
         mapview.display();
         
