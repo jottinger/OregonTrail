@@ -76,6 +76,7 @@ public class MapControl {
         //assignQuestionsToScenes()
         //assignDialogToScenes(scenes);
         assignScenesToLoctions(gameMap, scenes);
+        MapControl.assignRiverHeightsToLoctions(gameMap);
         return gameMap;
     }
 
@@ -234,6 +235,18 @@ public class MapControl {
         locations[4][3].setScene(scenes[SceneType.RiverScene.ordinal()]);
         locations[4][4].setScene(scenes[SceneType.EndScene.ordinal()]);
     }
+    
+    private static void assignRiverHeightsToLoctions(Map map) 
+            throws MapControlException
+        {
+            Location[][] locations = map.getLocations();
+            locations[0][1].setRiverHeight(5);
+            locations[0][2].setRiverHeight(8);
+            locations[1][1].setRiverHeight(12);
+            locations[2][1].setRiverHeight(20);
+            locations[2][4].setRiverHeight(3);
+            locations[4][3].setRiverHeight(8);
+        }
     public static int calcDaysNeeded(int miles, int pace) throws MapControlException {
         if (miles < 0 ) {
             throw new MapControlException("Can not calculate days needed because miles negative. "

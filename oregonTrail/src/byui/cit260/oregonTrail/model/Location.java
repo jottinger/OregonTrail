@@ -53,6 +53,7 @@ public class Location implements Serializable{
     private boolean blocked;
     private Scene scene;
     private Places place;
+    private int riverHeight;
     
     
     // constructor function
@@ -147,20 +148,29 @@ public class Location implements Serializable{
         this.place = place;
     }
 
+    public int getRiverHeight() {
+        return riverHeight;
+    }
+
+    public void setRiverHeight(int riverHeight) {
+        this.riverHeight = riverHeight;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + Objects.hashCode(this.name);
-        hash = 53 * hash + this.milesFromStart;
-        hash = 53 * hash + this.milesToNext;
-        hash = 53 * hash + Objects.hashCode(this.type);
-        hash = 53 * hash + this.column;
-        hash = 53 * hash + this.row;
-        hash = 53 * hash + (this.visited ? 1 : 0);
-        hash = 53 * hash + Objects.hashCode(this.symbol);
-        hash = 53 * hash + (this.blocked ? 1 : 0);
-        hash = 53 * hash + Objects.hashCode(this.scene);
-        hash = 53 * hash + Objects.hashCode(this.place);
+        int hash = 5;
+        hash = 31 * hash + Objects.hashCode(this.name);
+        hash = 31 * hash + this.milesFromStart;
+        hash = 31 * hash + this.milesToNext;
+        hash = 31 * hash + Objects.hashCode(this.type);
+        hash = 31 * hash + this.column;
+        hash = 31 * hash + this.row;
+        hash = 31 * hash + (this.visited ? 1 : 0);
+        hash = 31 * hash + Objects.hashCode(this.symbol);
+        hash = 31 * hash + (this.blocked ? 1 : 0);
+        hash = 31 * hash + Objects.hashCode(this.scene);
+        hash = 31 * hash + Objects.hashCode(this.place);
+        hash = 31 * hash + this.riverHeight;
         return hash;
     }
 
@@ -194,6 +204,9 @@ public class Location implements Serializable{
         if (this.blocked != other.blocked) {
             return false;
         }
+        if (this.riverHeight != other.riverHeight) {
+            return false;
+        }
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
@@ -214,9 +227,10 @@ public class Location implements Serializable{
 
     @Override
     public String toString() {
-        return "Location{" + "name=" + name + ", milesFromStart=" + milesFromStart + ", milesToNext=" + milesToNext + ", type=" + type + ", column=" + column + ", row=" + row + ", visited=" + visited + ", symbol=" + symbol + ", blocked=" + blocked + ", scene=" + scene + ", place=" + place + '}';
+        return "Location{" + "name=" + name + ", milesFromStart=" + milesFromStart + ", milesToNext=" + milesToNext + ", type=" + type + ", column=" + column + ", row=" + row + ", visited=" + visited + ", symbol=" + symbol + ", blocked=" + blocked + ", scene=" + scene + ", place=" + place + ", riverHeight=" + riverHeight + '}';
     }
 
+    
  
 }
 
