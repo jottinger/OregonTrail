@@ -273,4 +273,3 @@ public class GameControl {
 //public void quitGame() {
 //TODO: Add statements to function.
 //}
-
