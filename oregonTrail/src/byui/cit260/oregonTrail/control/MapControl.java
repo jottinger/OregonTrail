@@ -131,7 +131,7 @@ public class MapControl {
                     + "set your start date, and purchase items for the road.");
             scene.setActivityDone(false);
             scenes[SceneType.StartScene.ordinal()] = scene;
-            scene.setOption1("Prepare For Travel");
+            scene.setOption1("Prepare For Travel (For quick setup, enter 99)");
         }
         {
             RiverScene scene = new RiverScene();
