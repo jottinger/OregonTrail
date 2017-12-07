@@ -7,6 +7,7 @@ package byui.cit260.oregonTrail.view;
 
 import byui.cit260.oregonTrail.control.GameControl;
 import byui.cit260.oregonTrail.control.MapControl;
+import byui.cit260.oregonTrail.exceptions.MapControlException;
 import byui.cit260.oregonTrail.model.Location;
 import byui.cit260.oregonTrail.model.Places;
 import java.io.FileNotFoundException;
@@ -42,8 +43,34 @@ public class MapView extends View {
 
         switch (value) {
             case "M":
-                MoveLocationView moveLocationView = new MoveLocationView();
-                moveLocationView.display();
+                Location location = null;
+        {
+            try {
+                location = MapControl.getCurrentLocation();
+            } catch (MapControlException ex) {
+                ErrorView.display(this.getClass().getName(), ex.getMessage());
+                return false;
+            }
+        }
+                boolean activity = location.getScene().isActivityDone();
+                if (activity) {
+                    MoveLocationView moveLocationView = new MoveLocationView();
+                    moveLocationView.display();
+                } else {
+                    ErrorView.display(this.getClass().getName(), "\nError moving Location: "
+                            + "\nYou must complete a task at this location before moving on."
+                            + "\nSelect option 1 to complete the task");
+                     
+            try {
+                SceneView sceneView = new SceneView();
+                sceneView.display();
+            } catch (MapControlException ex) {
+                ErrorView.display(this.getClass().getName(), ex.getMessage());
+                return false;
+            }
+                    
+                }
+                
                 break;
             case "P":
                 PrintMapView printMapView = new PrintMapView();
