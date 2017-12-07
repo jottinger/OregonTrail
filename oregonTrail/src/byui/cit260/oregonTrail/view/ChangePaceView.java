@@ -5,6 +5,7 @@
  */
 package byui.cit260.oregonTrail.view;
 
+import byui.cit260.oregonTrail.exceptions.MapControlException;
 import byui.cit260.oregonTrail.model.Player;
 import java.util.Scanner;
 import oregonTrail.OregonTrail;
@@ -79,7 +80,14 @@ public class ChangePaceView extends View{
 
     private void displayNextView(int pace) {
         this.console.println("Your pace has changed to " + pace + ". ");
-        GameMenuView gameMenuView = new GameMenuView();
-        gameMenuView.display();
+        {
+                try {
+                    SceneView sceneView = new SceneView();
+                    sceneView.display();//exit the game
+                } catch (MapControlException ex) {
+                    ErrorView.display(this.getClass().getName(), ex.getMessage());
+                    return;
+                }
+            }
     }
 }
