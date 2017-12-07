@@ -6,7 +6,10 @@
 package byui.cit260.oregonTrail.view;
 
 import byui.cit260.oregonTrail.control.HuntControl;
+import byui.cit260.oregonTrail.control.MapControl;
+import byui.cit260.oregonTrail.exceptions.MapControlException;
 import byui.cit260.oregonTrail.model.Animal;
+import byui.cit260.oregonTrail.model.Location;
 import java.util.Scanner;
 import oregonTrail.OregonTrail;
 
@@ -63,6 +66,13 @@ public class HuntView extends View{
  
        @Override
        public boolean doAction(String value) {
+        try {
+            // set activity to done.
+            Location location = MapControl.getCurrentLocation();
+            location.getScene().setActivityDone(true);
+        } catch (MapControlException ex) {
+            ErrorView.display(this.getClass().getName(), ex.getMessage());
+        }
         Animal animal = null;
         String difficulty;
         boolean done = false;
