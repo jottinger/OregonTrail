@@ -8,6 +8,7 @@ import byui.cit260.oregonTrail.exceptions.GameControlException;
 import byui.cit260.oregonTrail.exceptions.MapControlException;
 import byui.cit260.oregonTrail.model.Game;
 import byui.cit260.oregonTrail.model.Occupation;
+import java.awt.Point;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -31,7 +32,7 @@ public class MainMenuView extends View {
                     +"\nG - Get and start saved game"
                     +"\nH - Get help on how to play the game"
                     +"\nS - Save game"
-                    +"\nP - Pass setup and start quick game"
+                   /* +"\nP - Pass setup and start quick game"*/
                     +"\nQ - Quit"
                     +"\n----------------------------------------------------"
                     +"\n"
@@ -66,7 +67,7 @@ public class MainMenuView extends View {
             case "S": //Calls saveGame() in this class. save the current game
                 this.saveGame();
                 break;
-            case "P": // Bypasses all of start up menu for testing.
+            /*case "P": // Bypasses all of start up menu for testing.
                 try{
                     try { 
                 this.startNewGameFast();
@@ -76,7 +77,7 @@ public class MainMenuView extends View {
                 } catch (GameControlException ge) {
                     ErrorView.display(this.getClass().getName(), "Error: " + ge.getMessage());
                 }
-                break;
+                break; */
             default: // Print out error message and exit loop.
                 ErrorView.display(this.getClass().getName(),"Error reading input: Invalid selection *** Try again");
                 break;
@@ -94,10 +95,10 @@ public class MainMenuView extends View {
             if (returnValue < 0) { //Checks to see if player created. if unsuccessful, print error message.
             throw new MapControlException("Unable to create new game. Player is NULL.");
         }
-
-            CompanionView companionView = new CompanionView(); // creates new companionView object by calling construtor function in companionView.
-            companionView.display(); //calls companionView() in companionView
-            
+            Point coordinates = new Point(0,0);
+            ConfirmMoveView confirmView = new ConfirmMoveView(0, 0, coordinates); // creates new companionView object by calling construtor function in companionView.
+            confirmView.welcomeBanner(); //calls companionView() in companionView
+            confirmView.deliverNextView();
             return true; //success!*/
     }
             

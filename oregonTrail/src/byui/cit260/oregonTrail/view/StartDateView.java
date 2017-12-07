@@ -6,7 +6,11 @@
 package byui.cit260.oregonTrail.view;
 
 import byui.cit260.oregonTrail.control.GameControl;
+import byui.cit260.oregonTrail.control.MapControl;
 import byui.cit260.oregonTrail.exceptions.GameControlException;
+import byui.cit260.oregonTrail.exceptions.InventoryControlException;
+import byui.cit260.oregonTrail.exceptions.MapControlException;
+import byui.cit260.oregonTrail.model.Location;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,11 +64,33 @@ public class StartDateView extends View{
     } 
 
     private void displayNextView() {
-        GameMenuView gameMenuView = new GameMenuView();
-        gameMenuView.display();
-        // TODO: needs to change to inventory view.  
-        // Still need to add money to inventory and let user purchase supplies.
-        // Still need to set pace.
+        
+            
+            this.console.println("\n****************************************************"
+                    + "\n You are almost ready to begin"
+                    +"\n****************************************************"
+                    +"\n----------------------------------------------------"
+                    +"\n| Companions                                        |"
+                    +"\n----------------------------------------------------"
+                    +"\nYou: " + OregonTrail.getCurrentGame().getPlayer().getName()
+                    +"\nCompanion 1: " + OregonTrail.getCurrentGame().getCompanion1()
+                    +"\nCompanion 2: " + OregonTrail.getCurrentGame().getCompanion2()
+                    +"\nCompanion 3: " + OregonTrail.getCurrentGame().getCompanion3()
+                    +"\n----------------------------------------------------"
+                    + "\n| Occupation chosen: " + OregonTrail.getPlayer().getOccupation().getName()
+                    + "\n----------------------------------------------------"
+                    + "\n| StartDate: MARCH 1;"
+                    +"\n****************************************************"
+                    +"\n"
+                    +"\nIt's time to purchase supplies for the road.");
+        try {
+            PurchaseGoodsView purchaseGoods = new PurchaseGoodsView();
+            purchaseGoods.display();
+
+        } catch (InventoryControlException ex) {
+            ErrorView.display(this.getClass().getName(), ex.getMessage());
+            return;
+        }
     }
 
     private void saveStartDate(int startDate) {
@@ -73,6 +99,10 @@ public class StartDateView extends View{
             GameControl.setStartDate(startDate);
         } catch (GameControlException ex) {
             ErrorView.display(this.getClass().getName(), ex.getMessage());
+            return;
+        } catch (MapControlException ex) {
+            ErrorView.display(this.getClass().getName(), ex.getMessage());
+            return;
         }
         this.findThisDay();
         

@@ -48,6 +48,8 @@ public class TalkToLocalsView extends View{
         switch (choice) {
             case "A":
                 actor = Actor.Settler;
+                // grab person
+                //create view
             case "B":
                 actor = Actor.Pioneer;
             case "C":

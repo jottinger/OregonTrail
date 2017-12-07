@@ -8,6 +8,7 @@ package byui.cit260.oregonTrail.view;
 import byui.cit260.oregonTrail.control.InventoryControl;
 import byui.cit260.oregonTrail.control.RiverControl;
 import byui.cit260.oregonTrail.exceptions.InventoryControlException;
+import byui.cit260.oregonTrail.exceptions.MapControlException;
 import byui.cit260.oregonTrail.exceptions.RiverControlException;
 import byui.cit260.oregonTrail.model.InventoryItem;
 import byui.cit260.oregonTrail.model.InventoryType;
@@ -22,25 +23,49 @@ import oregonTrail.OregonTrail;
  * @author jordan
  */
 public class RiverMenuView extends View {
+
     private String menu;
     private String promptMessage;
-    
+
     public RiverMenuView() {
         super("\n"
-                    +"\n----------------------------------------------------"
-                    +"\n| River Menu                                       |"
-                    +"\n----------------------------------------------------"
-                    +"\n1 - Ford the river"
-                    +"\n2 - Hire a Guide for $50"
-                    +"\n3 - Save game"
-                    +"\nQ - Quit to previous menu"
-                    +"\n----------------------------------------------------");
+                + "\n----------------------------------------------------"
+                + "\n| River Menu                                       |"
+                + "\n----------------------------------------------------"
+                + "\n1 - Ford the river"
+                + "\n2 - Hire a Guide for $50"
+                + "\n3 - Save game"
+                + "\nQ - Quit to previous menu"
+                + "\n----------------------------------------------------");
     }
-    
-    
+
+    @Override
+    public void display() {  //called from main() in OregonTrail.java
+        boolean done = false; // set flag to not done
+
+        do {
+            //prompt for and get player's name
+            String value = this.getInput(); // calls getPlayersName() from this class, stores in string playersName
+
+            if (value.toUpperCase().equals("Q")) {
+
+                try {
+                    SceneView sceneView = new SceneView();
+                    sceneView.display();//exit the game
+                } catch (MapControlException ex) {
+                    ErrorView.display(this.getClass().getName(), ex.getMessage());
+                    return;
+                }
+
+            }
+            //do the requested action and display the next view
+            done = this.doAction(value);// Calls doAction()in this class and passes in name. Return value changes boolean to true to exit do while loop.
+        } while (!done);
+    }
+
     @Override
     public boolean doAction(String choice) {
-        
+
         int number = 0;
         try {
             number = parseInt(choice);
@@ -48,17 +73,13 @@ public class RiverMenuView extends View {
             ErrorView.display(this.getClass().getName(), "Error reading input: You must enter a valid number. Try again or enter Q to quit.");
             getInput();
         }
-        
+
         switch (number) {
-            case 1: {
-            try {
+            case 1:  {
                 //ford the river
                 this.fordRiver();
-            } catch (InventoryControlException ex) {
-                ErrorView.display(this.getClass().getName(), "Error: " + ex.getMessage());
             }
-        }
-                break;
+            break;
             case 2: //hire a guide
                 this.hireGuide();
                 break;
@@ -66,13 +87,13 @@ public class RiverMenuView extends View {
                 this.saveGame();
                 break;
             default:
-                ErrorView.display(this.getClass().getName(),"Error reading input: Invalid selection *** Try again");
+                ErrorView.display(this.getClass().getName(), "Error reading input: Invalid selection *** Try again");
         }
-        
+
         return false;
     }
 
-    private void fordRiver() throws InventoryControlException {
+    private void fordRiver() {
         //ford the river
         int riverHeight = getRiverHeight();
         InventoryItem[] inventory = OregonTrail.getCurrentGame().getInventory();
@@ -86,18 +107,20 @@ public class RiverMenuView extends View {
         }
         if (success == 1) {
             this.riverYes();
-        }
-    
-        else if (success == 0) {
-            this.riverNo(inventory);
-        }
-        else {
+        } else if (success == 0) {
+            try {
+                this.riverNo(inventory);
+            } catch (InventoryControlException ex) {
+                ErrorView.display(this.getClass().getClass().getName(), ex.getMessage());
+                
+                        }
+        } else {
             ErrorView.display(this.getClass().getName(), "Error: There was an error fording the river. Try again");
             this.display();
         }
 
-            
     }
+
     private void saveGame() {
         this.console.println("*** saveGame() function called ***");
     }
@@ -125,12 +148,12 @@ public class RiverMenuView extends View {
 
     private void riverYes() {
         this.console.println("\n*************************************************"
-                          + "\n| Congratulations! "
-                          + "\n| Your attempt to cross the river succeeded."
-                          + "\n************************************************");
-            GameMenuView gameMenuView = new GameMenuView();
-            gameMenuView.display();
-        }
+                + "\n| Congratulations! "
+                + "\n| Your attempt to cross the river succeeded."
+                + "\n************************************************");
+        GameMenuView gameMenuView = new GameMenuView();
+        gameMenuView.display();
+    }
 
     private void riverNo(InventoryItem[] inventory) throws InventoryControlException {
         double lost = 0;
@@ -142,17 +165,17 @@ public class RiverMenuView extends View {
             mainMenuView.display();
         }
 
-            this.console.println("\n*************************************************"
-                          + "\n| Your attempt to cross the river failed."
-                          + "\n| 20% of your inventory fell in the river."
-                          + "\n| You lost " + lost + " items."
-                          + "\n************************************************"
-                          + "\n"
-                          + "\n************************************************"
-                          + "\n* Item: New Inventory Totals"
-                          + "\n************************************************"
-                          + "\n* Item: Quantity in Inventory, Value");
-            /*String name;
+        this.console.println("\n*************************************************"
+                + "\n| Your attempt to cross the river failed."
+                + "\n| 20% of your inventory fell in the river."
+                + "\n| You lost " + lost + " items."
+                + "\n************************************************"
+                + "\n"
+                + "\n************************************************"
+                + "\n* Item: New Inventory Totals"
+                + "\n************************************************"
+                + "\n* Item: Quantity in Inventory, Value");
+        /*String name;
             double inStock;
             int i = 0;
             for (InventoryItem item : inventory) {
@@ -161,21 +184,17 @@ public class RiverMenuView extends View {
                 
             this.console.println("\n* " + name + ": " + inStock); 
             }*/
-            String playerInventory = "";
-            try {
+        String playerInventory = "";
+        try {
             playerInventory = InventoryControl.displayInventoryQuantityPrice();
-            } catch (InventoryControlException ex) {
-                    ErrorView.display(this.getClass().getName(), 
-                            "Error reading input: " + ex.getMessage());
-                }
-            this.console.print(playerInventory);
-            this.console.println("\n* " 
-                + "\n************************************************");
-            this.display();
-            }
-   
-                
+        } catch (InventoryControlException ex) {
+            ErrorView.display(this.getClass().getName(),
+                    "Error reading input: " + ex.getMessage());
         }
+        this.console.print(playerInventory);
+        this.console.println("\n* "
+                + "\n************************************************");
+        this.display();
+    }
 
-
-
+}

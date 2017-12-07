@@ -12,6 +12,7 @@ import byui.cit260.oregonTrail.model.Game;
 import byui.cit260.oregonTrail.model.InventoryItem;
 import byui.cit260.oregonTrail.model.InventoryType;
 import static byui.cit260.oregonTrail.model.InventoryType.Money;
+import byui.cit260.oregonTrail.model.Location;
 import byui.cit260.oregonTrail.model.Occupation;
 import byui.cit260.oregonTrail.model.Player;
 import oregonTrail.OregonTrail;
@@ -76,8 +77,9 @@ public class GameControl {
         game.setInventory(items);
         game.setMilesTraveled(0);
         game.setPercentComplete(0);
-        game.setTravelDays(0);
+        game.setTravelDays(1);
         game.getPlayer().setPace(1);
+        game.setStartDate(1);
         // save location of player at start
         game.getPlayer().setColumn(0);
         game.getPlayer().setRow(0);
@@ -183,12 +185,15 @@ public class GameControl {
     }
 // called from CreateNewGame in this class
 
-    public static void setStartDate(int startDate) throws GameControlException {
+    public static void setStartDate(int startDate) throws GameControlException, MapControlException {
         Game game = OregonTrail.getCurrentGame();
         int gameStartDate = game.getStartDate();
-        if (gameStartDate == 0) {
+        if (gameStartDate == 1) {
             game.setStartDate(startDate);
         }
+        game.setTravelDays(0);
+        Location location = MapControl.getCurrentLocation();
+        location.getScene().setActivityDone(true);
 
     }
 

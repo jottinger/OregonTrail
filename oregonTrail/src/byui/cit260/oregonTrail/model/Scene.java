@@ -17,6 +17,8 @@ public class Scene implements Serializable {
     private String description;
     private String name;
     private String option1;
+    private boolean activityDone;
+    
     
 
     // default constructor
@@ -51,12 +53,21 @@ public class Scene implements Serializable {
         this.option1 = option1;
     }
 
+    public boolean isActivityDone() {
+        return activityDone;
+    }
+
+    public void setActivityDone(boolean activityDone) {
+        this.activityDone = activityDone;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.description);
-        hash = 79 * hash + Objects.hashCode(this.name);
-        hash = 79 * hash + Objects.hashCode(this.option1);
+        hash = 59 * hash + Objects.hashCode(this.description);
+        hash = 59 * hash + Objects.hashCode(this.name);
+        hash = 59 * hash + Objects.hashCode(this.option1);
+        hash = 59 * hash + (this.activityDone ? 1 : 0);
         return hash;
     }
 
@@ -72,6 +83,9 @@ public class Scene implements Serializable {
             return false;
         }
         final Scene other = (Scene) obj;
+        if (this.activityDone != other.activityDone) {
+            return false;
+        }
         if (!Objects.equals(this.description, other.description)) {
             return false;
         }
@@ -86,10 +100,9 @@ public class Scene implements Serializable {
 
     @Override
     public String toString() {
-        return "Scene{" + "description=" + description + ", name=" + name + ", option1=" + option1 + '}';
+        return "Scene{" + "description=" + description + ", name=" + name + ", option1=" + option1 + ", activityDone=" + activityDone + '}';
     }
-
-
     
+   
    
 }

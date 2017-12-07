@@ -52,8 +52,10 @@ class ConfirmMoveView extends View{
                 
             } catch (MapControlException ex) {
                 ErrorView.display(this.getClass().getName(), ex.getMessage());
+                return false;
             } catch (InventoryControlException ex) {
                 ErrorView.display(this.getClass().getName(), ex.getMessage());
+                return false;
             }
             // get scene
             Location newLocation = null;
@@ -62,11 +64,12 @@ class ConfirmMoveView extends View{
                 newLocation = MapControl.getCurrentLocation();
             } catch (MapControlException ex) {
                 ErrorView.display(this.getClass().getName(), ex.getMessage());
+                return false;
             }
         }
             String scene = newLocation.getScene().getName();
-            welcomeBanner(newLocation, scene);
-            deliverNextView(newLocation, scene);
+            welcomeBanner();
+            deliverNextView();
                 // deliver correct view.
             break;
         case "N":
@@ -81,7 +84,15 @@ class ConfirmMoveView extends View{
         } return false;
     }
 
-    private void welcomeBanner(Location location, String scene) {
+    public void welcomeBanner() {
+        Location location = null;
+        try {
+            location = MapControl.getCurrentLocation();
+        } catch (MapControlException ex) {
+            ErrorView.display(this.getClass().getName(), "\nError reading input: Invalid Entry. Please enter Y or N.");
+            display();
+        }
+        String scene = location.getScene().getName();
         String date = "";
         try {
             date = GameControl.thisDay();
@@ -90,7 +101,7 @@ class ConfirmMoveView extends View{
         }
         Game game = OregonTrail.getCurrentGame();
         String description = location.getScene().getDescription();
-        
+
         
         this.console.println("\n****************************************************"
                               + "\n Welcome to " + location.getPlace().getDescription() 
@@ -98,7 +109,7 @@ class ConfirmMoveView extends View{
                               +"\n----------------------------------------------------"
                               +"\nDate: " +   date   
                               +"\nMiles Traveled: " +   game.getMilesTraveled()
-                              +"\nPercent Complete: " +   game.getPercentComplete() * 100
+                              +"\nPercent Complete: " +  (int) Math.floor(game.getPercentComplete() * 100) + "%"
                               +"\n----------------------------------------------------"
                               +"\nThis is a " + scene + " location." 
                               +"\n" + description
@@ -117,21 +128,15 @@ class ConfirmMoveView extends View{
         
     }
 
-    public void deliverNextView(Location location, String scene) {
-        String option1 = location.getScene().getOption1();
-        String menu = "\n----------------------------------------------------"
-                              + "\n" + scene + " Location Menu"
-                              + "\n----------------------------------------------------"
-                              + "\n1 - " + option1
-                              + "\n2 - Barter"
-                              + "\n3 - Change Pace"
-                              + "\n4 - Hire Guide"
-                              + "\n5 - Travel to Next Location"  
-                              + "\n"  
-                              + "\nQ - Exit to Main Menu View"     
-                              +"\n****************************************************";
+    public void deliverNextView() {
         
-        SceneView sceneView = new SceneView(menu);
+        SceneView sceneView = null;
+        try {
+            sceneView = new SceneView();
+        } catch (MapControlException ex) {
+            ErrorView.display(this.getClass().getName(), ex.getMessage());
+            display();
+        }
         sceneView.display();    
     }
     

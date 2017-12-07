@@ -106,7 +106,7 @@ public class GameMenuView extends View{
 
                PurchaseGoodsView purchaseGoodsView;
                try {
-                   purchaseGoodsView = new PurchaseGoodsView(inventory);
+                   purchaseGoodsView = new PurchaseGoodsView();
                    purchaseGoodsView.display();
                } catch (InventoryControlException ex) {
                    ErrorView.display(this.getClass().getName(),

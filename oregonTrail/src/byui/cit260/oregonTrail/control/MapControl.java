@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package byui.cit260.oregonTrail.control;
+import byui.cit260.oregonTrail.exceptions.GameControlException;
 import byui.cit260.oregonTrail.exceptions.InventoryControlException;
 import byui.cit260.oregonTrail.exceptions.MapControlException;
 import byui.cit260.oregonTrail.model.Actor;
@@ -27,6 +28,7 @@ import byui.cit260.oregonTrail.model.RiverScene;
 import byui.cit260.oregonTrail.model.Scene;
 import byui.cit260.oregonTrail.model.SceneType;
 import static byui.cit260.oregonTrail.model.SceneType.RegularScene;
+import byui.cit260.oregonTrail.model.StartScene;
 import java.awt.Point;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -126,10 +128,7 @@ public class MapControl {
             scene.setDescription("Prepare to start your journey. \n"
                     + "You will choose your occupation, companions, \n"
                     + "set your start date, and purchase items for the road.");
-            scene.setItemDesired(inventory[InventoryType.Bullets.ordinal()]);
-            scene.setQuantityToTrade(0);
-            scene.setItemsToTrade(inventory[InventoryType.Money.ordinal()]);
-            scene.setInventory(inventory);
+            scene.setActivityDone(false);
             scenes[SceneType.StartScene.ordinal()] = scene;
             scene.setOption1("Prepare For Travel");
         }
@@ -145,6 +144,7 @@ public class MapControl {
             scene.setInventory(inventory);
             scenes[SceneType.RiverScene.ordinal()] = scene;
             scene.setOption1("River Crossing");
+            scene.setActivityDone(false);
             
         }
         {
@@ -208,7 +208,7 @@ public class MapControl {
             throws MapControlException
         {
        Location[][] locations = map.getLocations();
-        locations[0][0].setScene(scenes[SceneType.FortScene.ordinal()]);
+        locations[0][0].setScene(scenes[SceneType.StartScene.ordinal()]);
         locations[0][1].setScene(scenes[SceneType.RiverScene.ordinal()]);
         locations[0][2].setScene(scenes[SceneType.RiverScene.ordinal()]);
         locations[0][3].setScene(scenes[SceneType.FortScene.ordinal()]);
@@ -368,7 +368,46 @@ public class MapControl {
         game.setPercentComplete(percentComplete);
     }
 
-    
+    public static String createMenu() throws MapControlException {
+        Location location = getCurrentLocation();
+        String scene = location.getScene().getName();
+        String option1 = location.getScene().getOption1();
+        String menu = "\n----------------------------------------------------"
+                              + "\n" + scene + " Location Menu"
+                              + "\n----------------------------------------------------"
+                              + "\n1 - " + option1
+                              + "\n2 - Barter"
+                              + "\n3 - Change Pace"
+                              + "\n4 - Hire Guide"
+                              + "\n5 - Travel to Next Location"  
+                              + "\n"  
+                              + "\nQ - Exit to Main Menu View"     
+                              +"\n****************************************************";    
+        return menu;
+    }
+
+    public static String createLocationBanner() throws MapControlException, GameControlException {
+        Location location = getCurrentLocation();
+        String date = GameControl.thisDay();
+        Game game = OregonTrail.getCurrentGame();
+        
+        String welcome = "\n****************************************************"
+                              + "\n Welcome to " + location.getPlace().getDescription() 
+                              +"\n****************************************************"
+                              +"\n----------------------------------------------------"
+                              +"\nDate: " +   date   
+                              +"\nMiles Traveled: " +   game.getMilesTraveled()
+                              +"\nPercent Complete: " +   game.getPercentComplete() * 100
+                              +"\n----------------------------------------------------"
+                              +"\nThis is a " + location.getScene().getName() + " location." 
+                              +"\n" + location.getScene().getDescription()
+                              +"\n----------------------------------------------------";
+        return welcome;                      
+    }
+
+    public static void activityDone() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     public int calcDistanceTraveled( int pace, int totalHealth)

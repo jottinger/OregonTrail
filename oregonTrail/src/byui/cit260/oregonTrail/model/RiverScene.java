@@ -16,7 +16,8 @@ public class RiverScene extends Scene implements Serializable{
     
     private int riverHeight; 
     public String travelChoice; 
-    private double safetyWithGuide; 
+    private double safetyWithGuide;
+    private boolean activityDone;
     
     // relationships with other classes
 
@@ -61,13 +62,22 @@ public class RiverScene extends Scene implements Serializable{
         this.inventory = inventory;
     }
 
+    public boolean isActivityDone() {
+        return activityDone;
+    }
+
+    public void setActivityDone(boolean activityDone) {
+        this.activityDone = activityDone;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 29 * hash + this.riverHeight;
-        hash = 29 * hash + Objects.hashCode(this.travelChoice);
-        hash = 29 * hash + (int) (Double.doubleToLongBits(this.safetyWithGuide) ^ (Double.doubleToLongBits(this.safetyWithGuide) >>> 32));
-        hash = 29 * hash + Arrays.deepHashCode(this.inventory);
+        hash = 13 * hash + this.riverHeight;
+        hash = 13 * hash + Objects.hashCode(this.travelChoice);
+        hash = 13 * hash + (int) (Double.doubleToLongBits(this.safetyWithGuide) ^ (Double.doubleToLongBits(this.safetyWithGuide) >>> 32));
+        hash = 13 * hash + (this.activityDone ? 1 : 0);
+        hash = 13 * hash + Arrays.deepHashCode(this.inventory);
         return hash;
     }
 
@@ -89,13 +99,13 @@ public class RiverScene extends Scene implements Serializable{
         if (Double.doubleToLongBits(this.safetyWithGuide) != Double.doubleToLongBits(other.safetyWithGuide)) {
             return false;
         }
+        if (this.activityDone != other.activityDone) {
+            return false;
+        }
         if (!Objects.equals(this.travelChoice, other.travelChoice)) {
             return false;
         }
         if (!Arrays.deepEquals(this.inventory, other.inventory)) {
-            return false;
-        }
-        if (!super.equals(obj)) {
             return false;
         }
         return true;
@@ -103,7 +113,7 @@ public class RiverScene extends Scene implements Serializable{
 
     @Override
     public String toString() {
-        return "RiverScene{" + "riverHeight=" + riverHeight + ", travelChoice=" + travelChoice + ", safetyWithGuide=" + safetyWithGuide + ", inventory=" + inventory + '}' + super.toString();
+        return "RiverScene{" + "riverHeight=" + riverHeight + ", travelChoice=" + travelChoice + ", safetyWithGuide=" + safetyWithGuide + ", activityDone=" + activityDone + ", inventory=" + inventory + '}';
     }
     
 
