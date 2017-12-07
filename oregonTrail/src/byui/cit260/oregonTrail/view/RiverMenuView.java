@@ -36,7 +36,7 @@ public class RiverMenuView extends View {
                 + "\n----------------------------------------------------"
                 + "\n1 - Ford the river"
                 + "\n2 - Hire a Guide for $50"
-                + "\n3 - Save game"
+                //+ "\n3 - Save game"
                 + "\nQ - Quit to previous menu"
                 + "\n----------------------------------------------------");
     }
@@ -77,12 +77,18 @@ public class RiverMenuView extends View {
         }
 
         switch (number) {
-            case 1:  {
+            case 1: {
                 //ford the river
                 this.fordRiver();
             }
             break;
             case 2: //hire a guide
+                InventoryItem[] inventory = OregonTrail.getCurrentGame().getInventory();
+                if (inventory[InventoryType.Guide.ordinal()].getQuantityInStock() == 1) {
+                    this.console.println("You already have a guide.");
+                    RiverMenuView riverMenuView = new RiverMenuView();
+                    riverMenuView.display();
+                }
                 this.hireGuide();
                 break;
             case 3: //save the current game
@@ -121,8 +127,8 @@ public class RiverMenuView extends View {
                 this.riverNo(inventory);
             } catch (InventoryControlException ex) {
                 ErrorView.display(this.getClass().getClass().getName(), ex.getMessage());
-                
-                        }
+
+            }
         } else {
             ErrorView.display(this.getClass().getName(), "Error: There was an error fording the river. Try again");
             this.display();
@@ -150,7 +156,7 @@ public class RiverMenuView extends View {
     }
 
     private long getRiverWeather() {
-        this.console.println("*** getRiverWeather() function called ***");
+        //this.console.println("*** getRiverWeather() function called ***");
         long weather = 0;
         return weather;
     }
@@ -160,8 +166,15 @@ public class RiverMenuView extends View {
                 + "\n| Congratulations! "
                 + "\n| Your attempt to cross the river succeeded."
                 + "\n************************************************");
-        GameMenuView gameMenuView = new GameMenuView();
-        gameMenuView.display();
+        /*GameMenuView gameMenuView = new GameMenuView();
+        gameMenuView.display();*/
+        try {
+            SceneView sceneView = new SceneView();
+            sceneView.display();
+        } catch (MapControlException ex) {
+            ErrorView.display(this.getClass().getName(), ex.getMessage());
+            return;
+        }
     }
 
     private void riverNo(InventoryItem[] inventory) throws InventoryControlException {
@@ -170,8 +183,15 @@ public class RiverMenuView extends View {
             lost = InventoryControl.riverFailureRemove(inventory);
         } catch (InventoryControlException ie) {
             ErrorView.display(this.getClass().getName(), "Error: " + ie.getMessage());
-            MainMenuView mainMenuView = new MainMenuView();
-            mainMenuView.display();
+            /*MainMenuView mainMenuView = new MainMenuView();
+            mainMenuView.display();*/
+            try {
+                SceneView sceneView = new SceneView();
+                sceneView.display();
+            } catch (MapControlException ex) {
+                ErrorView.display(this.getClass().getName(), ex.getMessage());
+                return;
+            }
         }
 
         this.console.println("\n*************************************************"
@@ -203,7 +223,14 @@ public class RiverMenuView extends View {
         this.console.print(playerInventory);
         this.console.println("\n* "
                 + "\n************************************************");
-        this.display();
+        //this.display();
+        try {
+            SceneView sceneView = new SceneView();
+            sceneView.display();
+        } catch (MapControlException ex) {
+            ErrorView.display(this.getClass().getName(), ex.getMessage());
+            return;
+        }
     }
 
 }

@@ -32,8 +32,8 @@ public class PrintMapView extends View{
         try (PrintWriter out = new PrintWriter(filePath)) {
             // print title and column headings
             out.println("\n\n               LIST OF MAP LOCATIONS       \n");
-            out.printf("%n%-10s%-30s%-20s", "Symbol", "Description", "Scene Type");
-            out.printf("%n%-10s%-30s%-20s", "------", "-----------", "----------");
+            out.printf("%n%-8s%-30s%-15s%-6s", "Symbol", "Description", "Scene Type", "Miles");
+            out.printf("%n%-8s%-30s%-15s%-6s", "------", "-----------", "----------", "_____");
             
             // print symbol, description, and scenetype of each item
             Location[][] locations = OregonTrail.getCurrentGame().getMap().getLocations();
@@ -42,7 +42,8 @@ public class PrintMapView extends View{
                 String name = stop.getPlace().name();
                 String description = stop.getPlace().getDescription();
                 String scene = stop.getScene().getName();
-                out.printf("%n%-10s%-30s%-10s", name,  description, scene);
+                String miles = Integer.toString(stop.getPlace().getMilesFromStart());
+                out.printf("%n%-8s%-30s%-15s%-6s", name,  description, scene, miles);
                 
             }
         }

@@ -28,7 +28,8 @@ public class BarterMenuView extends View {
                     +"\n----------------------------------------------------"
                     +"\nD - Display your inventory items"
                     +"\nB - Barter items"
-                    +"\nC - Cancel"
+                    //+"\nC - Cancel"
+                    +"\nQ - Quit bartering"
                     +"\n----------------------------------------------------");
     }
 

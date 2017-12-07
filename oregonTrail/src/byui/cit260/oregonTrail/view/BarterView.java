@@ -42,8 +42,8 @@ class BarterView extends View {
                     +"\n---------------------------------------------------------------"
                     + InventoryControl.displayInventoryQuantityPrice()
                     +"\n---------------------------------------------------------------"
-                    +"\n* H - Display barter help screen"
-                    +"\n* Q - Close and return to Barter Main Menu"
+                    //+"\n* H - Display barter help screen"
+                    +"\n*Q - Quit bartering" //Close and return to Barter Main Menu"
                     +"\n---------------------------------------------------------------"
                     +"\n Enter selection to barter for that item (Q to quit this menu):");
     }
@@ -75,9 +75,9 @@ class BarterView extends View {
        int number = 0;
        InventoryType type;
        
-       if (choice == "Q"){
-           displayBarterHelp();
-       }
+       //if (choice == "Q"){
+           //displayBarterHelp();
+       //}
        
         try {
             number = Integer.parseInt(choice);

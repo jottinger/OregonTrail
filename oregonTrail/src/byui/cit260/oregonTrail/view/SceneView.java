@@ -145,8 +145,10 @@ class SceneView extends View {
                 hireGuide.display();
                 break;
             case 5:
-                GameMenuView gameMenu = new GameMenuView();
-                gameMenu.displayMap();
+                /*GameMenuView gameMenu = new GameMenuView();
+                gameMenu.displayMap();*/
+                //game = get the currentGame from the main class
+                displayMap();
                 break;
             case 99: {
                 switch (scene) {
@@ -236,5 +238,32 @@ class SceneView extends View {
         }
         return false;
 
+    }
+
+    public void displayMap() {
+//locations = get the 2-D locations array from the map
+        Game game = OregonTrail.getCurrentGame();
+        Location[][] locations = game.getMap().getLocations();
+        //Print the title
+        int i = 1;
+        this.console.println(  "\n***********************************************"
+                              +"\n*               The Oregon Trail              *"
+                              +"\n*---------------------------------------------*"
+                              +"\n|     |   1   |   2   |   3   |   4   |   5   |  "
+                + "    ");
+        for (Location[] row : locations) {
+            this.console.print("\n-----------------------------------------------"
+                              + "\n|  " + i  );
+            i++;
+        
+            for (Location location : row){
+                this.console.print("  |   " + location.getSymbol() + " ");
+                
+            }
+            this.console.print("  |");
+        }       
+        this.console.println("\n***********************************************");
+        MapView mapview = new MapView();
+        mapview.display();
     }
 }

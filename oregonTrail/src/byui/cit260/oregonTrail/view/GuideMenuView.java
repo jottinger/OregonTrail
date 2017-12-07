@@ -27,7 +27,7 @@ public class GuideMenuView extends View {
                     +"\n----------------------------------------------------"
                     +"\n| Hire a Guide Menu                                 |"
                     +"\n----------------------------------------------------"
-                    +"\nY - Hire a Guide"
+                    +"\nY - Hire a Guide for $50."
                     +"\nN - Go without a Guide"
                     +"\nQ - Return to previous menu"
                     +"\n----------------------------------------------------");
@@ -61,18 +61,21 @@ public class GuideMenuView extends View {
         InventoryItem[] inventory = OregonTrail.getCurrentGame().getInventory();
         double quantity = inventory[InventoryType.Guide.ordinal()].getQuantityInStock();
         if (quantity != 0) {
-        this.console.println("\nYou already have a guide. You are ready to cross the river.");    
+        this.console.println("\nYou already have a guide."); //You are ready to cross the river.");    
         } else {
             InventoryControl.addToInventory(InventoryType.Guide, 1);
             InventoryControl.subtractFromInventory(InventoryType.Money, 50);
-            this.console.println("\nYou have hired a guide. You are ready to cross the river.");
-            RiverMenuView riverMenuView = new RiverMenuView();
-            riverMenuView.display();
+            this.console.println("\nYou have hired a guide. $50 has been removed from your inventory."); //You are ready to cross the river.");
+            /*RiverMenuView riverMenuView = new RiverMenuView();
+            riverMenuView.display();*/
+            return;
     }}
 
     private void setRiverGuideNo() {
-        RiverMenuView riverMenuView = new RiverMenuView();
-        riverMenuView.display();
+        /*RiverMenuView riverMenuView = new RiverMenuView();
+        riverMenuView.display();*/
+        this.console.println("Hire guide transaction cancelled.");
+        return;
     }
 }
 

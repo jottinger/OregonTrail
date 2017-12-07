@@ -109,7 +109,7 @@ public class MainMenuView extends View {
                         ErrorView.display(this.getClass().getName(), ex.getMessage());
                         return false;
                     }
-                }
+                
                 Location location;
                 try {
                     location = MapControl.getCurrentLocation();
@@ -133,7 +133,7 @@ public class MainMenuView extends View {
                         + "\n----------------------------------------------------"
                         + "\n| StartDate: MARCH 1;"
                         + "\n****************************************************");
-
+                }
                 GameMenuView gameMenuView = new GameMenuView();
                 gameMenuView.display();
             default: // Print out error message and exit loop.
