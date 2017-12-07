@@ -16,7 +16,9 @@ import oregonTrail.OregonTrail;
  * @author Dresen_HP
  */
 public class BarterMenuView extends View {
-
+    // class instance variables
+    private String menu; // barter menu
+    private String promptMessage; // enter choice prompt
     
     // constructor funtion called from GameMenuView
     public BarterMenuView() {

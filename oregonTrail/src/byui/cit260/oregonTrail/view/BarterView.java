@@ -7,7 +7,6 @@ package byui.cit260.oregonTrail.view;
 
 import byui.cit260.oregonTrail.control.InventoryControl;
 import byui.cit260.oregonTrail.exceptions.InventoryControlException;
-import byui.cit260.oregonTrail.exceptions.MapControlException;
 import byui.cit260.oregonTrail.model.InventoryItem;
 import byui.cit260.oregonTrail.model.InventoryType;
 import static java.lang.Integer.parseInt;
@@ -48,28 +47,6 @@ class BarterView extends View {
                     +"\n Enter selection to barter for that item (Q to quit this menu):");
     }
     
-    @Override
-    public void display() {  //called from main() in OregonTrail.java
-            boolean done = false; // set flag to not done
-            do {
-                //prompt for and get player's name
-                String value = this.getInput(); // calls getPlayersName() from this class, stores in string playersName
-
-                if (value.toUpperCase().equals("Q")) // user wants to quit
-                    {
-                try {
-                    SceneView sceneView = new SceneView();
-                    sceneView.display();//exit the game
-                } catch (MapControlException ex) {
-                    ErrorView.display(this.getClass().getName(), ex.getMessage());
-                    return;
-                }
-            }
-                 
-                //do the requested action and display the next view
-                done = this.doAction(value);// Calls doAction()in this class and passes in name. Return value changes boolean to true to exit do while loop.
-            } while (!done);
-    }
 
     @Override
     public boolean doAction(String choice) {
@@ -220,8 +197,8 @@ class BarterView extends View {
                     ErrorView.display(this.getClass().getName(), "Error: " + ex.getMessage());
                 }
             }
-                    BarterView barterView = new BarterView();
-                    barterView.display();
+                    PurchaseGoodsView purchaseGoodsView = new PurchaseGoodsView(inventory);
+                    purchaseGoodsView.display();
                     break;
                 } else {
                     ErrorView.display(this.getClass().getName(), "Error: There was an error completing the sale. Try again");
