@@ -6,11 +6,13 @@
 package byui.cit260.oregonTrail.view;
 
 import byui.cit260.oregonTrail.control.InventoryControl;
+import byui.cit260.oregonTrail.control.MapControl;
 import byui.cit260.oregonTrail.exceptions.InventoryControlException;
 import byui.cit260.oregonTrail.exceptions.MapControlException;
 import byui.cit260.oregonTrail.model.FortScene;
 import byui.cit260.oregonTrail.model.InventoryItem;
 import byui.cit260.oregonTrail.model.InventoryType;
+import byui.cit260.oregonTrail.model.Location;
 import java.io.IOException;
 import static java.lang.Integer.parseInt;
 import java.util.Scanner;
@@ -149,6 +151,13 @@ public class PurchaseGoodsView extends View {
 
     private String confirmSale(InventoryType type, int quantity, int price) {
         String value = ""; //create variable value to be returned
+        try {
+            // set activity to done.
+            Location location = MapControl.getCurrentLocation();
+            location.getScene().setActivityDone(true);
+        } catch (MapControlException ex) {
+            ErrorView.display(this.getClass().getName(), ex.getMessage());
+        }
         boolean valid = false; //initialize to not valid
         try {
             while (!valid) {
