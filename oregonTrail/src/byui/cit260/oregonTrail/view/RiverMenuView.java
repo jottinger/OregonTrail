@@ -6,12 +6,14 @@
 package byui.cit260.oregonTrail.view;
 
 import byui.cit260.oregonTrail.control.InventoryControl;
+import byui.cit260.oregonTrail.control.MapControl;
 import byui.cit260.oregonTrail.control.RiverControl;
 import byui.cit260.oregonTrail.exceptions.InventoryControlException;
 import byui.cit260.oregonTrail.exceptions.MapControlException;
 import byui.cit260.oregonTrail.exceptions.RiverControlException;
 import byui.cit260.oregonTrail.model.InventoryItem;
 import byui.cit260.oregonTrail.model.InventoryType;
+import byui.cit260.oregonTrail.model.Location;
 import static java.lang.Integer.parseInt;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -94,6 +96,13 @@ public class RiverMenuView extends View {
     }
 
     private void fordRiver() {
+        try {
+            // set activity to done.
+            Location location = MapControl.getCurrentLocation();
+            location.getScene().setActivityDone(true);
+        } catch (MapControlException ex) {
+            ErrorView.display(this.getClass().getName(), ex.getMessage());
+        }
         //ford the river
         int riverHeight = getRiverHeight();
         InventoryItem[] inventory = OregonTrail.getCurrentGame().getInventory();
