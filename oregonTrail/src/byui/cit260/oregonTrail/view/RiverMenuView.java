@@ -15,6 +15,7 @@ import byui.cit260.oregonTrail.model.InventoryItem;
 import byui.cit260.oregonTrail.model.InventoryType;
 import byui.cit260.oregonTrail.model.Location;
 import static java.lang.Integer.parseInt;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -78,8 +79,12 @@ public class RiverMenuView extends View {
 
         switch (number) {
             case 1: {
+            try {
                 //ford the river
                 this.fordRiver();
+            } catch (MapControlException ex) {
+                ErrorView.display(this.getClass().getName(), "Error: Cannot cross river. " + ex.getMessage());
+            }
             }
             break;
             case 2: //hire a guide
@@ -101,7 +106,7 @@ public class RiverMenuView extends View {
         return false;
     }
 
-    private void fordRiver() {
+    private void fordRiver() throws MapControlException {
         try {
             // set activity to done.
             Location location = MapControl.getCurrentLocation();
@@ -113,10 +118,9 @@ public class RiverMenuView extends View {
         int riverHeight = getRiverHeight();
         InventoryItem[] inventory = OregonTrail.getCurrentGame().getInventory();
         double guide = inventory[InventoryType.Guide.ordinal()].getQuantityInStock();
-        long currentRiverWeather = getRiverWeather();
-        int success = 0;
+        int success = 3;
         try {
-            RiverControl.calcRiverSuccessProbability(riverHeight, guide, currentRiverWeather);
+            success = RiverControl.calcRiverSuccessProbability(riverHeight, guide);
         } catch (RiverControlException me) {
             ErrorView.display(this.getClass().getName(), "Error: " + me.getMessage());
         }
@@ -150,16 +154,24 @@ public class RiverMenuView extends View {
     }
 
     private int getRiverHeight() {
-
-        int height = 0;
+        
+        //create random river height
+        Random rand = new Random();
+        int low = 1;
+        int high = 18;
+        int result = rand.nextInt(high - low) + low;
+        
+        int height = result;
         return height;
     }
 
+    /*
     private long getRiverWeather() {
         //this.console.println("*** getRiverWeather() function called ***");
         long weather = 0;
         return weather;
     }
+    */
 
     private void riverYes() {
         this.console.println("\n*************************************************"
