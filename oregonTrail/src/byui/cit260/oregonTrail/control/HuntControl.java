@@ -16,21 +16,19 @@ import java.util.Random;
  * @author Dresen_HP
  */
 public class HuntControl {
-    public double calcFoodWeight(long baseWeight1, long baseWeight2, int guide) {
+    public int calcFoodWeight(int baseWeight, int guide) {
         // validate inputs
-        if (baseWeight1 < 0) {
+        if (baseWeight < 0) {
             return -1;
         }
-        if (baseWeight2 < 0) {
-            return -1;
-        }
+
         if (guide != 0 && guide != 1) {
             return -1;
         }
         
         // calculations
-        long yield = baseWeight1 + baseWeight2;
-        long weight;
+        int yield = baseWeight;
+        int weight;
         if (guide == 0) {
             weight = yield - 100;
             if (weight > 0) {
@@ -46,9 +44,13 @@ public class HuntControl {
         return yield;
     }
 
-    public double calcHuntingSuccessProbability(String difficulty, int startDate, int travelDays ) {
+    public double calcHuntingSuccessProbability(String name, int startDate, int travelDays ) {
             //validate inputs
-            if ( difficulty != "Hard" && difficulty != "Medium" && difficulty != "Easy") {
+            //if ( difficulty != "Hard" && difficulty != "Medium" && difficulty != "Easy") {
+               // return -1;
+            //}
+            
+            if (name != "Bison" && name != "Wolf" && name != "Bear" && name != "Rabbit") {
                 return -1;
             }
           
@@ -59,6 +61,10 @@ public class HuntControl {
    int dt = travelDays;
    double currentHuntWeatherModifier = 0;
    double difficultyModifier = 0;
+   Random random = new Random();
+   int low = 1;
+   int high = 100;
+   int randomNumber = random.nextInt(high-low)+low;
    
             
             
@@ -74,38 +80,51 @@ public class HuntControl {
     //calculate currentHuntWeather using month
     
     if (month >= 0 && month <= 2) {
-        currentHuntWeatherModifier = .10;
+        currentHuntWeatherModifier = 20;
     }
     if (month >= 3 && month <= 4) {
-        currentHuntWeatherModifier = .15;
+        currentHuntWeatherModifier = 15;
     }
     if (month >= 5 && month <= 8) {
-        currentHuntWeatherModifier = .20;
+        currentHuntWeatherModifier = -10;
     }
     if (month >= 9 && month <= 11) {
-        currentHuntWeatherModifier = .15;
+        currentHuntWeatherModifier = 15;
     }
     if (month >= 11 && month <= 12) {
-        currentHuntWeatherModifier = .10;
+        currentHuntWeatherModifier = 20;
     }
     
     //calculate difficultyModifier by turning string into number
     
-    if (difficulty == "Hard") {
-        difficultyModifier = .1;
+    if (name == "Bear" || name == "Wolf") {
+        difficultyModifier = 70;
     }
-    if (difficulty == "Medium") {
-        difficultyModifier = .15;
+    if (name == "Bison") {
+        difficultyModifier = 50;
     }
-    if (difficulty == "Easy") {
-        difficultyModifier = .25;
+    if (name == "Rabbit") {
+        difficultyModifier = 30;
     }
        
-    huntSuccess = (double) (difficultyModifier + currentHuntWeatherModifier);
+   
+    
+    double chanceOfSuccess = (difficultyModifier + currentHuntWeatherModifier);
+    
+    if (randomNumber >= chanceOfSuccess) {
+        huntSuccess = 0;
+    }
+    
+    if (randomNumber <= chanceOfSuccess) {
+        huntSuccess = 1;
+    }
     
     return huntSuccess;
     
-    }    
+    
+    }   
+    
+    
   
     
 }
