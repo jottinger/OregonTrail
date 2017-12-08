@@ -10,7 +10,13 @@ import byui.cit260.oregonTrail.control.MapControl;
 import byui.cit260.oregonTrail.exceptions.MapControlException;
 import byui.cit260.oregonTrail.model.Animal;
 import byui.cit260.oregonTrail.model.Location;
+import byui.cit260.oregonTrail.control.InventoryControl;
+import byui.cit260.oregonTrail.model.InventoryType;
+import byui.cit260.oregonTrail.exceptions.InventoryControlException;
+import byui.cit260.oregonTrail.model.InventoryItem;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import oregonTrail.OregonTrail;
 
 /**
@@ -60,59 +66,93 @@ public class HuntView extends View {
     @Override
     public boolean doAction(String value) {
         try {
-            // set activity to done.
-            Location location = MapControl.getCurrentLocation();
-            location.getScene().setActivityDone(true);
-        } catch (MapControlException ex) {
-            ErrorView.display(this.getClass().getName(), ex.getMessage());
+            try {
+                // set activity to done.
+                Location location = MapControl.getCurrentLocation();
+                location.getScene().setActivityDone(true);
+            } catch (MapControlException ex) {
+                ErrorView.display(this.getClass().getName(), ex.getMessage());
+            }
+            
+            value = value.toUpperCase();
+            Animal animal = null;
+            String difficulty;
+            boolean done = false;
+            
+            switch (value) {
+                case "A":
+                    animal = Animal.Bison;
+                    storeAnimal(animal);
+                    break;
+                case "B":
+                    animal = Animal.Wolf;
+                    storeAnimal(animal);
+                    break;
+                case "C":
+                    animal = Animal.Bear;
+                    storeAnimal(animal);
+                    break;
+                case "D":
+                    animal = Animal.Rabbit;
+                    storeAnimal(animal);
+                    break;
+            }
+            
+            return false;
+            
+        } catch (InventoryControlException ex) {
+            Logger.getLogger(HuntView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Animal animal = null;
-        String difficulty;
-        boolean done = false;
-
-        switch (value) {
-            case "A":
-                animal = Animal.Bison;
-                storeAnimal(animal);
-                break;
-            case "B":
-                animal = Animal.Wolf;
-                storeAnimal(animal);
-                break;
-            case "C":
-                animal = Animal.Bear;
-                storeAnimal(animal);
-                break;
-            case "D":
-                animal = Animal.Rabbit;
-                storeAnimal(animal);
-                break;
-        }
-
         return false;
 
     }
-    // save animal choice
-    // figure probability
-    // subtract bullet from inventory
-    // if success then calcFoodWeight 
-    // add food to inventory
-    // else You failed message.
-    // hunting again if yes, then call display
-    // else quit to the game menu
+   
 
-    private void storeAnimal(Animal animal) {
+//Store the animal 
+//calculate probability
+//execute probability
+
+
+//if success, calcfoodweight
+//add food to inventory
+//subtract bullet
+
+//if fail, subtract bullet
+    
+    
+    private void storeAnimal(Animal animal) throws InventoryControlException {
+       
+        
         HuntControl huntControl = new HuntControl();
+        
         String animalChoice = animal.name();
-        String difficulty = animal.getDifficulty();
         int startdate = OregonTrail.getCurrentGame().getStartDate();
         int traveldays = OregonTrail.getCurrentGame().getTravelDays();
-        double successProbability = huntControl.calcHuntingSuccessProbability(difficulty, startdate, traveldays);
-        String probability = "\nYour hunt success probability is " + successProbability;
-        this.console.print(probability);
-        String success = "\n You successfully shot the " + animalChoice + "! Would you like to hunt again?";
-        String failure = "\n You failed to shoot the " + animalChoice + ". Would you like to hunt again?";
-        // TODO: Fix the rest of this
+        
+  
+        double success = huntControl.calcHuntingSuccessProbability(animalChoice, startdate, traveldays);
+       
+        
+        if (success == 0) {
+            String failed = "\nYour hunt was unsuccessful. A bullet has been subtracted from your inventory.";
+            this.console.print(failed);
+            InventoryControl.subtractFromInventory(InventoryType.Bullets, 1);
+            //return to menu
+        } else if (success == 1) {
+            String successful = "\nYou hunt was successful! A bullet has been subtracted and food added to your inventory.";
+            this.console.print(successful);
+            //subtract bullets
+            InventoryControl.subtractFromInventory(InventoryType.Bullets, 1);
+            //calcFood
+            int baseweight1 = animal.getBaseWeight();
+            InventoryItem[] inventory = OregonTrail.getCurrentGame().getInventory();
+            double guide = inventory[InventoryType.Guide.ordinal()].getQuantityInStock();
+            int foodWeight = huntControl.calcFoodWeight(baseweight1, (int) guide);
+            //addFood
+            InventoryControl.addToInventory(InventoryType.Food, foodWeight);
+        }
+
+    
     }
 
 }
