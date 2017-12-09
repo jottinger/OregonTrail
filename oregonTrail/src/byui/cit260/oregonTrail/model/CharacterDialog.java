@@ -14,7 +14,7 @@ public enum CharacterDialog{
     WinterRiver("The water level will decrease to make crossing much easier.","river"),
     WinterPlains("There is much less game available, I would stock up on food before leaving.","plain"),
     WinterLateMountain("The storms have stopped but the snow hasn’t melted yet, you may want to wait a few more weeks.","mountain"), 
-    WinterLateRiver("The river has started to melt, but it’s darn cold! I would take the ferry or you’re guaranteed to catch pneumonia.","river"), 
+    WinterLateRiver("The river has started to melt, but it is darn cold! I would take the ferry or you’re guaranteed to catch pneumonia.","river"), 
     WinterLatePlain("Large game is still sparse, take extra bullets for those faster smaller critters and extra food.","plain"), 
     SpringMountain("The passes are open but it sure is muddy and cold in the mountains, take extra clothes and be careful of getting stuck.","mountain"), 
     SpringRiver("The snow melting from the mountains has raised the water level of the river, floating might be better than fording at this point.","river"), 

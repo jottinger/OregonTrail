@@ -26,6 +26,7 @@ public class Map implements Serializable {
     // relationships with other classes
     private Location[][] locations = new Location[5][5]; //0-*
     private Places[] places;
+    private Scene[] scenes;
     
     //constructor
 
@@ -90,16 +91,25 @@ public class Map implements Serializable {
         this.places = places;
     }
 
+    public Scene[] getScenes() {
+        return scenes;
+    }
+
+    public void setScenes(Scene[] scenes) {
+        this.scenes = scenes;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 53 * hash + Objects.hashCode(this.description);
-        hash = 53 * hash + (this.visited ? 1 : 0);
-        hash = 53 * hash + Objects.hashCode(this.game);
-        hash = 53 * hash + this.rows;
-        hash = 53 * hash + this.columns;
-        hash = 53 * hash + Arrays.deepHashCode(this.locations);
-        hash = 53 * hash + Arrays.deepHashCode(this.places);
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.description);
+        hash = 59 * hash + (this.visited ? 1 : 0);
+        hash = 59 * hash + Objects.hashCode(this.game);
+        hash = 59 * hash + this.rows;
+        hash = 59 * hash + this.columns;
+        hash = 59 * hash + Arrays.deepHashCode(this.locations);
+        hash = 59 * hash + Arrays.deepHashCode(this.places);
+        hash = 59 * hash + Arrays.deepHashCode(this.scenes);
         return hash;
     }
 
@@ -136,13 +146,20 @@ public class Map implements Serializable {
         if (!Arrays.deepEquals(this.places, other.places)) {
             return false;
         }
+        if (!Arrays.deepEquals(this.scenes, other.scenes)) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Map{" + "description=" + description + ", visited=" + visited + ", game=" + game + ", rows=" + rows + ", columns=" + columns + ", locations=" + locations + ", places=" + places + '}';
+        return "Map{" + "description=" + description + ", visited=" + visited + ", game=" + game + ", rows=" + rows + ", columns=" + columns + ", locations=" + locations + ", places=" + places + ", scenes=" + scenes + '}';
     }
+    
+    
+    
 
+    
      
 }

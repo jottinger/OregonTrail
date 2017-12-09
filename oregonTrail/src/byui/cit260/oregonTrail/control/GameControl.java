@@ -22,6 +22,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Random;
 
 /**
  *
@@ -53,7 +54,6 @@ public class GameControl {
             }               
         } 
         }*/
-
 // createNewGame called from MainMenuView
     public static int createNewGame(Player player) throws GameControlException, MapControlException {
         if (player == null) // if no player passed in, return null back to startNewGame() in MainMenuView
@@ -262,6 +262,13 @@ public class GameControl {
         return days;
     }
 
+    public static int getRandom(int high) {
+        Random rand = new Random();
+        int low = 0;
+
+        int randomNumber = rand.nextInt(high - low) + low;
+        return randomNumber;
+    }
 }
 
 //public void saveGame(Player player, Game game, Database INSTANCE) {

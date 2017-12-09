@@ -6,6 +6,7 @@
 package byui.cit260.oregonTrail.control;
 
 
+import byui.cit260.oregonTrail.exceptions.HuntControlException;
 import byui.cit260.oregonTrail.model.Game;
 import byui.cit260.oregonTrail.model.Animal;
 import java.util.Date;
@@ -16,14 +17,16 @@ import java.util.Random;
  * @author Dresen_HP
  */
 public class HuntControl {
-    public int calcFoodWeight(int baseWeight, int guide) {
+    public int calcFoodWeight(int baseWeight, int guide) throws HuntControlException {
         // validate inputs
         if (baseWeight < 0) {
-            return -1;
+            throw new HuntControlException("\nCannot calculate food produced from hunt."
+                    + "\n Base weight must be 0 or greater.");
         }
 
         if (guide != 0 && guide != 1) {
-            return -1;
+            throw new HuntControlException("\nCannot calculate food produced from hunt."
+                    + "\n There must be 0 or 1 guide.");
         }
         
         // calculations

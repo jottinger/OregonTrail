@@ -56,7 +56,8 @@ public class ActorView extends View {
                 printActorView.display();
                 break;
             case "N":
-                //////
+                TalkToLocalsView talkToLocals = new TalkToLocalsView();
+                talkToLocals.display();
                 break;
             default:
                 ErrorView.display(this.getClass().getName(), "*** Error: invalid choice entered. Try again. ***");

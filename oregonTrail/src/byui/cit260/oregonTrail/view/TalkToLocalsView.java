@@ -5,11 +5,19 @@
  */
 package byui.cit260.oregonTrail.view;
 
+import byui.cit260.oregonTrail.control.GameControl;
 import byui.cit260.oregonTrail.control.MapControl;
 import byui.cit260.oregonTrail.exceptions.MapControlException;
 import byui.cit260.oregonTrail.model.Actor;
+import byui.cit260.oregonTrail.model.CharacterDialog;
 import byui.cit260.oregonTrail.model.Location;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import oregonTrail.OregonTrail;
 
 
 /**
@@ -31,9 +39,11 @@ public class TalkToLocalsView extends View{
                     +"\nF - Shoshone"
                     +"\nG - Cayusa"
                     +"\nH - Guide"
-                    +"\nI - Wife"
-                    +"\nJ - Son"
-                    +"\nK - Daughter"
+                   // +"\nI - Wife"
+                    //+"\nJ - Son"
+                    //+"\nK - Daughter"
+                    +"\nV - View information about Characters"
+                    +"\nP - Print information about Characters"
                     +"\nQ - Quit"
                     +"\n----------------------------------------------------"
                     + "\nWho would you like to speak to?");
@@ -57,33 +67,82 @@ public class TalkToLocalsView extends View{
         switch (choice) {
             case "A":
                 actor = Actor.Settler;
-                // grab person
-                //create view
+                this.talkToActor(actor);
             case "B":
                 actor = Actor.Pioneer;
+                this.talkToActor(actor);
+                break;
             case "C":
                 actor = Actor.Trapper;
+                this.talkToActor(actor);
+                break;
             case "D":
                 actor = Actor.Soldier;
+                this.talkToActor(actor);
+                break;
             case "E":
                 actor = Actor.Clerk;
+                this.talkToActor(actor);
+                break;
             case "F":
                 actor = Actor.Shoshone;
+                this.talkToActor(actor);
+                break;
             case "G":
                 actor = Actor.Cayusa;
+                this.talkToActor(actor);
+                break;
             case "H":
                 actor = Actor.Guide;
-            case "I":
-                actor = Actor.Wife;
-            case "J":
-                actor = Actor.Son;
-            case "K":
-                actor = Actor.Daughter;
+                this.talkToActor(actor);
+                break;
+            case "V":
+                this.displayActor();
+                break;
+            case "P":
+                ActorView actorView = new ActorView();
+                actorView.display();
+                break;
+            default:
+                ErrorView.display(this.getClass().getName(), "Error reading input: Invalid entry. Try again.");
+                this.display();
+            
+            //case "I":
+                //actor = Actor.Wife;
+            //case "J":
+                //actor = Actor.Son;
+            //case "K":
+                //actor = Actor.Daughter;
                 
         }
         return false;
     
     
+    }
+
+    private void displayActor() {
+            this.console.println("\n\n         ACTOR LIST          \n");
+            this.console.printf("%n%-10s%20s%10s", "Name", "Description");
+            this.console.printf("%n%-10s%20s%10s", "------", "-----------", "----------");
+          
+        List<Actor> actor = OregonTrail.getCurrentGame().getActors();   
+        for (Actor stop : actor) {
+            this.console.printf("%n%-10s%20s%10s", stop.getName(), stop.getDescription());
+            }
+        this.display();
+           }
+
+    private void talkToActor(Actor actor) {
+        // get dialog.
+        CharacterDialog[] characterDialog = CharacterDialog.values();
+        int index = GameControl.getRandom(18);
+        String dialog = characterDialog[index].getDialog();
+        this.console.println("\n==========================================="
+                           +"\nHello, my name is " + actor.getName() + "."
+                           +"\n" + actor.getDescription()
+                           +"\n" + dialog
+                           +"\n===========================================");
+        this.display();
     }
     
 }

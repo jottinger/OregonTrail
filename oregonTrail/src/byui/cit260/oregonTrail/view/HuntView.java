@@ -11,6 +11,7 @@ import byui.cit260.oregonTrail.exceptions.MapControlException;
 import byui.cit260.oregonTrail.model.Animal;
 import byui.cit260.oregonTrail.model.Location;
 import byui.cit260.oregonTrail.control.InventoryControl;
+import byui.cit260.oregonTrail.exceptions.HuntControlException;
 import byui.cit260.oregonTrail.model.InventoryType;
 import byui.cit260.oregonTrail.exceptions.InventoryControlException;
 import byui.cit260.oregonTrail.model.InventoryItem;
@@ -65,6 +66,16 @@ public class HuntView extends View {
 
     @Override
     public boolean doAction(String value) {
+        InventoryItem bullets = null;
+        try {
+            bullets = InventoryControl.getItem(InventoryType.Bullets);
+        } catch (InventoryControlException ex) {
+            ErrorView.display(this.getClass().getName(), ex.getMessage());
+        }
+        if (bullets.getQuantityInStock() < 1) {
+            ErrorView.display(this.getClass().getName(), "\nYou do not have any bullets. \nPurchase some and try again.");
+            return false;
+        }
         try {
             try {
                 // set activity to done.
@@ -101,7 +112,7 @@ public class HuntView extends View {
             return false;
             
         } catch (InventoryControlException ex) {
-            Logger.getLogger(HuntView.class.getName()).log(Level.SEVERE, null, ex);
+            ErrorView.display(this.getClass().getName(), ex.getMessage());        
         }
         return false;
 
@@ -147,7 +158,12 @@ public class HuntView extends View {
             int baseweight1 = animal.getBaseWeight();
             InventoryItem[] inventory = OregonTrail.getCurrentGame().getInventory();
             double guide = inventory[InventoryType.Guide.ordinal()].getQuantityInStock();
-            int foodWeight = huntControl.calcFoodWeight(baseweight1, (int) guide);
+            int foodWeight = 0;
+            try {
+                foodWeight = huntControl.calcFoodWeight(baseweight1, (int) guide);
+            } catch (HuntControlException ex) {
+                Logger.getLogger(HuntView.class.getName()).log(Level.SEVERE, null, ex);
+            }
             //addFood
             InventoryControl.addToInventory(InventoryType.Food, foodWeight);
         }

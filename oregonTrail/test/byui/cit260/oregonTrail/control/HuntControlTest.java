@@ -51,12 +51,12 @@ public class HuntControlTest {
          * Test case #1
          ********************/
         System.out.println("\tTest case #1");
-        long baseWeight1 = 15;
-        long baseWeight2 = 200;
+        int baseWeight1 = 15;
+
         int guide = 0;
         HuntControl instance = new HuntControl();
         double expResult = 100;
-        double result = instance.calcFoodWeight(baseWeight1, baseWeight2, guide);
+        double result = instance.calcFoodWeight(baseWeight1, guide);
         assertEquals(expResult, result, 0.0001); 
         
         /********************
@@ -64,10 +64,10 @@ public class HuntControlTest {
          ********************/
         System.out.println("\tTest case #2");
         baseWeight1 = 200;
-        baseWeight2 = 15;
+        
         guide = 1;
         expResult = 200;
-        result = instance.calcFoodWeight(baseWeight1, baseWeight2, guide);
+        result = instance.calcFoodWeight(baseWeight1, guide);
         assertEquals(expResult, result, 0.0001);
         
         /********************
@@ -75,10 +75,10 @@ public class HuntControlTest {
          ********************/
         System.out.println("\tTest case #3");
         baseWeight1 = 15;
-        baseWeight2 = 30;
+        
         guide = 0;
         expResult = 45;
-        result = instance.calcFoodWeight(baseWeight1, baseWeight2, guide);
+        result = instance.calcFoodWeight(baseWeight1,  guide);
         assertEquals(expResult, result, 0.0001);
         
         /********************
@@ -86,10 +86,10 @@ public class HuntControlTest {
          ********************/
         System.out.println("\tTest case #4");
         baseWeight1 = 500;
-        baseWeight2 = 15;
+        
         guide = 3;
         expResult = -1;
-        result = instance.calcFoodWeight(baseWeight1, baseWeight2, guide);
+        result = instance.calcFoodWeight(baseWeight1, guide);
         assertEquals(expResult, result, 0.0001);
         
         /********************
@@ -97,10 +97,10 @@ public class HuntControlTest {
          ********************/
         System.out.println("\tTest case #5");
         baseWeight1 = -1;
-        baseWeight2 = 200;
+        
         guide = 1;
         expResult = -1;
-        result = instance.calcFoodWeight(baseWeight1, baseWeight2, guide);
+        result = instance.calcFoodWeight(baseWeight1,  guide);
         assertEquals(expResult, result, 0.0001);
         
         /********************
@@ -108,10 +108,10 @@ public class HuntControlTest {
          ********************/
         System.out.println("\tTest case #6");
         baseWeight1 = 200;
-        baseWeight2 = -5;
+        
         guide = 1;
         expResult = -1;
-        result = instance.calcFoodWeight(baseWeight1, baseWeight2, guide);
+        result = instance.calcFoodWeight(baseWeight1, guide);
         assertEquals(expResult, result, 0.0001);
         
         /********************
@@ -119,10 +119,9 @@ public class HuntControlTest {
          ********************/
         System.out.println("\tTest case #7");
         baseWeight1 = 0;
-        baseWeight2 = 0;
         guide = 0;
         expResult = 0;
-        result = instance.calcFoodWeight(baseWeight1, baseWeight2, guide);
+        result = instance.calcFoodWeight(baseWeight1 , guide);
         assertEquals(expResult, result, 0.0001);
         
         /********************
@@ -130,10 +129,9 @@ public class HuntControlTest {
          ********************/
         System.out.println("\tTest case #2");
         baseWeight1 = 0;
-        baseWeight2 = 0;
         guide = 1;
         expResult = 0;
-        result = instance.calcFoodWeight(baseWeight1, baseWeight2, guide);
+        result = instance.calcFoodWeight(baseWeight1 , guide);
         assertEquals(expResult, result, 0.0001);
         
         /********************
@@ -141,10 +139,9 @@ public class HuntControlTest {
          ********************/
         System.out.println("\tTest case #9");
         baseWeight1 = 0;
-        baseWeight2 = 50;
         guide = 1;
         expResult = 50;
-        result = instance.calcFoodWeight(baseWeight1, baseWeight2, guide);
+        result = instance.calcFoodWeight(baseWeight1 , guide);
         assertEquals(expResult, result, 0.0001);
  
     
