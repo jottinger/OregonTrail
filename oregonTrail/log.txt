@@ -1,7 +1,0 @@
-byui.cit260.oregonTrail.view.MapView - Error moving Location: You must complete a task at this location before moving on.Select option 1 to complete the task
-byui.cit260.oregonTrail.view.StartDateView - Cannot find day. TravelDays cannot be null.
-byui.cit260.oregonTrail.view.SceneView - Error reading input: Please enter a valid number.
-byui.cit260.oregonTrail.view.MapView - Error moving Location: You must complete a task at this location before moving on.Select option 1 to complete the task
-byui.cit260.oregonTrail.view.SceneView - Error reading input: Please enter a valid number.
-byui.cit260.oregonTrail.view.MapView - Error moving Location: You must complete a task at this location before moving on.Select option 1 to complete the task
-byui.cit260.oregonTrail.view.MapView - Error moving Location: You must complete a task at this location before moving on.Select option 1 to complete the task
