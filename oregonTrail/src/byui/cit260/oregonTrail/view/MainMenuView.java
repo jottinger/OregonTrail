@@ -210,8 +210,14 @@ public class MainMenuView extends View {
             ErrorView.display("MainMenuView", ex.getMessage());
         }
         // display game menu
-        GameMenuView gameMenu = new GameMenuView();
-        gameMenu.display();
+
+        try {
+            SceneView sceneView = new SceneView();
+            sceneView.display();
+        } catch (MapControlException ex) {
+            Logger.getLogger(MainMenuView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     private void displayHelpMenu() { //Called from doAction() case H in this class
@@ -229,6 +235,8 @@ public class MainMenuView extends View {
         } catch (Exception ex) {
             ErrorView.display("mainMenuView", ex.getMessage());
         }
+        this.console.println("\nGame saved successfully.");
+        
     }
 
     private String getGameInput() {

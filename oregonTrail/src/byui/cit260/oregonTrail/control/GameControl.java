@@ -108,6 +108,7 @@ public class GameControl {
             ObjectOutputStream output = new ObjectOutputStream(fops);
 
             output.writeObject(game); // write game object out to file
+            
         } catch (Exception e) {
             throw new GameControlException(e.getMessage());
         }
