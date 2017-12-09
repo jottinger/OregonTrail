@@ -5,6 +5,7 @@
  */
 package byui.cit260.oregonTrail.control;
 
+import byui.cit260.oregonTrail.exceptions.HuntControlException;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -44,7 +45,7 @@ public class HuntControlTest {
      * Test of calcFoodWeight method, of class HuntControl.
      */
     @Test
-    public void testCalcFoodWeight() {
+    public void testCalcFoodWeight() throws HuntControlException {
         System.out.println("calcFoodWeight");
         
         /********************
