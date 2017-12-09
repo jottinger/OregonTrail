@@ -34,6 +34,7 @@ public class MainMenuView extends View {
                 + "\nH - Get help on how to play the game"
                 + "\nS - Save game"
                 + "\nX - Enter game menu (bypasses regular game play)"
+                + "\nE - End game"
                 + "\nQ - Quit"
                 + "\n----------------------------------------------------"
                 + "\n"
@@ -136,6 +137,10 @@ public class MainMenuView extends View {
                 }
                 GameMenuView gameMenuView = new GameMenuView();
                 gameMenuView.display();
+                break;
+            case "E":
+                EndGameView endGameView = new EndGameView();
+                endGameView.display();
             default: // Print out error message and exit loop.
                 ErrorView.display(this.getClass().getName(), "Error reading input: Invalid selection *** Try again");
                 break;

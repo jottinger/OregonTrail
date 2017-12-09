@@ -95,6 +95,11 @@ class SceneView extends View {
                         talkToLocals.display();
                         break;
                     case "Start":
+                        if (OregonTrail.getCurrentGame().getStartDate() > 1) {
+                            this.console.println("You have already prepared for the trail.\n"
+                                    + "Choose another option.");
+                            this.display();
+                        }
                         CompanionView companionView = new CompanionView();
                         companionView.display();
                         break;
@@ -128,8 +133,7 @@ class SceneView extends View {
 
                         break;
                     case "Finish":
-                        EndGameView endGame = new EndGameView();
-                        endGame.display();
+                        this.endGame();
                         break;
                 }
             case 2:
@@ -141,7 +145,7 @@ class SceneView extends View {
                 changePace.display();
                 break;
             case 4:
-                HireGuideView hireGuide = new HireGuideView();
+                GuideMenuView hireGuide = new GuideMenuView();
                 hireGuide.display();
                 break;
             case 5:
@@ -265,5 +269,28 @@ class SceneView extends View {
         this.console.println("\n***********************************************");
         MapView mapview = new MapView();
         mapview.display();
+    }
+
+    public void endGame() {
+        this.console.println("\n*************************************************************\n" +
+                                "|     .       __   __            _    _ _       _   *       |\n" + 
+                                "|          *  \\ \\ / /      *    | |  | (_)     | | .     .  |\n" +
+                                "|   .          \\ V /___  _   _  | |  | |_ _ __ | |          |\n" +
+                                "|         .     \\ // _ \\| | | | | |/\\| | | '_ \\| |     .    |\n" +
+                                "|  *            | | (_) | |_| | \\  /\\  / | | | |_|          |\n" +
+                                "|               \\_/\\___/ \\__,_|  \\/  \\/|_|_| |_(_)       *  |\n" +
+                                "|      .                  *                     *           |\n" +
+                                "|              *        .          *        .   .       .   |\n" +
+                                "|      .         .            .          .     *            |\n" +
+                                "|   *     ,_          *   .-.-------.                 .     |\n" +
+                                "|       __(_\\   .        //^\\\\       \\  *      .       .    |\n" +
+                                "|     ~( _ )    ___      \\_//_______/      .--------.-.     |\n" +
+                                "|jgs^^ // >>^^,/ _ )~ ^^/[_=/]______]^^^^^^/        //^\\^^^ |\n" +
+                                "|            /_/< \\\\   /_(=/ (o)  (o)      \\________\\\\=//   |\n" +
+                                "|                             ~    ~       [________[\\__]   |\n" +
+                                "|      ^^^               ^^                (o)    (o)`\\=)_  |\n" +
+                                "|*************************************************************\n\n" +
+                                " Wagons from http://www.ascii-art.com, text from http://patorjk.com ");
+        System.exit(0);
     }
 }

@@ -7,6 +7,7 @@ package byui.cit260.oregonTrail.view;
 
 import byui.cit260.oregonTrail.control.GameControl;
 import byui.cit260.oregonTrail.control.MapControl;
+import byui.cit260.oregonTrail.exceptions.GameControlException;
 import byui.cit260.oregonTrail.exceptions.MapControlException;
 import byui.cit260.oregonTrail.model.Actor;
 import byui.cit260.oregonTrail.model.CharacterDialog;
@@ -50,7 +51,25 @@ public class TalkToLocalsView extends View{
 
     
     }
+    @Override
+    public void display() {  //called from main() in OregonTrail.java
+            boolean done = false; // set flag to not done
+            do {
+                //prompt for and get player's name
+                String value = this.getInput(); // calls getPlayersName() from this class, stores in string playersName
 
+                if (value.toUpperCase().equals("Q")) // user wants to quit
+                    try {
+                    SceneView sceneView = new SceneView();
+                    sceneView.display();
+                    } catch (MapControlException ex) {
+                        ErrorView.display(this.getClass().getName(), ex.getMessage());
+                    }
+                 
+                //do the requested action and display the next view
+                done = this.doAction(value);// Calls doAction()in this class and passes in name. Return value changes boolean to true to exit do while loop.
+            } while (!done);
+    }
 
     @Override
     public boolean doAction(String choice) {
@@ -139,7 +158,7 @@ public class TalkToLocalsView extends View{
         String dialog = characterDialog[index].getDialog();
         this.console.println("\n==========================================="
                            +"\nHello, my name is " + actor.getName() + "."
-                           +"\n" + actor.getDescription()
+                           +"\n" + actor.getExplanation()
                            +"\n" + dialog
                            +"\n===========================================");
         this.display();

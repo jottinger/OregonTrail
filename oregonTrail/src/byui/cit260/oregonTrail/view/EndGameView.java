@@ -12,14 +12,26 @@ package byui.cit260.oregonTrail.view;
 class EndGameView extends View {
     
     public EndGameView() {
-        super("EndGameView class called. Enter Q to go back.");
+        super("Are you sure you want to quit the game? Y/N");
     }
     
     @Override
     public boolean doAction(String value) {
-     return false;
-    }
-}
+      value = value.toUpperCase();
+
+        switch (value) {
+            case "Y":
+                System.exit(0);
+                break;
+            case "N":
+                MainMenuView mainMenu = new MainMenuView();
+                break;
+            default:
+                ErrorView.display(this.getClass().getName(), "Error reading input: Invalid entry try again.");
+                
+        
+    } return false;
+}}
 
 
     
