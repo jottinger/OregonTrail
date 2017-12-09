@@ -64,6 +64,13 @@ public class PurchaseGoodsView extends View {
 
     @Override
     public boolean doAction(String value) {
+        try {
+            // set activity to done.
+            Location location = MapControl.getCurrentLocation();
+            location.getScene().setActivityDone(true);
+        } catch (MapControlException ex) {
+            ErrorView.display(this.getClass().getName(), ex.getMessage());
+        }
         int number = 0;
         InventoryType type;
 
@@ -151,13 +158,7 @@ public class PurchaseGoodsView extends View {
 
     private String confirmSale(InventoryType type, int quantity, int price) {
         String value = ""; //create variable value to be returned
-        try {
-            // set activity to done.
-            Location location = MapControl.getCurrentLocation();
-            location.getScene().setActivityDone(true);
-        } catch (MapControlException ex) {
-            ErrorView.display(this.getClass().getName(), ex.getMessage());
-        }
+        
         boolean valid = false; //initialize to not valid
         try {
             while (!valid) {
