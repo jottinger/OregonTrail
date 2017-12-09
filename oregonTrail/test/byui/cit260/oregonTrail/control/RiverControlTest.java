@@ -52,7 +52,6 @@ public class RiverControlTest {
         System.out.println("\tTest case #1");
         int riverHeight = 30;
         int guide = 1;
-        long currentRiverWeather = -2;
         RiverControl instance = new RiverControl();
         int expResult = -1;        int result = instance.calcRiverSuccessProbability(riverHeight, guide);
         assertEquals(expResult, result);
@@ -63,7 +62,6 @@ public class RiverControlTest {
         System.out.println("\tTest case #2");
         riverHeight = 21;
         guide = 0;
-        currentRiverWeather = 0;
         expResult = -1;
         result = instance.calcRiverSuccessProbability(riverHeight, guide);
         assertEquals(expResult, result);
@@ -74,7 +72,6 @@ public class RiverControlTest {
         System.out.println("\tTest case #3");
         riverHeight = 10;
         guide = -1;
-        currentRiverWeather = 0;
         expResult = -1;
         result = instance.calcRiverSuccessProbability(riverHeight, guide);
         assertEquals(expResult, result);
@@ -85,7 +82,6 @@ public class RiverControlTest {
         System.out.println("\tTest case #4");
         riverHeight = 5;
         guide = 1;
-        currentRiverWeather = 4;
         expResult = 0;
         result = instance.calcRiverSuccessProbability(riverHeight, guide);
         assertEquals(expResult, result);
@@ -96,7 +92,6 @@ public class RiverControlTest {
         System.out.println("\tTest case #5");
         riverHeight = 2;
         guide = 0;
-        currentRiverWeather = -1;
         expResult = 0;
         result = instance.calcRiverSuccessProbability(riverHeight, guide);
         assertEquals(expResult, result);
@@ -107,7 +102,6 @@ public class RiverControlTest {
         System.out.println("\tTest case #6");
         riverHeight = 9;
         guide = 1;
-        currentRiverWeather = 0;
         expResult = 1;
         result = instance.calcRiverSuccessProbability(riverHeight, guide);
         assertEquals(expResult, result);
@@ -118,7 +112,6 @@ public class RiverControlTest {
         System.out.println("\tTest case #7");
         riverHeight = 20;
         guide = 0;
-        currentRiverWeather = 1;
         expResult = 0;
         result = instance.calcRiverSuccessProbability(riverHeight, guide);
         assertEquals(expResult, result);
