@@ -231,6 +231,13 @@ public class RiverMenuView extends View {
         } catch (InventoryControlException ex) {
             ErrorView.display(this.getClass().getName(),
                     "Error reading input: " + ex.getMessage());
+            try {
+            SceneView sceneView = new SceneView();
+            sceneView.display();
+        } catch (MapControlException mx) {
+            ErrorView.display(this.getClass().getName(), mx.getMessage());
+            return;
+        }
         }
         this.console.print(playerInventory);
         this.console.println("\n* "

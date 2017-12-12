@@ -29,14 +29,14 @@ public class PrintActorView extends View {
 
         try (PrintWriter out = new PrintWriter(filePath)) {
             out.println("\n\n         ACTOR LIST          \n");
-            out.printf("%n%-10s%20s%10s", "Name", "Description");
-            out.printf("%n%-10s%20s%10s", "------", "-----------", "----------");
+            out.printf("%n%-20s%20s", "Name", "Description");
+            out.printf("%n%-20s%20s", "------", "-----------");
             
-            List<Actor> actor = OregonTrail.getCurrentGame().getActors();
+            Actor[] actor = Actor.values();
             for (Actor stop: actor) {
                 String name = stop.name();
                 String description = stop.getDescription();
-                out.printf("%n%-10s%-30s%-10s", name,  description);
+                out.printf("%n%-20s%-30s", name,  description);
             }
         
         this.console.println("\n File printed successfully to " + filePath);

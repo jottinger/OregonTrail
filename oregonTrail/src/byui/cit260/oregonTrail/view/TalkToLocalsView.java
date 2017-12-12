@@ -141,12 +141,12 @@ public class TalkToLocalsView extends View{
 
     private void displayActor() {
             this.console.println("\n\n         ACTOR LIST          \n");
-            this.console.printf("%n%-10s%20s%10s", "Name", "Description");
-            this.console.printf("%n%-10s%20s%10s", "------", "-----------", "----------");
+            this.console.printf("%n%-20s%20s", "Name", "Description");
+            this.console.printf("%n%-20s%20s", "------", "-----------");
           
-        List<Actor> actor = OregonTrail.getCurrentGame().getActors();   
+        Actor[] actor = Actor.values();    
         for (Actor stop : actor) {
-            this.console.printf("%n%-10s%20s%10s", stop.getName(), stop.getDescription());
+            this.console.printf("%n%-20s%20s", stop.getName(), stop.getDescription());
             }
         this.display();
            }

@@ -111,12 +111,12 @@ public class ActorView extends View {
     private void printActorView(String list, String filePath) {
         try (PrintWriter out = new PrintWriter(filePath)) {
             out.println("\n\n         ACTOR LIST          \n");
-            out.printf("%n%-10s%20s%10s", "Name", "Description");
-            out.printf("%n%-10s%20s%10s", "------", "-----------", "----------");
+            out.printf("%n%-20s%20s", "Name", "Description");
+            out.printf("%n%-20s%20s", "------", "-----------");
           
-        List<Actor> actor = OregonTrail.getCurrentGame().getActors();   
+        Actor[] actor = Actor.values();   
         for (Actor stop : actor) {
-            out.printf("%n%-10s%20s%10s", stop.getName(), stop.getDescription());
+            out.printf("%n%-20s%20s", stop.getName(), stop.getDescription());
             }
         } 
          catch (FileNotFoundException ex)  {
