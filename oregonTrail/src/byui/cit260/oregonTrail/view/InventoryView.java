@@ -101,20 +101,7 @@ public class InventoryView extends View {
     }
     
     public void viewInventoryItems() {
-        InventoryItem[] inventory = OregonTrail.getCurrentGame().getInventory();
-        String name;
-        double quantity;
-        this.console.println("\n-----------------------------------");
-        this.console.printf("%10s %15s", "Item", "Quantity");
-        this.console.println("\n-----------------------------------");
-        for (InventoryItem item : inventory) {
-            name = item.getInventoryType().name();
-            quantity = item.getQuantityInStock();
-            this.console.printf("%10s %15s", name, quantity);
-            System.out.println();
-        }
-        this.console.println("\n-----------------------------------");
-            this.display();
+        this.console.println("hello world");
     }
 
     
