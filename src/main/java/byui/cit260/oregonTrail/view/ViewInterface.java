@@ -6,15 +6,16 @@
 package byui.cit260.oregonTrail.view;
 
 /**
- *
  * @author hannahwilliams
  */
 
 public interface ViewInterface {
-    
+
     public void display();
+
     public String getInput();
+
     public boolean doAction(String value);
-    
+
 }
 
